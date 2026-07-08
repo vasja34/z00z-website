@@ -1,0 +1,11 @@
+title: "Legal"
+icon: legal
+page_icons:
+  index: legal
+order:
+  - index
+  - architecture
+  - terms
+  - privacy
+  - disclosures
+  - public-claim-boundaries

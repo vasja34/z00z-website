@@ -1,0 +1,6 @@
+brand_name: "Z00Z Blockchain"
+brand_label: "Z00Z Docs"
+default_theme: "dockyard"
+default_code_theme: "atom-one-dark"
+title_suffix: "Z00Z"
+description: "Demo shell for routing, Markdown parsing, raw HTML rendering, and curated daisyUI theme switching."

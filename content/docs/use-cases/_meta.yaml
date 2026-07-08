@@ -1,0 +1,12 @@
+title: "Use Cases"
+icon: spark
+page_icons:
+  index: spark
+order:
+  - index
+  - offline-private-cash
+  - private-external-asset-rights
+  - policy-shaped-money
+  - private-organizational-settlement
+  - private-distribution-community-money
+  - machine-agent-rights

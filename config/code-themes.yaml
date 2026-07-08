@@ -1,0 +1,48 @@
+- id: atom-one-dark
+  label: "One Dark"
+  description: "Atom-family dark preset aligned with the previous Z00Z demo baseline, using neon pink keywords and lilac comments."
+  mode: dark
+  background: "#282c34"
+  border: "#3e4451"
+  foreground: "#abb2bf"
+  comment: "#b18eb1"
+  keyword: "#f92672"
+  string: "#98c379"
+  number: "#d19a66"
+  title: "#61aeee"
+- id: atom-one-light
+  label: "One Light"
+  description: "Original Atom One Light preset with magenta keywords and calm green strings."
+  mode: light
+  background: "#fafafa"
+  border: "#dde3eb"
+  foreground: "#383a42"
+  comment: "#a0a1a7"
+  keyword: "#a626a4"
+  string: "#50a14f"
+  number: "#986801"
+  title: "#4078f2"
+- id: night-owl
+  label: "Night Owl"
+  description: "Deep dark technical preset with muted comments and luminous violet, sand, and orange tokens."
+  mode: dark
+  background: "#011627"
+  border: "#13344a"
+  foreground: "#d6deeb"
+  comment: "#637777"
+  keyword: "#c792ea"
+  string: "#ecc48d"
+  number: "#f78c6c"
+  title: "#dcdcaa"
+- id: xcode
+  label: "Xcode"
+  description: "Light Apple-style preset with purple syntax, green comments, and crisp blue numerics."
+  mode: light
+  background: "#fafafa"
+  border: "#d6d6d6"
+  foreground: "#000000"
+  comment: "#007400"
+  keyword: "#aa0d91"
+  string: "#c41a16"
+  number: "#1c00cf"
+  title: "#1c00cf"

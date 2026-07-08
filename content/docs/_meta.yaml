@@ -1,0 +1,16 @@
+title: "Z00Z Docs"
+page_icons:
+  index: home
+order:
+  - index
+  - learn
+  - protocol
+  - developers
+  - network
+  - use-cases
+  - ecosystem
+  - security
+  - research
+  - support
+  - legal
+  - demo

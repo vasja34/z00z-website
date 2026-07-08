@@ -1,0 +1,12 @@
+- id: light
+  label: "Fancy"
+  description: "daisyUI fantasy-inspired light palette with rounded, playful surfaces."
+- id: corporate
+  label: "Corporate"
+  description: "Neutral documentation palette with restrained accents."
+- id: workbench
+  label: "Workbench"
+  description: "Aptos-inspired dark documentation theme with graphite surfaces and orange primary actions."
+- id: dockyard
+  label: "Dockyard"
+  description: "Aptos-inspired dark documentation theme with graphite surfaces and teal accents."

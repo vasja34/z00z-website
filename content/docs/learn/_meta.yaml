@@ -1,0 +1,12 @@
+title: "Learn"
+icon: book
+page_icons:
+  index: book
+order:
+  - index
+  - what-is-z00z
+  - litepaper
+  - main-whitepaper
+  - terminology
+  - roadmap
+  - comparisons

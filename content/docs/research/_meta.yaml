@@ -1,0 +1,13 @@
+title: "Research"
+icon: flask
+page_icons:
+  index: flask
+order:
+  - index
+  - whitepapers
+  - technical-papers
+  - hjmt
+  - benchmarks
+  - verification-orchestrator
+  - archive
+  - glossary

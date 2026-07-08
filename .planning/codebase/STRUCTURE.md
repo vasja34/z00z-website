@@ -17,6 +17,8 @@ z00z-website/
 ├── .planning/           # Generated planning and codebase-map artifacts
 │   └── codebase/        # Mapping documents created by this workflow
 ├── public/              # Static assets served directly by Next.js
+├── scripts/             # Operator-facing helper scripts for the website
+├── tools/               # Repository-local pentest tooling and caches
 ├── src/                 # Application source
 │   └── app/             # Next.js App Router files
 ├── README.md            # Upstream bootstrap readme
@@ -79,12 +81,22 @@ z00z-website/
 - `src/app/globals.css` - Shared theme variables and base styling
 
 **Testing:**
-- No `tests/`, `__tests__/`, `*.test.*`, or E2E directories are committed yet
+- `tools/penetration/tests/` - Python unittest coverage for the imported pentest workflow
 
 **Documentation:**
 - `README.md` - Bootstrap usage instructions
+- `scripts/README.md` - Classification of current website helpers vs inherited legacy scripts
+- `tools/penetration/` - Active local pentest scripts, validators, and tool installers
 - `.github/copilot-instructions.md` - Repository operating rules
 - `.codex/AGENTS.md` - Local agent guidance file
+
+**Project Helpers:**
+- `scripts/verify.sh` - Runs the website verification path (`lint` + `build`)
+- `scripts/play_tone.sh` - Completion tone helper with `scripts/sounds/` fallback
+- `scripts/gen_tree.sh` - Tree generator with Next.js-friendly default ignores
+- `scripts/run_pentest_tools.sh` - Canonical pentest entrypoint
+- `tools/penetration/` - Active pentest suite, local tool root, and pentest self-tests
+- `scripts/legacy/` - Archived copies of inherited Z00Z scripts kept out of the active helper surface
 
 ## Naming Conventions
 
@@ -133,6 +145,16 @@ z00z-website/
 - Purpose: Generated planning documents for this workspace
 - Source: Created by GSD workflows
 - Committed: Not ignored currently; intended to be committable when workflow docs are tracked
+
+**`scripts/`:**
+- Purpose: Local helper scripts for verification and operator workflows
+- Source: Website-specific helpers at the top level, with archived Z00Z copies isolated under `scripts/legacy/`
+- Committed: Yes
+
+**`tools/`:**
+- Purpose: Repository-local pentest tooling, wrappers, caches, manifests, and tests
+- Source: Imported and adapted security tooling for this website repo
+- Committed: Yes
 
 **`.github/workflows/`:**
 - Purpose: Standard location for GitHub Actions workflows

@@ -1,0 +1,14 @@
+title: "Security"
+icon: shield
+page_icons:
+  index: shield
+order:
+  - index
+  - overview
+  - threat-model
+  - crypto-policy
+  - supply-chain
+  - responsible-disclosure
+  - audits
+  - privacy-metrics
+  - incident-response

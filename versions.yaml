@@ -1,0 +1,6 @@
+total_version:
+  version: 0.2.0
+  last_git_tag: v0.2.0
+
+crates:
+  # This repository currently has no crate entries tracked by version-manager.

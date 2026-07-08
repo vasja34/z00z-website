@@ -1,0 +1,20 @@
+title: "Protocol"
+icon: layers
+page_icons:
+  index: layers
+order:
+  - index
+  - architecture
+  - settlement-model
+  - wallet-local-possession
+  - checkpoints
+  - assets-vouchers-rights
+  - smart-cash
+  - linked-liability
+  - privacy-threat-model
+  - cross-chain-rights
+  - tokenomics
+  - governance
+  - proof-of-useful-work
+  - post-quantum-migration
+  - legal-architecture

@@ -1,0 +1,36 @@
+markdown:
+  html: true
+  linkify: true
+  typographer: true
+  toc: true
+  abbreviation: true
+  alerts: true
+  align: true
+  anchor: true
+  attrs: true
+  containers: true
+  definition_lists: true
+  embeds: true
+  figures: true
+  footnotes: true
+  include: true
+  image_lazyload: true
+  image_size: true
+  insertions: true
+  katex: true
+  mark: true
+  snippet: true
+  spoiler: true
+  stylize: true
+  sub_sup: true
+  tabs: true
+  tasklist: true
+  mermaid: true
+  collapsible: true
+html:
+  allow_local_styles: true
+  allow_scripts: false
+  allow_inline_event_handlers: false
+code:
+  auto_detect_html_blocks: true
+  theme_mode: "selectable"

@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Node
+**/node_modules/
+**/dist/
+**/build/
+/.next/
+/out/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+*.tsbuildinfo
+next-env.d.ts
+.pnpm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database
+*.db
+*.sqlite
+
+# Backup files
+*.backup
+*.bak
+
+# Environment
+.env
+.env.*
+.venv/
+.gsd/
+.vercel
+
+# Documentation
+/docs/**/*.pdf
+/tools/
+/logs/
+/reports/
+
+# Misc
+**/.temp/
+**/data/
+**/.codacy/
+**/.cache/
+**/cache/
+.codex/

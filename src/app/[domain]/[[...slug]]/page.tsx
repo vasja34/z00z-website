@@ -1,0 +1,130 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+import { DocPagePager } from "@/components/docs/DocPagePager";
+import { DocPageToc } from "@/components/docs/DocPageToc";
+import { MarkdownEnhancer } from "@/components/docs/MarkdownEnhancer";
+import { ShadowHtmlArticle } from "@/components/docs/ShadowHtmlArticle";
+import {
+  getDomainById,
+  getDomainPageNeighbors,
+  loadDomainPage,
+} from "@/lib/content/docs";
+import { getSiteConfig } from "@/lib/config/site";
+
+type ContentDomainPageProps = {
+  params: Promise<{
+    domain: string;
+    slug?: string[];
+  }>;
+};
+
+export const dynamic = "force-dynamic";
+
+function titleFromSegment(segment: string): string {
+  return segment
+    .replace(/[-_]+/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+export async function generateMetadata({ params }: ContentDomainPageProps): Promise<Metadata> {
+  const { domain: domainId, slug = [] } = await params;
+  const domain = getDomainById(domainId);
+  const site = getSiteConfig();
+
+  if (!domain || domain.id === "docs") {
+    return {
+      title: `Not Found · ${site.title_suffix}`,
+    };
+  }
+
+  const page = loadDomainPage(domain, slug);
+
+  if (!page) {
+    return {
+      title: `Not Found · ${site.title_suffix}`,
+    };
+  }
+
+  return {
+    title: `${page.title} · ${site.title_suffix}`,
+    description: page.description ?? site.description,
+  };
+}
+
+export default async function ContentDomainPage({ params }: ContentDomainPageProps) {
+  const { domain: domainId, slug = [] } = await params;
+  const domain = getDomainById(domainId);
+
+  if (!domain || domain.id === "docs") {
+    notFound();
+  }
+
+  const page = loadDomainPage(domain, slug);
+  const neighbors = getDomainPageNeighbors(domain, slug);
+  const enhancerKey = `${domain.id}:${slug.join("/") || "index"}`;
+
+  if (!page) {
+    notFound();
+  }
+
+  const breadcrumbs = [
+    { href: domain.home_path, label: domain.label },
+    ...slug.slice(0, -1).map((segment, index) => ({
+      href: `${domain.home_path}/${slug.slice(0, index + 1).join("/")}`,
+      label: titleFromSegment(segment),
+    })),
+  ];
+
+  return (
+    <div className="grid gap-10 xl:grid-cols-[minmax(0,52rem)_15rem]">
+      <section className="min-w-0">
+        <nav aria-label="Breadcrumbs" className="mb-6">
+          <ol className="flex flex-wrap items-center gap-2 text-sm text-base-content/55">
+            {breadcrumbs.map((crumb, index) => (
+              <li key={crumb.href} className="flex items-center gap-2">
+                {index > 0 && <span className="text-base-content/35">›</span>}
+                {slug.length === 0 && index === breadcrumbs.length - 1 ? (
+                  <span className="font-semibold text-base-content">{crumb.label}</span>
+                ) : (
+                  <a href={crumb.href} className="transition hover:text-primary">
+                    {crumb.label}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <header className="mb-8 border-b border-base-300 pb-6">
+          <h1 className="text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{page.title}</h1>
+          {page.description && (
+            <p className="mt-3 max-w-3xl text-base leading-7 text-base-content/68">{page.description}</p>
+          )}
+        </header>
+
+        <div className="min-w-0">
+          {page.shadowHtml ? (
+            <>
+              <div className="overflow-hidden rounded-md border border-base-300 bg-base-100">
+                <ShadowHtmlArticle html={page.shadowHtml} />
+              </div>
+              <DocPagePager previous={neighbors.previous} next={neighbors.next} />
+            </>
+          ) : (
+            <>
+              <article
+                className={page.kind === "markdown" ? "docs-prose" : "docs-html"}
+                dangerouslySetInnerHTML={{ __html: page.html }}
+              />
+              {page.kind === "markdown" && <MarkdownEnhancer key={enhancerKey} />}
+              <DocPagePager previous={neighbors.previous} next={neighbors.next} />
+            </>
+          )}
+        </div>
+      </section>
+
+      <DocPageToc items={page.tocItems} />
+    </div>
+  );
+}

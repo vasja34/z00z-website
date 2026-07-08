@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theme Lab</title>
+  </head>
+  <body>
+    <article class="space-y-8">
+      <header class="space-y-3">
+        <p class="badge badge-outline">Theme Demo</p>
+        <h1 class="text-4xl font-black tracking-tight">Theme Lab</h1>
+        <p class="max-w-3xl text-base-content/70">
+          These buttons switch the global docs shell between curated daisyUI themes.
+          The same choice also changes cards, badges, buttons, tables, and code blocks across every demo page.
+        </p>
+      </header>
+
+      <section class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <button class="btn btn-outline justify-start" data-theme-select="light">Fancy</button>
+        <button class="btn btn-outline justify-start" data-theme-select="corporate">Corporate</button>
+        <button class="btn btn-outline justify-start" data-theme-select="workbench">Workbench</button>
+        <button class="btn btn-outline justify-start" data-theme-select="dockyard">Dockyard</button>
+      </section>
+
+      <section class="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
+        <div class="card border border-base-300 bg-base-100 shadow-sm">
+          <div class="card-body gap-4">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="badge badge-primary">Docs</span>
+              <span class="badge badge-secondary">Routing</span>
+              <span class="badge badge-accent">Parser</span>
+            </div>
+            <h2 class="card-title">Shared Shell Preview</h2>
+            <p>
+              The page itself is a raw HTML file rendered through the shared shell.
+              Buttons above are not React components inside the content file; they bind through a lightweight client runtime.
+            </p>
+            <div class="stats stats-vertical border border-base-300 bg-base-200/50 lg:stats-horizontal">
+              <div class="stat">
+                <div class="stat-title">Themes</div>
+                <div class="stat-value text-primary">4</div>
+                <div class="stat-desc">2 curated light + 2 custom dark themes</div>
+              </div>
+              <div class="stat">
+                <div class="stat-title">Formats</div>
+                <div class="stat-value text-secondary">MD + HTML</div>
+                <div class="stat-desc">Both routed through content</div>
+              </div>
+              <div class="stat">
+                <div class="stat-title">Parser</div>
+                <div class="stat-value text-accent">mdit</div>
+                <div class="stat-desc">Primary extension surface</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card border border-base-300 bg-base-100 shadow-sm">
+          <div class="card-body gap-4">
+            <h2 class="card-title">Theme-Aware Tokens</h2>
+            <div class="space-y-3">
+              <div class="rounded-box border border-base-300 bg-base-200 p-4">Base surface</div>
+              <div class="rounded-box border border-primary/40 bg-primary text-primary-content p-4">Primary action</div>
+              <div class="rounded-box border border-secondary/40 bg-secondary text-secondary-content p-4">Secondary surface</div>
+              <div class="rounded-box border border-accent/40 bg-accent text-accent-content p-4">Accent signal</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="overflow-x-auto">
+        <table class="table table-zebra border border-base-300">
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>Source</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>/docs/demo/md-plugins-test</td>
+              <td>Markdown</td>
+              <td>Exercises the mdit-driven parser profile</td>
+            </tr>
+            <tr>
+              <td>/docs/demo/code-highlight-test</td>
+              <td>HTML</td>
+              <td>Verifies syntax highlighting for ready-made HTML</td>
+            </tr>
+            <tr>
+              <td>/docs/demo/zuz-rust-engineer-2</td>
+              <td>HTML</td>
+              <td>Verifies style-isolated rendering of complex exported HTML</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </article>
+  </body>
+  </html>

@@ -1,0 +1,184 @@
+- id: docs
+  label: "Docs"
+  description: "Canonical product and developer documentation."
+  icon: "book"
+  mode: content
+  status: active
+  home_path: "/docs"
+  content_root: "content/docs"
+  hostnames:
+    - "docs.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: &shared_allowed_themes
+    - light
+    - corporate
+    - workbench
+    - dockyard
+  default_canvas: content
+  show_toc: true
+  route_strategy: content-catchall
+- id: wiki
+  label: "Wiki"
+  description: "Research notes, design rationale, and knowledge base."
+  icon: "flask"
+  mode: content
+  status: active
+  home_path: "/wiki"
+  content_root: "content/wiki"
+  hostnames:
+    - "wiki.z00z.io"
+  default_theme: "corporate"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: content
+  show_toc: true
+  route_strategy: content-catchall
+- id: explorer
+  label: "Explorer"
+  description: "Live data views for accounts, transactions, and blocks."
+  icon: "compass"
+  mode: app
+  status: active
+  home_path: "/explorer"
+  content_root: "content/explorer"
+  hostnames:
+    - "explorer.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: wide
+  show_toc: false
+  route_strategy: app-router
+- id: network
+  label: "Network"
+  description: "Status, topology, metrics, and technical explanation."
+  icon: "network"
+  mode: hybrid
+  status: active
+  home_path: "/network"
+  content_root: "content/network"
+  hostnames:
+    - "network.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: wide
+  show_toc: true
+  route_strategy: hybrid
+- id: tools
+  label: "Tools"
+  description: "Tool catalog, guides, and interactive utilities."
+  icon: "code"
+  mode: hybrid
+  status: active
+  home_path: "/tools"
+  content_root: "content/tools"
+  hostnames:
+    - "tools.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: wide
+  show_toc: true
+  route_strategy: hybrid
+- id: aggregators
+  label: "Aggregators"
+  description: "Directory, metrics, and comparison surfaces."
+  icon: "layers"
+  mode: hybrid
+  status: active
+  home_path: "/aggregators"
+  content_root: "content/aggregators"
+  hostnames:
+    - "aggregators.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: wide
+  show_toc: true
+  route_strategy: hybrid
+- id: validators
+  label: "Validators"
+  description: "Validator info, dashboards, and operator docs."
+  icon: "shield"
+  mode: hybrid
+  status: active
+  home_path: "/validators"
+  content_root: "content/validators"
+  hostnames:
+    - "validators.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: wide
+  show_toc: true
+  route_strategy: hybrid
+- id: watchers
+  label: "Watchers"
+  description: "Monitoring guides and live system views."
+  icon: "monitor"
+  mode: hybrid
+  status: active
+  home_path: "/watchers"
+  content_root: "content/watchers"
+  hostnames:
+    - "watchers.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: wide
+  show_toc: true
+  route_strategy: hybrid
+- id: wallet
+  label: "Wallet"
+  description: "Wallet-oriented product pages and support flows."
+  icon: "wallet"
+  mode: app
+  status: active
+  home_path: "/wallet"
+  content_root: "content/wallet"
+  hostnames:
+    - "wallet.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: content
+  show_toc: false
+  route_strategy: app-router
+- id: dao
+  label: "DAO"
+  description: "DAO governance materials and coordination documents."
+  icon: "users"
+  mode: content
+  status: active
+  home_path: "/dao"
+  content_root: "content/dao"
+  hostnames:
+    - "dao.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: content
+  show_toc: true
+  route_strategy: content-catchall
+- id: treasury
+  label: "Treasury"
+  description: "Treasury policies, operations, and financial planning materials."
+  icon: "wallet"
+  mode: content
+  status: active
+  home_path: "/treasury"
+  content_root: "content/treasury"
+  hostnames:
+    - "treasury.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: content
+  show_toc: true
+  route_strategy: content-catchall
+- id: whitepapers
+  label: "Whitepapers"
+  description: "Long-form whitepapers, research papers, and canonical references."
+  icon: "flask"
+  mode: content
+  status: active
+  home_path: "/whitepapers"
+  content_root: "content/whitepapers"
+  hostnames:
+    - "whitepapers.z00z.io"
+  default_theme: "dockyard"
+  allowed_themes: *shared_allowed_themes
+  default_canvas: content
+  show_toc: true
+  route_strategy: content-catchall

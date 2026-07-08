@@ -1,0 +1,883 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>ZUZ Rust Engineer</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1ffdeb85-e81e-8058-8b7c-c75e4327765c" class="page sans"><header><h1 class="page-title">ZUZ Rust Engineer</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-person"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesPerson"><path d="M10.9536 7.90088C12.217 7.90088 13.2559 6.79468 13.2559 5.38525C13.2559 4.01514 12.2114 2.92017 10.9536 2.92017C9.70142 2.92017 8.65137 4.02637 8.65698 5.39087C8.6626 6.79468 9.69019 7.90088 10.9536 7.90088ZM4.4231 8.03003C5.52368 8.03003 6.42212 7.05859 6.42212 5.83447C6.42212 4.63843 5.51245 3.68945 4.4231 3.68945C3.33374 3.68945 2.41846 4.64966 2.41846 5.84009C2.42407 7.05859 3.32251 8.03003 4.4231 8.03003ZM1.37964 13.168H5.49561C4.87231 12.292 5.43384 10.6074 6.78711 9.51807C6.18628 9.14746 5.37769 8.87231 4.4231 8.87231C1.95239 8.87231 0.262207 10.6917 0.262207 12.1628C0.262207 12.7974 0.548584 13.168 1.37964 13.168ZM7.50024 13.168H14.407C15.4009 13.168 15.7322 12.8423 15.7322 12.2864C15.7322 10.8489 13.8679 8.88354 10.9536 8.88354C8.04492 8.88354 6.17505 10.8489 6.17505 12.2864C6.17505 12.8423 6.50635 13.168 7.50024 13.168Z"></path></svg></span>Owner</th><td><span class="user"><img src="ZUZ%20Rust%20Engineer%201ffdeb85e81e80588b7cc75e4327765c/moi_glaz.jpg" class="icon user-icon"/>Vadim M</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesMultipleSelect"><path d="M1.91602 4.83789C2.44238 4.83789 2.87305 4.40723 2.87305 3.87402C2.87305 3.34766 2.44238 2.91699 1.91602 2.91699C1.38281 2.91699 0.952148 3.34766 0.952148 3.87402C0.952148 4.40723 1.38281 4.83789 1.91602 4.83789ZM5.1084 4.52344H14.3984C14.7607 4.52344 15.0479 4.23633 15.0479 3.87402C15.0479 3.51172 14.7607 3.22461 14.3984 3.22461H5.1084C4.74609 3.22461 4.45898 3.51172 4.45898 3.87402C4.45898 4.23633 4.74609 4.52344 5.1084 4.52344ZM1.91602 9.03516C2.44238 9.03516 2.87305 8.60449 2.87305 8.07129C2.87305 7.54492 2.44238 7.11426 1.91602 7.11426C1.38281 7.11426 0.952148 7.54492 0.952148 8.07129C0.952148 8.60449 1.38281 9.03516 1.91602 9.03516ZM5.1084 8.7207H14.3984C14.7607 8.7207 15.0479 8.43359 15.0479 8.07129C15.0479 7.70898 14.7607 7.42188 14.3984 7.42188H5.1084C4.74609 7.42188 4.45898 7.70898 4.45898 8.07129C4.45898 8.43359 4.74609 8.7207 5.1084 8.7207ZM1.91602 13.2324C2.44238 13.2324 2.87305 12.8018 2.87305 12.2686C2.87305 11.7422 2.44238 11.3115 1.91602 11.3115C1.38281 11.3115 0.952148 11.7422 0.952148 12.2686C0.952148 12.8018 1.38281 13.2324 1.91602 13.2324ZM5.1084 12.918H14.3984C14.7607 12.918 15.0479 12.6309 15.0479 12.2686C15.0479 11.9062 14.7607 11.6191 14.3984 11.6191H5.1084C4.74609 11.6191 4.45898 11.9062 4.45898 12.2686C4.45898 12.6309 4.74609 12.918 5.1084 12.918Z"></path></svg></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><h2 id="200deb85-e81e-80e5-85bc-f0a14a160faa" class="">The Goal</h2><p id="200deb85-e81e-8011-8be4-eca8882a8738" class="">Purpose – deliver a single-binary Rust daemon (“agent”) that</p><ol type="1" id="1ffdeb85-e81e-801e-acfd-efae3c816e21" class="numbered-list" start="1"><li>fetches <strong>immutable Vault objects</strong> from <strong>IPFS</strong>,</li></ol><ol type="1" id="1ffdeb85-e81e-800f-9310-d8fe216e1e0f" class="numbered-list" start="2"><li>loads a <strong>Lua-byte-code “ticket”</strong> bundled with each vault,</li></ol><ol type="1" id="1ffdeb85-e81e-80d7-85d8-cfefcf926157" class="numbered-list" start="3"><li>executes the ticket in a <strong>deterministic, capability-restricted Lua sandbox</strong>,</li></ol><ol type="1" id="1ffdeb85-e81e-804e-b392-efdf2cd67464" class="numbered-list" start="4"><li>performs all network coordination with fellow agents (FROST signing,) via I2P network</li></ol><ol type="1" id="1ffdeb85-e81e-8046-be34-e3bd9bbb5823" class="numbered-list" start="5"><li>submits the resulting SUI-Move call to the <mark class="highlight-red"><strong><span style="border-bottom:0.05em solid">(stub)</span></strong></mark> <br/><br/><strong>ZUZ-smart-contract</strong> on a Sui devnet.</li></ol><p id="200deb85-e81e-80f7-9f88-ed44b05c37c2" class="">
+</p><p id="200deb85-e81e-8079-8230-d393d52bb993" class="">All communication with IPFS must go through I2P. <br/>I2P is already implemented in Docker.<br/></p><p id="200deb85-e81e-8080-a49b-d1fde8bf60eb" class="">The task is to simulate multiple agents that communicate with each other via I2P and treat the objects called Vaults.</p><p id="200deb85-e81e-808b-a684-fcc4602f1f02" class="">Each agent implemented in Rust and runs a Lua sandboxed ByteCode program (stored in Vault), and at the end of execution, the agent generates a hash as proof of ByteCode execution.</p><p id="200deb85-e81e-80fa-b85b-ebecee8126b2" class="">This hash must be confirmed by multiple agents using FROST multisignature.</p><p id="200deb85-e81e-8032-8d7f-e550bcfe50a1" class="">At this stage, the blockchain is only a stub. Later on, it will verify the aggregated signature, but for now it can simply act as a final stamp to close the cycle.</p><hr id="1ffdeb85-e81e-8002-a017-de959f117acb"/><h3 id="200deb85-e81e-8023-97f8-e3dd697a0795" class="">✅ <strong>Key Deliverables and Acceptance Criteria</strong></h3><table id="200deb85-e81e-80c7-99ea-eb7febe09181" class="simple-table"><tbody><tr id="200deb85-e81e-80c4-84e0-f19366ce399a"><td id="BqUt" class="">#</td><td id="ZBMb" class="">Deliverable</td><td id="b~@K" class="">Description</td><td id="WVqV" class="">Acceptance Test</td></tr><tr id="200deb85-e81e-80d0-bce6-e8423627555a"><td id="BqUt" class=""><strong>1</strong></td><td id="ZBMb" class="">✅ <code>zuz-agent</code> static binary</td><td id="b~@K" class="">A single Rust-based binary (<code>&lt; 15 MB</code>) for Linux <code>x86_64</code></td><td id="WVqV" class="">Running <code>./zuz-agent --version</code> prints semantic version (e.g., <code>v0.1.0</code>)</td></tr><tr id="200deb85-e81e-80b9-a63e-d0dce4037bbf"><td id="BqUt" class=""><strong>2</strong></td><td id="ZBMb" class="">🧠 Headless operation</td><td id="b~@K" class="">Agent runs with no user interaction; only one YAML config file is required (<code>agent.yaml</code>)</td><td id="WVqV" class="">Launching from an empty directory auto-generates a working <code>agent.yaml</code> and starts correctly</td></tr><tr id="200deb85-e81e-8029-bd18-e49c08a45ee1"><td id="BqUt" class=""><strong>3</strong></td><td id="ZBMb" class="">📥 Load via I2P IPFS file: Vault_123.yaml (*.yml) and run Lua Vault[ticket_i] from Vault_123.yaml</td><td id="b~@K" class="">Fetches Lua 5.4 bytecode from Vault tickets.<strong> execute it in a deterministic sandboxed Lua env.</strong>  restricted Lua sandbox (≤ 250 ms execution)</td><td id="WVqV" class="">Sample Vault (IPFS CID) is fetched and executed successfully; output matches expected execution-hash</td></tr><tr id="200deb85-e81e-804a-b9d6-c59e7567fa67"><td id="BqUt" class=""><strong>4</strong></td><td id="ZBMb" class="">🔐 FROST multisignature protocol</td><td id="b~@K" class="">Implements K-of-L FROST Ed25519 signing over I2P (via SAM). Agents coordinate signing via shared Vault hash</td><td id="WVqV" class="">Local test with 5 agents, K=3: aggregated signature is produced and verified identically across all nodes</td></tr><tr id="200deb85-e81e-8065-9d77-e12b3da2d485"><td id="BqUt" class=""><strong>5</strong></td><td id="ZBMb" class="">🧪 Stub blockchain call</td><td id="b~@K" class="">Simulates on blockchain: <br/><br/><code>VaultHandle::execution_plan.ticket_id  =  1 </code>on ZUZ Sui devnet smart contract (stubbed); actual chain write not required</td><td id="WVqV" class="">Dry-run shows correct simulation result (e.g., <code>plan.current += 1</code>) with expected return structure</td></tr><tr id="200deb85-e81e-80e2-83b0-f7ab2a9e8ad8"><td id="BqUt" class=""><strong>6</strong></td><td id="ZBMb" class="">🐳 Docker-ready deployment</td><td id="b~@K" class="">Provide a <code>Dockerfile</code> to run the agent in an isolated container, with no manual setup required</td><td id="WVqV" class=""><code>docker run --rm zuz-agent</code> starts the agent in headless mode using <code>agent.yaml</code></td></tr><tr id="200deb85-e81e-8020-95d6-c67539e02046"><td id="BqUt" class=""><strong>7</strong></td><td id="ZBMb" class="">📄 Documentation</td><td id="b~@K" class="">Include detailed <code>README.md</code> with instructions for config, build, test, and runtime flow. YAML config schema must be documented</td><td id="WVqV" class="">Tester can replicate the environment and run a full simulation using only README and default YAML file</td></tr><tr id="200deb85-e81e-8052-9e94-dfd334a19f12"><td id="BqUt" class=""></td><td id="ZBMb" class=""></td><td id="b~@K" class=""></td><td id="WVqV" class=""></td></tr></tbody></table><hr id="200deb85-e81e-80fe-82cd-e0b2cd0dc523"/><blockquote id="200deb85-e81e-80bb-a104-e68338b88f6c" class=""><strong>Bonus:</strong><p id="200deb85-e81e-80f9-95a1-e6dc4fbf1d9d" class="">If a real on-chain object on <strong>Sui Devnet</strong> is integrated and used to treat <code>VaultHandle::execution_plan.ticket_id</code>  this will be considered a valuable <strong>bonus</strong> beyond the core scope.</p></blockquote><hr id="200deb85-e81e-80ba-82f3-e0d8d1b62fe5"/><blockquote id="200deb85-e81e-806a-8a52-cc2d10d85264" class="">Development Environment Requirement:<p id="200deb85-e81e-80f3-b923-c9abfc7ccc26" class="">In addition to the Docker-based setup, the freelancer must provide a <strong>fully working local development environment</strong> that allows the project to be run and extended directly in <strong>VSCode</strong> (or equivalent IDE), outside of Docker.</p><p id="200deb85-e81e-80d9-b201-ef80e1ed2fb1" class="">This includes:</p><ul id="200deb85-e81e-80ed-870a-f0da08bba463" class="bulleted-list"><li style="list-style-type:disc">all necessary build instructions,</li></ul><ul id="200deb85-e81e-80af-971d-c323128840be" class="bulleted-list"><li style="list-style-type:disc">configuration files,</li></ul><ul id="200deb85-e81e-8043-b293-c9c838776fad" class="bulleted-list"><li style="list-style-type:disc">dependency setup (e.g. <code>Cargo.toml</code>, <code>.env</code>, <code>.vscode</code> tasks),</li></ul><ul id="200deb85-e81e-800b-9b99-f44cd6eddaa3" class="bulleted-list"><li style="list-style-type:disc">and documentation for local execution and debugging.</li></ul></blockquote><p id="200deb85-e81e-8022-9beb-db08e7dea83a" class="">The goal is to make it easy to continue development <strong>natively</strong>, without being locked into the container.</p><hr id="200deb85-e81e-8060-ae92-d7ac564db1e1"/><p id="200deb85-e81e-801b-b85b-c2062f19ff29" class="">Хочешь, чтобы я добавил это как пункт в основную таблицу требований (#8)?</p><hr id="1ffdeb85-e81e-8015-b692-dfe3dd629fdb"/><h3 id="1ffdeb85-e81e-8098-bf5e-fd4fcdcc2ad2" class="">2 Architecture Overview</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ffdeb85-e81e-8018-b369-e692bd75a5bd" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">┌──────────────┐   IPFS I2P    ┌──────────────┐
+│  Vault CID   │&lt;──────────────│  IPFS Node   │
+└──────────────┘               └──────────────┘
+        │ load(Lua ticket:byte-code)              ▲ pin(site)
+        ▼                                   │
+┌────────────────┐  FROST msgs  ┌────────────────┐
+│  Rust Agent    │&lt;────────────&gt;│ Other Agents   │
+                       I2P
+└────────────────┘              └────────────────┘
+        │ PTB (Move call)
+        ▼
+┌────────────────┐
+│  Sui Devnet    │  (stub SmartContract.move)
+└────────────────┘
+</code></pre><hr id="1ffdeb85-e81e-8089-a039-cce02e9c3e4a"/><h3 id="200deb85-e81e-8084-9472-f08f04f6b09b" class="">🔧 <strong>3. Component Responsibilities</strong></h3><table id="200deb85-e81e-80c2-95c6-da2fb7881fcb" class="simple-table"><tbody><tr id="200deb85-e81e-80b9-9d7a-e6abb0d1e3da"><td id="^SIW" class="">ID</td><td id="]rBv" class="">Component</td><td id="M}Dn" class="">Tech / Crates</td><td id=":QM[" class="">Detailed Notes</td></tr><tr id="200deb85-e81e-80d4-8053-ff38e9cc70d7"><td id="^SIW" class=""><strong>A</strong></td><td id="]rBv" class=""><strong>Lua Sandbox</strong></td><td id="M}Dn" class=""><code>mlua</code> with Lua 5.4; also uses <code>rlimit</code></td><td id=":QM[" class="">- Executes user-provided Lua bytecode in a <strong>deterministic</strong>, <strong>restricted sandbox</strong> - Must block access to unsafe standard libraries: <code>os</code>, <code>io</code>, <code>debug</code>, etc. - Memory limit: <strong>32 MiB</strong> - Execution timeout: <strong>250 ms</strong> per ticket</td></tr><tr id="200deb85-e81e-80b0-a19b-eff19819480d"><td id="^SIW" class=""><strong>B</strong></td><td id="]rBv" class=""><strong>Vault Fetcher</strong></td><td id="M}Dn" class=""><code>ipfs-api</code> I2P gateway; support offline pinning</td><td id=":QM[" class="">- Fetches Vault objects from IPFS using <strong>CID</strong> - Verifies <strong>SHA-256</strong> checksum after fetch - Must support optional <strong>local pin-cache</strong> (e.g., when network is down)</td></tr><tr id="200deb85-e81e-8050-b5a1-cf966903b1a1"><td id="^SIW" class=""><strong>C</strong></td><td id="]rBv" class=""><strong>Ticket Executor</strong></td><td id="M}Dn" class="">Uses Lua interpreter from A; returns Yaml-encoded result (&quot;Q-struct&quot;)</td><td id=":QM[" class="">- Each ticket (Lua bytecode) is a deterministic program embedded in the Vault - After execution, it must return a result in YAML format - Result includes trace + execution hash</td></tr><tr id="200deb85-e81e-80e3-a45f-c70e1620c258"><td id="^SIW" class=""><strong>D</strong></td><td id="]rBv" class=""><strong>FROST Multisig Engine</strong></td><td id="M}Dn" class=""><code>frost-ed25519</code> + <code>rand_core</code></td><td id=":QM[" class="">- Handles key generation, partial signing, and aggregation - Must support <strong>K-of-L threshold scheme</strong> - Logic should be <strong>transport-agnostic</strong> (not tied to I2P or TCP directly)</td></tr><tr id="200deb85-e81e-80e7-a5b5-d5c769af6a2e"><td id="^SIW" class=""><strong>E</strong></td><td id="]rBv" class=""><strong>Overlay Network</strong></td><td id="M}Dn" class="">i2p-sam3 (default), fallback TCP/mock</td><td id=":QM[" class="">- Implements unified Transport trait:   fn send(&amp;msg), fn recv() -&gt; msg - <strong>Default: I2P (via SAM) </strong>using Docker - Supports fallback to <strong>local TCP </strong>or <strong>stdin/stdout</strong> for testing - Design must allow future tunnels (e.g.,<strong> clearnet, Tor via SOCKS5</strong>) via config or feature flags</td></tr><tr id="200deb85-e81e-808b-b903-fca9e6448a0a"><td id="^SIW" class=""><strong>G</strong></td><td id="]rBv" class=""><strong>Telemetry &amp; Logging</strong></td><td id="M}Dn" class=""><code>tracing</code></td><td id=":QM[" class="">- Add standard <code>--verbose</code> CLI flag - Use <code>tracing</code> for all logs (file + stdout) - Optionally integrate <strong>OpenTelemetry</strong> for distributed tracing if enabled</td></tr></tbody></table><p id="200deb85-e81e-8051-9a1b-ecb1ce7fb963" class="">Here’s the Q-structure expressed in <strong>YAML</strong> with  comments:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-8034-a0f8-f57880309c70" class="code"><code class="language-YAML" style="white-space:pre-wrap;word-break:break-all">status: ok                      # or &quot;error&quot;
+ticket_id: 5                    # sequential number or name of the ticket
+result_data:                    # payload (e.g., computed values)
+  key: value                    # replace with actual data
+execution_hash: &quot;0xabc123...&quot;   # final execution hash
+trace:                          # list of executed steps (optional)
+  - load_contract
+  - check_balance
+  - approve_transfer
+</code></pre><h3 id="200deb85-e81e-80ce-af3c-f0214da73042" class="">🛰️ <strong>E — Overlay Network</strong></h3><table id="200deb85-e81e-8051-8cb0-c2e2edd1e1b9" class="simple-table"><tbody><tr id="200deb85-e81e-8071-8dd7-d923b379ec62"><td id="cpza" class="">Поле</td><td id="UaHI" class="">Значение</td></tr><tr id="200deb85-e81e-80a9-ba10-dedc101b54a9"><td id="cpza" class=""><strong>Tech / Crates</strong></td><td id="UaHI" class=""><code>i2p-sam3</code> (default), fallback to raw TCP, stdin/stdout loopback</td></tr><tr id="200deb85-e81e-80cc-927d-ea04f4d0737b"><td id="cpza" class=""><strong>Purpose</strong></td><td id="UaHI" class="">Handles encrypted peer-to-peer message passing between agents</td></tr><tr id="200deb85-e81e-8088-85d4-f1eb7be553ec"><td id="cpza" class=""><strong>Trait to Implement</strong></td><td id="UaHI" class=""></td></tr></tbody></table><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-8093-906f-c5128fda7090" class="code"><code class="language-Rust" style="white-space:pre-wrap;word-break:break-all">trait Transport {
+    fn send(&amp;self, msg: &amp;[u8]) -&gt; Result&lt;()&gt;;
+    fn recv(&amp;self) -&gt; Result&lt;Vec&lt;u8&gt;&gt;;
+}</code></pre><hr id="200deb85-e81e-80c8-b82b-e845121559d9"/><h3 id="200deb85-e81e-80db-af45-f557db16fc5c" class="">🔧 Transport Logic</h3><ul id="200deb85-e81e-80c0-ad76-fe91353c44bc" class="bulleted-list"><li style="list-style-type:disc"><strong>🔌 Primary (default):</strong><p id="200deb85-e81e-806c-a55d-f4eed0e42e5e" class="">Use <strong>I2P (via SAM API)</strong> for all agent-to-agent communication.</p><ul id="200deb85-e81e-80fe-8a9a-c3c23c248465" class="bulleted-list"><li style="list-style-type:circle">Must work <strong>out of the box</strong> via Docker I2P setup.</li></ul><ul id="200deb85-e81e-80cf-bc7b-c1f206c7c0bf" class="bulleted-list"><li style="list-style-type:circle">Agent should connect using a generated or preconfigured I2P identity.</li></ul></li></ul><ul id="200deb85-e81e-8069-8f3f-c29dd5218ff6" class="bulleted-list"><li style="list-style-type:disc"><strong>🌐 Optional tunneling layers:</strong><p id="200deb85-e81e-8071-b63f-e0432e7fdadb" class="">Although I2P is default, the system should be <strong>extensible</strong> to support:</p><ul id="200deb85-e81e-80cc-b54a-e87230bda07b" class="bulleted-list"><li style="list-style-type:circle"><strong>Clearnet</strong> TCP/IP (for local or debugging use)</li></ul><ul id="200deb85-e81e-80c4-95de-dc7c51063964" class="bulleted-list"><li style="list-style-type:circle"><strong>Tor</strong> (via SOCKS5 proxy, optional future integration)</li></ul></li></ul><ul id="200deb85-e81e-80ee-a3d5-e37d44d8f6f7" class="bulleted-list"><li style="list-style-type:disc"><strong>🔁 Fallbacks:</strong><ul id="200deb85-e81e-80c4-88d4-fcc334a03261" class="bulleted-list"><li style="list-style-type:circle">Local <strong>TCP</strong> loopback for test environments (e.g., <code>127.0.0.1:PORT</code>)</li></ul><ul id="200deb85-e81e-80c0-821f-d29e9e436f45" class="bulleted-list"><li style="list-style-type:circle">In-memory mock channel or <code>stdin/stdout</code> for unit testing</li></ul></li></ul><hr id="200deb85-e81e-804f-87a0-ebed789aba06"/><h3 id="200deb85-e81e-800b-a328-d970c9771a60" class="">🧩 Expected Features</h3><ul id="200deb85-e81e-801f-b8f6-eb286b13cfbf" class="bulleted-list"><li style="list-style-type:disc">Modular backend: pluggable transport implementation</li></ul><ul id="200deb85-e81e-80e8-9be3-c056dc3ec6d9" class="bulleted-list"><li style="list-style-type:disc">Default build: <strong>I2P only</strong></li></ul><ul id="200deb85-e81e-8047-961d-dfbdcd0adf58" class="bulleted-list"><li style="list-style-type:disc">Optional build flags (or <code>agent.yaml</code>) can enable:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-803b-9fb0-e4abc97e8197" class="code"><code class="language-YAML" style="white-space:pre-wrap;word-break:break-all">transport:
+  backend: i2p   # or &quot;tcp&quot;, &quot;tor&quot;, &quot;mock&quot;
+  i2p_sam_host: 127.0.0.1
+  i2p_sam_port: 7656
+  tor_proxy: socks5://127.0.0.1:9050  # optional</code></pre><hr id="200deb85-e81e-80b9-a7dc-e5a89ad0c31c"/><h3 id="200deb85-e81e-80cc-8476-c2322819052b" class="">🕸️ What is <strong>SAM</strong> in I2P?</h3><p id="200deb85-e81e-8028-9f10-f6a30c7f784b" class=""><strong>SAM (Simple Anonymous Messaging)</strong> is a <strong>network protocol</strong> provided by the I2P router that allows external programs to connect to the I2P network <strong>without needing to understand its internal routing architecture</strong>.</p><h3 id="200deb85-e81e-80db-af15-ee4d65c3f6ff" class="">📦 Specifically:</h3><ul id="200deb85-e81e-8064-b893-e13e89d617e9" class="bulleted-list"><li style="list-style-type:circle"><strong>SAM</strong> stands for <strong>Simple Anonymous Messaging API</strong></li></ul><ul id="200deb85-e81e-80dd-a600-dfae4edba7dc" class="bulleted-list"><li style="list-style-type:circle">It’s a <strong>TCP-based interface</strong>, usually available on port <code>7656</code></li></ul><ul id="200deb85-e81e-807a-8c07-c5723b75ff60" class="bulleted-list"><li style="list-style-type:circle">Programs (like your agent) can connect to I2P through SAM to:<ul id="200deb85-e81e-80ff-a879-caa42eab5986" class="bulleted-list"><li style="list-style-type:square">Create an I2P identity (destination)</li></ul><ul id="200deb85-e81e-80c8-b776-d684e566c3ee" class="bulleted-list"><li style="list-style-type:square">Send and receive data within the I2P network</li></ul><ul id="200deb85-e81e-804d-8ceb-e6667e744fa7" class="bulleted-list"><li style="list-style-type:square">Listen for incoming connections</li></ul></li></ul><h3 id="200deb85-e81e-802f-9d3f-d3e783258aa7" class="">🛠️ Example Connection</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-801a-a717-e8db792c413a" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">tcp://127.0.0.1:7656</code></pre><h3 id="200deb85-e81e-8067-9084-d608a8b79c7e" class="">🔧 In Rust</h3><p id="200deb85-e81e-8034-a216-c9e04ebe4e86" class="">The <code><a href="https://docs.rs/i2p-sam3">i2p-sam3</a></code> crate is built to work with the SAM protocol. It allows you to:</p><ul id="200deb85-e81e-80aa-adcb-fc187c02043d" class="bulleted-list"><li style="list-style-type:circle">Connect to the I2P SAM gateway</li></ul><ul id="200deb85-e81e-8053-9cd1-c9d32bd14678" class="bulleted-list"><li style="list-style-type:circle">Generate I2P keys and set up tunnels</li></ul><ul id="200deb85-e81e-80b7-9e35-cb1e20b11a18" class="bulleted-list"><li style="list-style-type:circle">Send messages to other I2P destinations</li></ul><ul id="200deb85-e81e-8028-8d13-ce843c9e080f" class="bulleted-list"><li style="list-style-type:circle">Listen for incoming messages</li></ul><h3 id="200deb85-e81e-800b-bfd3-f4ce93e6209a" class="">✅ Why SAM Matters</h3><ul id="200deb85-e81e-804b-bc37-dabac0c88bcd" class="bulleted-list"><li style="list-style-type:circle">It <strong>simplifies integration of I2P into applications</strong></li></ul><ul id="200deb85-e81e-8036-b253-ee824ecbb172" class="bulleted-list"><li style="list-style-type:circle">You don’t need to implement a full I2P router or understand its internals</li></ul><ul id="200deb85-e81e-8004-b841-e537b7b820e6" class="bulleted-list"><li style="list-style-type:circle">It’s the <strong>standard way</strong> for apps to communicate through I2P securely and anonymously</li></ul></li></ul><hr id="200deb85-e81e-80e6-966a-e7f3ef608cae"/><h3 id="200deb85-e81e-80cf-a604-cb67ba5fa042" class="">📡 <strong>G — Telemetry</strong></h3><h3 id="200deb85-e81e-8025-8867-cdc00972da63" class="">📦 Technologies Used:</h3><ul id="200deb85-e81e-80ae-8c52-e71c906e31da" class="bulleted-list"><li style="list-style-type:disc"><code><a href="https://docs.rs/tracing">tracing</a></code> — a modern structured logging and tracing framework for Rust</li></ul><h3 id="200deb85-e81e-806d-b25d-d9eae4ca038c" class="">🧭 Core Features:</h3><table id="200deb85-e81e-80fe-b675-dd36909d4196" class="simple-table"><tbody><tr id="200deb85-e81e-803e-beea-dd3d0f6a1537"><td id="=V_E" class="">Feature</td><td id="GXdL" class="">Description</td></tr><tr id="200deb85-e81e-80fc-ba3b-f3c974d3f58e"><td id="=V_E" class=""><strong>CLI flag </strong><code><strong>--verbose</strong></code></td><td id="GXdL" class="">Enables detailed logging when launching the agent</td></tr><tr id="200deb85-e81e-8074-bdc3-dda84b393512"><td id="=V_E" class=""><strong>stdout + file logging</strong></td><td id="GXdL" class="">Logs are written to terminal by default and optionally to a log file</td></tr><tr id="200deb85-e81e-8038-a150-f327c3fd2d29"><td id="=V_E" class=""><strong>OpenTelemetry (optional)</strong></td><td id="GXdL" class="">If enabled in the config or via a feature flag, logs and metrics can be sent to an OTLP-compatible backend (e.g., Jaeger, Grafana Tempo)</td></tr></tbody></table><h3 id="200deb85-e81e-80c4-9067-d3c87c7cc4dd" class="">📋 CLI Usage Example</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-8064-b113-f823be98d521" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">./zuz-agent --verbose</code></pre><h3 id="200deb85-e81e-8066-bbc6-e5bf22c6280b" class="">🛠️ Example Implementation in Rust</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-801c-99e8-d9ba3321348a" class="code"><code class="language-Rust" style="white-space:pre-wrap;word-break:break-all">use tracing::{info, error};
+use tracing_subscriber;
+
+fn main() {
+    tracing_subscriber::fmt()
+        .with_env_filter(&quot;info&quot;) // can be dynamically adjusted
+        .init();
+
+    info!(&quot;Agent started&quot;);
+}</code></pre><h3 id="200deb85-e81e-80da-a7cf-f89dc1194600" class="">🧾 Example <code>agent.yaml</code> Configuration:</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-802e-ba7d-f7275f7bb906" class="code"><code class="language-YAML" style="white-space:pre-wrap;word-break:break-all">logging:
+  level: info            # or &quot;debug&quot;, &quot;warn&quot;, &quot;error&quot;
+  file: logs/agent.log
+  opentelemetry:
+    enabled: true
+    endpoint: http://localhost:4317</code></pre><h3 id="200deb85-e81e-8090-8c05-df7ff9398bbf" class="">✅ Benefits:</h3><ul id="200deb85-e81e-80e4-a7a8-fe6739c86717" class="bulleted-list"><li style="list-style-type:disc">Easy <strong>local debugging and testing</strong> (via stdout)</li></ul><ul id="200deb85-e81e-8048-8ef0-ee6a81062388" class="bulleted-list"><li style="list-style-type:disc">Optional support for <strong>production-grade observability</strong></li></ul><ul id="200deb85-e81e-80e3-832d-e9b13013d2d2" class="bulleted-list"><li style="list-style-type:disc">Flexible: supports both simple console output and full <strong>distributed tracing</strong> through OpenTelemetry</li></ul><hr id="200deb85-e81e-809f-9cc5-f46138bc9612"/><h3 id="200deb85-e81e-808d-b7f0-d8881d807963" class="">🔄 <strong>4. Detailed Functional Flow</strong></h3><p id="200deb85-e81e-8065-bd0b-f654be3493a2" class="">This section describes the <strong>step-by-step flow</strong> of how a <code>zuz-agent</code> operates from boot to signature broadcast. Each step maps to one or more components defined in section 3.</p><hr id="200deb85-e81e-80a4-a8c2-e99030949b1f"/><h3 id="200deb85-e81e-8051-b916-e077ca627613" class="">🧱 1. <strong>Agent Bootstrap</strong></h3><ul id="200deb85-e81e-8070-871f-fda71c766a87" class="bulleted-list"><li style="list-style-type:disc"><strong>Component:</strong> <em>Startup logic + Config loader</em></li></ul><ul id="200deb85-e81e-807a-956b-e2e5a2938d6d" class="bulleted-list"><li style="list-style-type:disc">At startup, the agent:<ul id="200deb85-e81e-801d-be22-f8597dd1fd28" class="bulleted-list"><li style="list-style-type:circle">Loads or auto-creates a config file: <code>agent.yaml</code> (formerly <code>agent.toml</code>).</li></ul><ul id="200deb85-e81e-8070-8160-f5f6e42a957d" class="bulleted-list"><li style="list-style-type:circle">The config includes:<ul id="200deb85-e81e-800a-a987-e670562d6a61" class="bulleted-list"><li style="list-style-type:square"><code>peer_id</code>: the agent’s unique ID (can be derived from I2P identity),</li></ul><ul id="200deb85-e81e-8084-92ee-c1857b60c9cb" class="bulleted-list"><li style="list-style-type:square"><code>secret_share</code>: the FROST private share used for signing,</li></ul><ul id="200deb85-e81e-8027-9cd0-e8e9928c8520" class="bulleted-list"><li style="list-style-type:square"><code>ipfs_gateway</code>: I2P-accessible IPFS endpoint (or offline cache),</li></ul><ul id="200deb85-e81e-806f-9b7c-ca42fc8d375b" class="bulleted-list"><li style="list-style-type:square"><code>sui_rpc</code>: Devnet RPC endpoint (stub at this stage).</li></ul></li></ul></li></ul><p id="200deb85-e81e-8072-940a-e712268e5d8b" class="">✅ <strong>Purpose:</strong> prepare local identity and connection settings.</p><hr id="200deb85-e81e-8021-9127-ca57f3dec2c5"/><h3 id="200deb85-e81e-8002-95cc-f0bc407308cb" class="">📦 2. <strong>Vault Discovery</strong></h3><ul id="200deb85-e81e-807b-b2a9-fcb8543e0c21" class="bulleted-list"><li style="list-style-type:disc"><strong>Component:</strong> <em>Vault Fetcher (B)</em></li></ul><ul id="200deb85-e81e-8047-91a1-d909bdd06ea9" class="bulleted-list"><li style="list-style-type:disc">Agent continuously checks for new Vaults by:<ul id="200deb85-e81e-8033-8df9-ce38ad7264a9" class="bulleted-list"><li style="list-style-type:circle">Polling a local file (<code>cids.list</code>) or a remote IPNS endpoint,</li></ul><ul id="200deb85-e81e-807b-bcf3-c15de358f36a" class="bulleted-list"><li style="list-style-type:circle">For each new CID:<ul id="200deb85-e81e-8025-902f-f22e960a2089" class="bulleted-list"><li style="list-style-type:square">Downloads <code>.tar</code> archive from IPFS over <strong>I2P</strong>,</li></ul><ul id="200deb85-e81e-8077-8d4a-f52742774e13" class="bulleted-list"><li style="list-style-type:square">Verifies content using <code>vault.json</code> manifest with embedded <code>sha256</code> checks.</li></ul></li></ul></li></ul><p id="200deb85-e81e-8062-9a47-d36130f25730" class="">✅ <strong>Purpose:</strong> find and verify new work units (Vaults).</p><hr id="200deb85-e81e-8006-9dd4-c670a04abe70"/><h3 id="200deb85-e81e-80d3-a91d-f1ae94bf5db4" class="">🎟️ 3. <strong>Ticket Handling</strong></h3><ul id="200deb85-e81e-8041-9ed2-ec2e91266bce" class="bulleted-list"><li style="list-style-type:disc"><strong>Components:</strong> <em>Lua Sandbox (A), Ticket Executor (C)</em></li></ul><ul id="200deb85-e81e-8033-baec-f7820a1d22f1" class="bulleted-list"><li style="list-style-type:disc">From the fetched Vault:<ul id="200deb85-e81e-806d-b8da-d809014b8831" class="bulleted-list"><li style="list-style-type:circle">Extracts and loads <code>ticket.luac</code> — a Lua <strong>bytecode</strong> script,</li></ul><ul id="200deb85-e81e-8053-b676-c8fb9c992d1f" class="bulleted-list"><li style="list-style-type:circle">Executes it in a <strong>restricted, deterministic sandbox</strong>, passing a read-only:<ul id="200deb85-e81e-8088-99e9-c9f72e2490fc" class="bulleted-list"><li style="list-style-type:square">includes Vault metadata, system time, etc.</li></ul></li></ul></li></ul><ul id="200deb85-e81e-805c-b883-fa0d66327899" class="bulleted-list"><li style="list-style-type:disc">Lua returns Q-structure expressed in <strong>YAML </strong>as described above:</li></ul><p id="200deb85-e81e-809f-8e4c-d53a31753434" class="">✅ <strong>Purpose:</strong> deterministically compute the next vault ticket.</p><hr id="200deb85-e81e-80ef-84d9-f65af8d79bc2"/><h3 id="200deb85-e81e-8027-9270-cc0fd288faf1" class="">🗳️ 4. <strong>Consensus – Step Selection</strong></h3><ul id="200deb85-e81e-8091-8867-d30c10d5c3d3" class="bulleted-list"><li style="list-style-type:disc"><strong>Component:</strong> <em>FROST Engine (D), Overlay Network (E)</em></li></ul><ul id="200deb85-e81e-809e-956b-f4af04864cc9" class="bulleted-list"><li style="list-style-type:disc">For each <code>step_idx</code>, agents independently:<ul id="200deb85-e81e-8060-8c33-cec88f5fc3e9" class="bulleted-list"><li style="list-style-type:circle">Compute a deterministic leader using:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-80a7-a65e-d229e08e0963" class="code"><code class="language-Rust" style="white-space:pre-wrap;word-break:break-all">min(hash(agent_id || vault_id || ticket_id))</code></pre></li></ul><ul id="200deb85-e81e-8047-9b85-f47e25dbcd3c" class="bulleted-list"><li style="list-style-type:circle">The selected <strong>leader agent</strong> starts a <strong>FROST signing round</strong>:<ul id="200deb85-e81e-8067-ae97-e9f78587c826" class="bulleted-list"><li style="list-style-type:square">Sends signing request to other agents over <strong>I2P</strong>,</li></ul><ul id="200deb85-e81e-800b-826e-dcc776b47291" class="bulleted-list"><li style="list-style-type:square">Collects <strong>K-of-L</strong> valid signature shares on <code>result_hash</code>.</li></ul></li></ul></li></ul><p id="200deb85-e81e-80a9-9d40-ff703136241d" class="">✅ <strong>Purpose:</strong> reach decentralized agreement on result correctness.</p><hr id="200deb85-e81e-8078-98ce-ed8538003244"/><h3 id="200deb85-e81e-8000-aaff-c50ccc2fc287" class="">🔗 5. <strong>Sui Blockchain Interaction</strong></h3><ul id="200deb85-e81e-8028-87ee-c3f6b9ce380b" class="bulleted-list"><li style="list-style-type:disc"><strong>Component:</strong> <em>Stub Blockchain (integration logic only)</em></li></ul><ul id="200deb85-e81e-80cb-925d-d9a6fa225d42" class="bulleted-list"><li style="list-style-type:disc">Once FROST aggregation is complete:<ul id="200deb85-e81e-808a-80f4-fbd5566edcb8" class="bulleted-list"><li style="list-style-type:circle">Leader builds a PTB (Programmable Transaction Block) calling:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-8046-b6c9-d8e6c4db23f3" class="code"><code class="language-Rust" style="white-space:pre-wrap;word-break:break-all">exec_ticket(vault_id, ticket_id, result_hash)</code></pre></li></ul><ul id="200deb85-e81e-80f2-93e3-f933d97e0bcc" class="bulleted-list"><li style="list-style-type:circle">Attaches <strong>aggregated signature</strong> as sender,</li></ul><ul id="200deb85-e81e-8048-9d2d-e1ed6ffbd872" class="bulleted-list"><li style="list-style-type:circle">Executes a <strong>dry-run</strong>, then (optionally) submits to the <strong>Sui Devnet</strong> (stub stage),</li></ul></li></ul><p id="200deb85-e81e-80bb-9e63-de73dae4f0c0" class="">✅ <strong>Purpose:</strong> simulate submission of agreed result (real submission in future phase).</p><hr id="200deb85-e81e-808c-816b-e26e24059ba3"/><h3 id="200deb85-e81e-80b3-847c-f8817116f597" class="">📢 6. <strong>Result Broadcast</strong></h3><ul id="200deb85-e81e-8054-81db-d22c2774a1f4" class="bulleted-list"><li style="list-style-type:disc"><strong>Component:</strong> <em>Overlay Network (E), optionally Telemetry (G)</em></li></ul><ul id="200deb85-e81e-806d-9208-e909eaf7c19b" class="bulleted-list"><li style="list-style-type:disc">After submitting (or dry-running) the step:<ul id="200deb85-e81e-805a-a17a-e72c654a1bc2" class="bulleted-list"><li style="list-style-type:circle">The leader publishes a signed message:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-806f-aa1e-e06a0414d72c" class="code"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;step_idx&quot;: 4,
+  &quot;tx_digest&quot;: &quot;0xabc123...&quot;
+}</code></pre></li></ul><ul id="200deb85-e81e-805c-856d-eb12d2178ad8" class="bulleted-list"><li style="list-style-type:circle">Other agents receive this over <strong>I2P</strong>,</li></ul><ul id="200deb85-e81e-8033-bbf8-f6fbb751ab39" class="bulleted-list"><li style="list-style-type:circle">Optionally verify that the transaction is live on-chain (in future versions).</li></ul></li></ul><p id="200deb85-e81e-80b4-842f-daf353e5d4ca" class="">✅ <strong>Purpose:</strong> ensure all agents are synchronized on step results.</p><hr id="200deb85-e81e-80e3-a40a-f8d109647804"/><h3 id="200deb85-e81e-80fd-ab78-f9a347e08760" class="">🧠 Additional Notes for Developers</h3><ul id="200deb85-e81e-8002-a305-ff9f4df12223" class="bulleted-list"><li style="list-style-type:disc">All communication is over <strong>I2P by default</strong>, using the <strong>SAM protocol</strong> (<code>i2p-sam3</code> crate).</li></ul><ul id="200deb85-e81e-80f2-86b6-d8424ca84522" class="bulleted-list"><li style="list-style-type:disc">FROST signing is implemented with <code>frost-ed25519</code>, and is <strong>transport-agnostic</strong>.</li></ul><ul id="200deb85-e81e-8084-9095-e0baf5cdf86e" class="bulleted-list"><li style="list-style-type:disc">Lua execution must be <strong>sandboxed</strong> (<code>mlua</code> + <code>rlimit</code>) and limited to 500 ms and 32 MiB.</li></ul><ul id="200deb85-e81e-805a-9e7d-e70694278f12" class="bulleted-list"><li style="list-style-type:disc">Logging is controlled via CLI flag <code>-verbose</code> and configured in <code>agent.yaml</code>, with optional OpenTelemetry export.</li></ul><ul id="200deb85-e81e-80e2-bf1d-f9cd8e170e0c" class="bulleted-list"><li style="list-style-type:disc">Agents must be testable <strong>natively (via VSCode)</strong> and in Docker.</li></ul><hr id="1ffdeb85-e81e-80f1-be54-d2563f423d82"/><h3 id="200deb85-e81e-8094-8ece-eedf9e8b7a13" class="">✅ <strong>6. Testing Requirements</strong></h3><blockquote id="200deb85-e81e-802b-a684-c0401f91c5a7" class="">🎯 Goal: Ensure that cargo test --all runs in CI and gives high confidence that the agent is safe, deterministic, and reproducible, even across sandboxed execution and cryptographic operations.</blockquote><h3 id="200deb85-e81e-80cd-acba-ec1705d9ceed" class="">📦 <strong>6.1 Unit Tests</strong></h3><table id="200deb85-e81e-800e-9955-dc2ee5d3bbc0" class="simple-table"><tbody><tr id="200deb85-e81e-8092-8bdb-ec6d4c674ab0"><td id="Z;Hg" class="">Module / Component</td><td id="GYQ;" class="">What to Test</td><td id="OOiA" class="">Coverage Target</td><td id="S;P^" class="">Notes</td></tr><tr id="200deb85-e81e-8092-9ffa-ebfec26a2642"><td id="Z;Hg" class=""><strong>lua-sandbox</strong> (A)</td><td id="GYQ;" class="">- Denied function access (e.g., <code>os.execute</code>, <code>io.open</code>)  - Memory limit enforcement (32 MiB)  - Timeout logic (≤ 500 ms)  - Deterministic hash chaining</td><td id="OOiA" class="">100% logic paths; ≥ 5 edge-case tests</td><td id="S;P^" class="">Use <code>mlua</code> with mocked Lua scripts; assert panics or error returns</td></tr><tr id="200deb85-e81e-802c-9af1-e63a7024005b"><td id="Z;Hg" class=""><strong>vault-fetcher</strong> (B)</td><td id="GYQ;" class="">- Correct CID parsing  - Invalid CID rejection  - SHA-256 verification of TAR contents  - Pin-cache hit/miss logic  - TAR file integrity errors</td><td id="OOiA" class="">≥ 95% line + branch coverage</td><td id="S;P^" class="">Include real IPFS gateway mock and local cache simulation</td></tr><tr id="200deb85-e81e-8005-a80d-ccf46e5a2d53"><td id="Z;Hg" class=""><strong>ticket-parser / executor</strong> (C)</td><td id="GYQ;" class="">- Valid Lua returns (happy path)  - Malformed ticket structure  - Invalid return types  - CBOR serialization output  - <code>result_hash</code> computation consistency</td><td id="OOiA" class="">100% happy + error paths</td><td id="S;P^" class="">Use static <code>.luac</code> fixtures as test data</td></tr><tr id="200deb85-e81e-8082-aae1-f19de53feca4"><td id="Z;Hg" class=""><strong>frost-engine</strong> (D)</td><td id="GYQ;" class="">- Correct aggregation of valid shares  - Bad share detection/rejection  - Key generation determinism  - Threshold behavior (K-of-L)  - Signature identity verification</td><td id="OOiA" class="">100% logic + property-based tests</td><td id="S;P^" class="">Use <code>proptest</code> for signature math and key consistency</td></tr><tr id="200deb85-e81e-80b0-9d6e-d08b69296ea5"><td id="Z;Hg" class=""><strong>transport layer</strong> (E)</td><td id="GYQ;" class="">- TCP loopback roundtrip  - Framed send/receive with mock I2P  - Message integrity (hash match)  - Timeout and connection error handling</td><td id="OOiA" class="">Round-trip under 1 ms + all error branches</td><td id="S;P^" class="">Create test impl of <code>Transport</code> trait; simulate dropped conn.</td></tr><tr id="200deb85-e81e-8074-90c6-c8e829417572"><td id="Z;Hg" class=""><strong>leader-election</strong> (Step selection logic)</td><td id="GYQ;" class="">- Hash(peer_id</td><td id="OOiA" class=""></td><td id="S;P^" class="">step_idx) correctness  - Tie-breaker edge case  - Collision-resistance</td></tr><tr id="200deb85-e81e-8078-a6fc-e52f59038917"><td id="Z;Hg" class=""><strong>sui-call builder</strong></td><td id="GYQ;" class="">- PTB construction logic  - Dry-run simulation returns expected delta  - <code>result_hash</code> inserted correctly  - Signature injection to <code>sender_sig</code></td><td id="OOiA" class="">100% for stub interaction</td><td id="S;P^" class="">Stub out Sui RPC and assert correct request structure</td></tr><tr id="200deb85-e81e-80f7-a3ea-c860e858e832"><td id="Z;Hg" class=""><strong>telemetry/logger</strong> (G)</td><td id="GYQ;" class="">- CLI flag <code>--verbose</code> triggers <code>info</code> level  - Config-file log level respected  - File + stdout writers work  - OpenTelemetry optional init</td><td id="OOiA" class="">All branches tested</td><td id="S;P^" class="">Use <code>tracing_subscriber::reload</code> in tests</td></tr><tr id="200deb85-e81e-8038-a87e-cf8f474096cd"><td id="Z;Hg" class=""><strong>agent.yaml loader</strong></td><td id="GYQ;" class="">- Missing key fallback/defaults  - Invalid formats or types  - Schema validation errors</td><td id="OOiA" class="">100% structure parsing</td><td id="S;P^" class="">Use <code>serde_yaml</code> and sample configs in <code>tests/fixtures/</code></td></tr></tbody></table><h3 id="200deb85-e81e-80ca-9803-cfbd0d924bff" class="">✅ <strong>6.2 Integration / Functional Tests</strong></h3><table id="200deb85-e81e-8052-ad9e-c6b39ae7c2dd" class="simple-table"><tbody><tr id="200deb85-e81e-8008-ba85-d5d738b02cda"><td id=";bGQ" class="">ID</td><td id="AP{]" class="">Scenario</td><td id="Z}JK" class="">Pass Criteria</td></tr><tr id="200deb85-e81e-8013-8f7f-e993a4d5d48f"><td id=";bGQ" class=""><strong>IT-1</strong></td><td id="AP{]" class=""><strong>Single-agent end-to-end run</strong> (no peers)</td><td id="Z}JK" class="">Agent fetches Vault → runs Lua ticket → returns <code>result_hash</code> → logs trace and telemetry locally</td></tr><tr id="200deb85-e81e-800b-b344-f59b5f2a61f6"><td id=";bGQ" class=""><strong>IT-2</strong></td><td id="AP{]" class=""><strong>3-of-5 FROST signature (localhost)</strong></td><td id="Z}JK" class="">5 simulated agents produce valid 3-of-5 multisig using <code>frost-ed25519</code>; sig verifies against public key</td></tr><tr id="200deb85-e81e-8059-98d0-d79a8426f736"><td id=";bGQ" class=""><strong>IT-3</strong></td><td id="AP{]" class=""><strong>Vault integrity check</strong></td><td id="Z}JK" class="">If <strong>1 byte</strong> in <code>ticket.luac</code> or <code>vault.json</code> is altered, <code>SHA-256</code> fails and Vault is rejected</td></tr><tr id="200deb85-e81e-80b5-8354-da935647b1a9"><td id=";bGQ" class=""><strong>IT-4</strong></td><td id="AP{]" class=""><strong>Stub Sui PTB submission</strong></td><td id="Z}JK" class="">Simulated <code>Plan::exec_step()</code> call runs correctly; <code>plan.current += 1</code> in dry-run response; digest logged in <code>ledger.sqlite</code></td></tr><tr id="200deb85-e81e-80fa-b557-f93dd17aa7b0"><td id=";bGQ" class=""><strong>IT-5</strong></td><td id="AP{]" class=""><strong>Leader timeout + retry failover</strong></td><td id="Z}JK" class="">Leader crashes mid-round → backup leader completes FROST → consensus completes with ≥ K</td></tr><tr id="200deb85-e81e-80f6-a5ac-d31a44a47b49"><td id=";bGQ" class=""><strong>IT-6</strong></td><td id="AP{]" class=""><strong>IPFS via I2P-only tunnel</strong></td><td id="Z}JK" class="">Agent fetches Vault over I2P-SAM tunnel only; fallback to clearnet is disabled and blocked</td></tr><tr id="200deb85-e81e-8025-aafb-c497f7eb8b9c"><td id=";bGQ" class=""><strong>IT-7</strong></td><td id="AP{]" class=""><strong>Result broadcast validation</strong></td><td id="Z}JK" class="">After step execution, leader broadcasts <code>{step_idx, tx_digest}</code> → all peers receive &amp; verify digest match</td></tr><tr id="200deb85-e81e-8000-bb66-fd9aa76934f3"><td id=";bGQ" class=""></td><td id="AP{]" class=""></td><td id="Z}JK" class=""></td></tr></tbody></table><table id="200deb85-e81e-8020-a1d4-e549621e28fa" class="simple-table"><tbody><tr id="200deb85-e81e-8048-9afc-d136a0a3973c"><td id="V^~]" class="">Scenario</td><td id="GfdE" class="">Goal</td><td id="P&lt;{]" class="">Example</td></tr><tr id="200deb85-e81e-8016-a151-f4d8700c2a96"><td id="V^~]" class="">Full-agent execution against mock Vault</td><td id="GfdE" class="">Validate that sandbox → consensus → stub blockchain flow works end-to-end</td><td id="P&lt;{]" class=""><code>tests/integration/full_cycle.rs</code></td></tr><tr id="200deb85-e81e-805c-94a3-e34d6b5455fc"><td id="V^~]" class="">Multiple agents in same process</td><td id="GfdE" class="">Simulate 3–5 agents verify FROST round and broadcast</td><td id="P&lt;{]" class=""><code>tests/integration/frost_cluster.rs</code></td></tr><tr id="200deb85-e81e-8072-a1d3-dff1d0f2886c"><td id="V^~]" class="">Broken Vault input</td><td id="GfdE" class="">Confirm agent logs and skips malformed Vault TAR</td><td id="P&lt;{]" class=""><code>tests/integration/bad_vault.rs</code></td></tr><tr id="200deb85-e81e-80d6-8929-c6079fff6322"><td id="V^~]" class="">I2P-offline recovery</td><td id="GfdE" class="">Agent works in pin-cache-only mode when I2P is down</td><td id="P&lt;{]" class=""><code>tests/integration/offline_cache.rs</code></td></tr></tbody></table><hr id="200deb85-e81e-80c8-98aa-c28ef90ef52a"/><h3 id="200deb85-e81e-8064-8caa-cacc9599c0f7" class="">⚙️ <strong>6.3 Performance &amp; Regression</strong></h3><table id="200deb85-e81e-80ce-a43f-c1dea2a78fa9" class="simple-table"><tbody><tr id="200deb85-e81e-8022-b335-c4822479109f"><td id="MnBZ" class="">Metric</td><td id="J_P_" class="">Target</td><td id="bx`Y" class="">CI Check</td></tr><tr id="200deb85-e81e-8013-880c-ec9fabb1e509"><td id="MnBZ" class=""><strong>Lua execution time</strong></td><td id="J_P_" class="">≤ 250 ms per ticket on 2.6 GHz CPU</td><td id="bx`Y" class=""><code>cargo criterion</code> benchmark + CI warning threshold</td></tr><tr id="200deb85-e81e-80a6-9707-c12ebef95cd5"><td id="MnBZ" class=""><strong>Memory usage per ticket</strong></td><td id="J_P_" class="">≤ 32 MiB RSS (Resident Set Size)</td><td id="bx`Y" class=""><code>--features memcheck</code>, or tracked via <code>rlimit</code></td></tr><tr id="200deb85-e81e-807a-8a11-c9661bc95a2d"><td id="MnBZ" class=""><strong>Binary size</strong></td><td id="J_P_" class="">≤ 15 MiB stripped</td><td id="bx`Y" class=""><code>strip ./zuz-agent &amp;&amp; size ./zuz-agent</code> in CI</td></tr><tr id="200deb85-e81e-80fb-85ed-ef93b3dc081a"><td id="MnBZ" class=""><strong>PTB construction time</strong></td><td id="J_P_" class="">≤ 10 ms in dry-run mode</td><td id="bx`Y" class="">Assert during IT-4</td></tr><tr id="200deb85-e81e-8032-be82-f040f28360a5"><td id="MnBZ" class=""><strong>FROST round duration</strong></td><td id="J_P_" class="">≤ 300 ms for 5 agents, 3-of-5 quorum</td><td id="bx`Y" class="">Time each round in IT-2</td></tr><tr id="200deb85-e81e-8070-a174-c8432d3f8688"><td id="MnBZ" class=""><strong>I2P transport latency</strong></td><td id="J_P_" class="">&lt; 200 ms avg over local SAM</td><td id="bx`Y" class="">Test using round-trip messages and <code>Transport::send/recv</code> timing</td></tr><tr id="200deb85-e81e-8005-9d04-dd3ba0d5799b"><td id="MnBZ" class=""><strong>Vault parse/verify</strong></td><td id="J_P_" class="">≤ 30 ms for average TAR</td><td id="bx`Y" class="">Profiled inside IT-1 and IT-3</td></tr></tbody></table><hr id="200deb85-e81e-80c1-ac58-eba830944cb5"/><h3 id="200deb85-e81e-80aa-8a46-f41ef34f4c33" class="">🛡️ <strong>6.4 Security-Focused Tests</strong></h3><table id="200deb85-e81e-801e-ac2d-fa5dfb51f47c" class="simple-table"><tbody><tr id="200deb85-e81e-80a1-bcda-f72434df1e80"><td id="a^Q~" class="">ID</td><td id="~IMX" class="">Scenario</td><td id="t&lt;?{" class="">Validation Goal</td></tr><tr id="200deb85-e81e-80f6-8ef6-d58d1c12a197"><td id="a^Q~" class=""><strong>ST-1</strong></td><td id="~IMX" class=""><strong>Lua escape attempt</strong> (e.g., <code>os.execute</code>)</td><td id="t&lt;?{" class="">Sandbox blocks access to all disallowed modules (<code>os</code>, <code>io</code>, <code>debug</code>, etc.)</td></tr><tr id="200deb85-e81e-80e7-a742-ea642b586161"><td id="a^Q~" class=""><strong>ST-2</strong></td><td id="~IMX" class=""><strong>Excessive memory use</strong></td><td id="t&lt;?{" class="">Lua ticket exceeding 32 MiB RSS is force-terminated with error</td></tr><tr id="200deb85-e81e-80d9-b6a3-c2717bc44a3a"><td id="a^Q~" class=""><strong>ST-3</strong></td><td id="~IMX" class=""><strong>Infinite loop or sleep</strong></td><td id="t&lt;?{" class="">Ticket that exceeds 500 ms is killed via timeout; execution hash is not generated</td></tr><tr id="200deb85-e81e-809d-84c2-fb636e2df93f"><td id="a^Q~" class=""><strong>ST-4</strong></td><td id="~IMX" class=""><strong>Fake Vault injection</strong></td><td id="t&lt;?{" class="">Vault with forged CID or invalid SHA-256 is rejected and not broadcast</td></tr><tr id="200deb85-e81e-80d8-a1e1-c9ea92b281c7"><td id="a^Q~" class=""><strong>ST-5</strong></td><td id="~IMX" class=""><strong>Signature tampering</strong></td><td id="t&lt;?{" class="">Manipulated partial sigs or invalid key shares are rejected in FROST aggregation</td></tr><tr id="200deb85-e81e-8090-81dd-de5f2245d653"><td id="a^Q~" class=""><strong>ST-6</strong></td><td id="~IMX" class=""><strong>Trace injection</strong></td><td id="t&lt;?{" class="">Tampering with <code>trace</code> field in result struct breaks execution hash validation</td></tr><tr id="200deb85-e81e-8054-ba62-f9d40b73234d"><td id="a^Q~" class=""><strong>ST-7</strong></td><td id="~IMX" class=""><strong>Config file poisoning</strong></td><td id="t&lt;?{" class="">Malformed or malicious <code>agent.yaml</code> causes controlled error, not panic</td></tr><tr id="200deb85-e81e-80f4-a59f-e6990a84aa99"><td id="a^Q~" class=""><strong>ST-8</strong></td><td id="~IMX" class=""><strong>Replay attack</strong></td><td id="t&lt;?{" class="">Same ticket replayed twice → agent recognizes <code>ticket_id</code> and skips processing</td></tr><tr id="200deb85-e81e-808b-9c9a-f446419d6e1a"><td id="a^Q~" class=""><strong>ST-9</strong></td><td id="~IMX" class=""><strong>Transport MITM / corruption</strong></td><td id="t&lt;?{" class="">Message integrity enforced over transport; corrupted payload fails decode or hash check</td></tr><tr id="200deb85-e81e-802c-8638-c6885f6cfd9d"><td id="a^Q~" class=""><strong>ST-10</strong></td><td id="~IMX" class=""><strong>I2P destination hijack</strong></td><td id="t&lt;?{" class="">FROST share only accepted if it matches known peer <code>peer_id</code> (binded to I2P destination hash)</td></tr></tbody></table><h3 id="200deb85-e81e-803c-835a-ebc92a668895" class="">🧪 6.2 Integration Tests </h3><hr id="200deb85-e81e-80ef-9647-d480ab2ed27c"/><h3 id="200deb85-e81e-8053-aa8d-fc228a6d4742" class="">🛠️ Tools &amp; Frameworks to Use</h3><ul id="200deb85-e81e-80b5-8c47-e2b949b54a25" class="bulleted-list"><li style="list-style-type:disc"><strong>Unit testing:</strong> <code>cargo test</code>, <code>#[test]</code>, <code>assert!</code>, <code>tempfile</code></li></ul><ul id="200deb85-e81e-807a-852a-c3835aabb10a" class="bulleted-list"><li style="list-style-type:disc"><strong>Property-based testing:</strong> <code>proptest</code>, especially for FROST share logic</li></ul><ul id="200deb85-e81e-80df-a0a7-d8cce52d1061" class="bulleted-list"><li style="list-style-type:disc"><strong>Mocking I/O &amp; network:</strong> <code>mockito</code>, <code>tokio-test</code>, or manual mocks for <code>Transport</code></li></ul><h3 id="200deb85-e81e-800e-ab83-ddbdc8c0f33a" class="">🧾 Suggested Test Structure</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-803c-a913-ef568d85b5ad" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">/src
+/tests
+  unit/
+    test_lua.rs
+    test_frost.rs
+    test_fetch.rs
+  end2end/
+    full_cycle.rs
+    offline_mode.rs
+  fixtures/
+    good_ticket.luac
+    bad_ticket.luac
+    vault_good.tar
+    vault_bad.tar
+</code></pre><hr id="1ffdeb85-e81e-8032-8c77-c16062108cd4"/><h3 id="1ffdeb85-e81e-805d-80cd-ff09479214b6" class="">📦 <strong>Immutable Vault File Structure (stored on IPFS)</strong></h3><blockquote id="1ffdeb85-e81e-801e-a1d6-e116cda6f312" class="">Canonical encoding: YAML <br/>Everything inside is read-only; mutable state lives on-chain.<br/></blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ffdeb85-e81e-8081-a022-e7d5991c369b" class="code"><code class="language-YAML" style="white-space:pre-wrap;word-break:break-all"># ────────────────────────────────────────────────────────────────
+#  Immutable Vault file (YAML flavour)
+#  Everything below is read-only once published to IPFS
+# ────────────────────────────────────────────────────────────────
+vault_id: &quot;0xabcdef1234...&quot;      # UID that matches the on-chain Plan/Vault
+version: 1                       # schema version
+created_at: 1716710400           # unix timestamp (seconds)
+owner_pk: &quot;0x…32bytes&quot;           # Ed25519 master public key (PK_MASTER)
+encrypted_data: &quot;0x…32bytes&quot;           # AES
+
+program:                         # static description of the ticket bundle
+  language: &quot;lua54-bytecode&quot;
+  digest: &quot;sha256:aa…ff&quot;         # hash of the whole /program/ folder
+  entrypoint: &quot;ticket_000.luac&quot;  # first step to execute
+
+# ────────────────────────────────────────────────────────────────
+#  FROST parameters
+#  Only the quorum (threshold) is stored here — the **actual**
+#  participant set is discovered *dynamically* at run-time via
+#  the agent-mesh and therefore is NOT hard-coded in the vault.
+# ────────────────────────────────────────────────────────────────
+frost:
+  threshold: 3                  # K: minimum number of signature shares required to aggregate a valid signature
+  total_participants: 5        # N: total number of agents participating in the FROST round
+  secret_share_path: &quot;keys/share_1.pem&quot;  # File path to this agent’s private FROST share
+  group_public_key: &quot;0xabc123...&quot;        # Hex-encoded group public key for signature verification
+  round_timeout_ms: 2000       # Optional: maximum time (in ms) to wait for partial shares from peers
+
+
+# ────────────────────────────────────────────────────────────────
+#  Signed tickets (one per execution step)
+# ────────────────────────────────────────────────────────────────
+tickets:
+  - idx: 0
+    hint_hash:  &quot;0x1111…&quot;        # 16-byte tag = Trunc128(SHA256(sig_master))
+    byte_code:  &quot;base64:AAA…=&quot;   # compiled Lua byte-code
+    meta_enc:   &quot;base64:BBB…=&quot;   # encrypted parameters for the Lua VM
+    sig_master: &quot;0xAAA…&quot;         # Ed25519(PK_MASTER, hash(all-fields-above))
+    expires:    1_900_000_000    # (optional) absolute timeout (unix secs)
+
+  - idx: 1
+    hint_hash:  &quot;0x2222…&quot;
+    byte_code:  &quot;base64:CCC…=&quot;
+    meta_enc:   &quot;base64:DDD…=&quot;
+    sig_master: &quot;0xBBB…&quot;
+
+  # … more steps …
+
+# ────────────────────────────────────────────────────────────────
+#  Optional 
+# ────────────────────────────────────────────────────────────────
+notes:
+    sha3_256: &quot;ee…&quot;
+    size: 12_455</code></pre><hr id="1ffdeb85-e81e-809e-bac8-e11ba29c62a2"/><hr id="200deb85-e81e-80c0-97d2-e6e8a3c8774a"/><h3 id="200deb85-e81e-8054-a6ee-e1c686a44725" class="">✅ Example<strong> </strong><code><strong>agent.yaml</strong></code></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-809f-8c08-c2b74a4f2676" class="code"><code class="language-YAML" style="white-space:pre-wrap;word-break:break-all">agent:
+  agent_id: &quot;agent-1&quot;                   # Unique agent ID (e.g., I2P hash or custom string)
+  instance_id: &quot;vault-worker-01&quot;       # Optional: human-readable instance label
+
+network:
+  transport_backend: &quot;i2p&quot;             # Options: &quot;i2p&quot;, &quot;tcp&quot;, &quot;mock&quot;
+  i2p_sam_host: &quot;127.0.0.1&quot;            # I2P SAM bridge (Docker or native)
+  i2p_sam_port: 7656
+  tcp_port: 40101                      # Fallback localhost TCP port for testing
+  allow_clearnet: false                # Force IPFS over I2P only
+  enable_tor: false                    # Placeholder for future use
+
+ipfs:
+  cid_source: &quot;file://cids.list&quot;       # Source of new Vault CIDs (or &quot;ipns://...&quot;)
+  gateway: &quot;http://127.0.0.1:8080&quot;     # IPFS gateway over I2P or local daemon
+  pin_cache_path: &quot;./cache/ipfs&quot;      # Optional: path for offline pinning
+  verify_hash: true                   # Enable SHA-256 verification of downloaded Vaults
+
+vault:
+  max_vault_size_bytes: 10485760       # Max size (10MB) of extracted vault TAR
+  manifest_filename: &quot;vault.json&quot;      # Manifest inside TAR for metadata
+  ticket_filename: &quot;ticket.luac&quot;       # Compiled Lua bytecode
+  ctx_includes:
+    - chain_height
+    - timestamp
+    - vault_meta
+
+lua:
+  engine: &quot;mlua&quot;                       # Options: &quot;mlua&quot;, &quot;luajit&quot; (if enabled)
+  memory_limit_mib: 32
+  timeout_ms: 500
+  deny_libraries:
+    - os
+    - io
+    - debug
+    - package
+  hash_chaining: true                  # Enable per-line hash chaining
+  cbor_output: true                    # Enable CBOR-encoded output struct from ticket
+
+frost:
+  threshold: 3                         # K: number of required sig-shares
+  total_participants: 5               # N: total number of agents
+  peer_id: &quot;agent-1&quot;                   # Must match top-level `agent.peer_id`
+  secret_share_path: &quot;keys/share_1.pem&quot;
+  group_public_key: &quot;0xaabbeedd...&quot;    # Hex-encoded group pubkey
+  round_timeout_ms: 2000
+
+sui:
+  enabled: true
+  mode: &quot;stub&quot;                         # &quot;stub&quot; or &quot;devnet&quot;
+  rpc_url: &quot;https://fullnode.devnet.sui.io&quot;
+  dry_run: true                        # Only simulate PTB execution
+  contract_address: &quot;0x123456...&quot;      # Placeholder; not validated yet
+
+logging:
+  level: info                          # One of: &quot;error&quot;, &quot;warn&quot;, &quot;info&quot;, &quot;debug&quot;, &quot;trace&quot;
+  file: &quot;logs/agent.log&quot;
+  stdout: true
+  opentelemetry:
+    enabled: false
+    endpoint: &quot;http://localhost:4317&quot;
+
+telemetry:
+  trace_steps: true                    # Log execution trace from Lua ticket
+  log_signature_rounds: true           # Log FROST signing steps
+  include_result_hash: true            # Log SHA3-256 result hash for verification
+
+storage:
+  ledger_db: &quot;storage/ledger.sqlite&quot;
+  working_dir: &quot;storage/tmp&quot;
+
+dev:
+  hot_reload: false                    # Reserved for future Lua update mechanism
+  auto_reset: false                    # Reset local DB and config on boot (useful for CI)
+</code></pre><hr id="200deb85-e81e-8028-9323-e88784eb08ca"/><hr id="200deb85-e81e-808f-ac50-ec254a4ca1e1"/><h2 id="200deb85-e81e-80ee-a0cf-efb13353dc56" class="">🔐 <strong>Hash-Chaining Execution Trace in Lua Bytecode</strong></h2><h3 id="200deb85-e81e-8079-bbf4-fdd6b93fd595" class="">🎯 Purpose</h3><p id="200deb85-e81e-8005-9d70-f95861663638" class="">To guarantee that every step of a Lua ticket was executed <strong>completely and honestly</strong>, we generate a <strong>cumulative execution hash</strong> as the script runs.</p><p id="200deb85-e81e-8036-87fe-c367c7a73274" class="">This hash cannot be forged or reconstructed unless <strong>every instruction or logical step is actually executed</strong>.</p><hr id="200deb85-e81e-80eb-8be0-fd7b0ecd6d68"/><h2 id="200deb85-e81e-8054-8585-eebbe16f668f" class="">⚙️ Step-by-Step Implementation</h2><h3 id="200deb85-e81e-8023-846a-d5f42b00aa36" class=""><strong>1. Initialize Execution Hash</strong></h3><p id="200deb85-e81e-80c1-a7a6-f6476117ffd6" class="">At the start of every Lua ticket, we initialize the hash:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-80dc-bf0b-ff984e8a7cd3" class="code"><code class="language-Lua" style="white-space:pre-wrap;word-break:break-all">local current_hash = sha3_256(&quot;ZUZ::execution_start&quot;)</code></pre><hr id="200deb85-e81e-8001-ae1e-e177427a3976"/><h3 id="200deb85-e81e-80d3-b255-ff0e494cd627" class=""><strong>2. Update Hash at Each Step</strong></h3><p id="200deb85-e81e-80bf-9cda-cb0047897e18" class="">During execution, we update the hash for each meaningful operation. For example:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-80df-8a7f-cd9e3e58625d" class="code"><code class="language-Lua" style="white-space:pre-wrap;word-break:break-all">local step_code = &quot;check_balance:args=1000&quot;
+current_hash = sha3_256(current_hash .. step_code)
+</code></pre><p id="200deb85-e81e-8002-9ced-fdf3c7f7f662" class="">This can be done:</p><ul id="200deb85-e81e-80fd-ab65-fba32629d860" class="bulleted-list"><li style="list-style-type:disc"><strong>Manually</strong>, by inserting code-line annotations at key logic points</li></ul><ul id="200deb85-e81e-8067-8f3a-d81707ff8a8a" class="bulleted-list"><li style="list-style-type:disc">Or <strong>automatically</strong>, by wrapping Lua functions <del>or bytecode dispatch in Rust/host</del></li></ul><hr id="200deb85-e81e-802b-b3a8-fd8b62318ade"/><h3 id="200deb85-e81e-8069-baa9-f17aa6426f29" class=""><strong>3. Finalize Execution Hash</strong></h3><p id="200deb85-e81e-80b9-ab05-f41f90af28dd" class="">At the end of execution:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-8039-987d-db3a886409df" class="code"><code class="language-Lua" style="white-space:pre-wrap;word-break:break-all">local final_hash = sha3_256(current_hash .. &quot;ZUZ::done&quot;)
+-- Optional: sign the hash
+local signature = sign_with_key(final_hash, private_key)</code></pre><p id="200deb85-e81e-805e-ae83-e7c90e144bdd" class="">The <code>final_hash</code> becomes a <strong>unique fingerprint</strong> of the full execution path. It can be:</p><ul id="200deb85-e81e-80a9-a88a-c4a26c9fac28" class="bulleted-list"><li style="list-style-type:disc">Broadcast to other agents for FROST signing</li></ul><ul id="200deb85-e81e-80d6-ac91-df9b8dc3bf5a" class="bulleted-list"><li style="list-style-type:disc">Included in the YAML output of the ticket</li></ul><ul id="200deb85-e81e-8085-a343-d9339cb227fe" class="bulleted-list"><li style="list-style-type:disc">Used later for verification</li></ul><hr id="200deb85-e81e-8021-8d8b-fa405d7a032f"/><h2 id="200deb85-e81e-8072-b4af-e5ac5b4f9dc3" class="">✅ What This Achieves</h2><ul id="200deb85-e81e-80e3-a2ec-dfb4eda074ce" class="bulleted-list"><li style="list-style-type:disc">If even one step is skipped, altered, or reordered — the <code>execution_hash</code> will not match</li></ul><ul id="200deb85-e81e-8014-b753-ef27bbd24511" class="bulleted-list"><li style="list-style-type:disc">If the Lua bytecode is tampered with, the final hash will be invalid</li></ul><ul id="200deb85-e81e-8030-b37c-e21b234dbb1c" class="bulleted-list"><li style="list-style-type:disc">Any party can <strong>re-run the ticket in a sandbox</strong> and verify that the same <code>execution_hash</code> is produced</li></ul><ul id="200deb85-e81e-807a-9707-f9a69548999d" class="bulleted-list"><li style="list-style-type:disc">for debugging: <strong>Trace logging→ </strong>Keep a list of hash contributions for debug/audit purposes</li></ul><hr id="200deb85-e81e-80e4-94d6-c3b488ccebe4"/><h2 id="200deb85-e81e-803c-ad58-e996f5b62b98" class="">🧠 Where This Runs</h2><ul id="200deb85-e81e-80a0-b832-c27089a93212" class="bulleted-list"><li style="list-style-type:disc">This logic is implemented <strong>inside the Lua ticket itself</strong>, or injected into it via the sandbox runtime</li></ul><ul id="200deb85-e81e-8087-8bb1-ea83752bed56" class="bulleted-list"><li style="list-style-type:disc">In Rust, the <code>mlua</code> wrapper can:<ul id="200deb85-e81e-807a-b353-edff9221db6d" class="bulleted-list"><li style="list-style-type:circle">Intercept key function calls,</li></ul><ul id="200deb85-e81e-80a2-afb4-ff58165cbc7a" class="bulleted-list"><li style="list-style-type:circle">Track hash updates at each step,</li></ul><ul id="200deb85-e81e-803a-9734-e0208c26a0a2" class="bulleted-list"><li style="list-style-type:circle">Return the <code>execution_hash</code> as part of the final result</li></ul></li></ul><hr id="200deb85-e81e-8029-a7af-f3106abef82e"/><h2 id="200deb85-e81e-8093-81d9-f7684a530f1d" class="">🔧 Rust/WASM Version</h2><p id="200deb85-e81e-807f-b9d6-cb5f43587df1" class="">If the Lua ticket is executed from Rust (as it is in this project), a typical hash chaining flow in Rust might look like:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="200deb85-e81e-80dd-9535-ff39f455dcef" class="code"><code class="language-Rust" style="white-space:pre-wrap;word-break:break-all">let mut hash = sha3_256(b&quot;ZUZ::execution_start&quot;);
+
+for step in ticket_steps {
+    hash = sha3_256(&amp;[&amp;hash, &amp;step_bytes].concat());
+}
+let final_hash = sha3_256(&amp;[&amp;hash, b&quot;ZUZ::done&quot;].concat());
+</code></pre><hr id="200deb85-e81e-80af-8fe3-f9ad66f054d1"/><h2 id="200deb85-e81e-80b0-b98e-f996b7c40965" class="">📦 Integration with FROST</h2><p id="200deb85-e81e-80ba-9784-d5daeeec3ca1" class="">The <code>execution_hash</code> becomes the <strong>message</strong> for FROST signing.</p><p id="200deb85-e81e-8086-9057-c3c6f7b60bb4" class="">Only agents who reproduced the same result can contribute a valid signature share.</p><hr id="200deb85-e81e-803b-a0da-cde46e726ef9"/><p id="200deb85-e81e-8042-a04e-c03dd71eca94" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

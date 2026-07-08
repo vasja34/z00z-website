@@ -5,8 +5,9 @@
 ## Test Framework
 
 **Runner:**
-- None configured - `package.json` does not define `test`, `test:watch`, or coverage scripts
-- No dedicated test config file (`vitest.config.*`, `jest.config.*`, `playwright.config.*`) is present
+- Frontend app: no JavaScript test runner is configured in `package.json`
+- Pentest suite: Python `unittest` tests live under `tools/penetration/tests/`
+- No dedicated JS test config file (`vitest.config.*`, `jest.config.*`, `playwright.config.*`) is present
 
 **Assertion Library:**
 - None committed
@@ -16,16 +17,20 @@
 ```bash
 npm run lint    # Current static verification path
 npm run build   # Current production-build verification path
+npm run verify  # Project wrapper: lint + build
 npm run dev     # Manual browser verification during development
+python3 -m unittest discover -s tools/penetration/tests
 ```
 
 ## Test File Organization
 
 **Location:**
-- No `*.test.*`, `*.spec.*`, `tests/`, `__tests__/`, `e2e/`, or `playwright/` directories exist
+- Website app: no `*.test.*`, `*.spec.*`, `__tests__/`, `e2e/`, or `playwright/` directories exist yet
+- Pentest workflow: `tools/penetration/tests/`
 
 **Naming:**
-- Not established yet
+- Python pentest tests use `test_*.py`
+- Frontend test naming is not established yet
 
 **Structure:**
 ```text
@@ -34,45 +39,59 @@ src/
     layout.tsx
     page.tsx
     globals.css
+
+tools/
+  penetration/
+    tests/
+      test_scope_validation.py
+      test_local_runner_integration.py
+      ...
 ```
 
 ## Test Structure
 
 **Suite Organization:**
-- Not established - no `describe`/`it` suites are committed yet
+- Python pentest coverage uses `unittest.TestCase` classes grouped by workflow surface
+- Frontend app suites are not established yet
 
 **Patterns:**
-- Current verification is manual plus compile/lint gates
-- No setup/teardown hooks, fixture helpers, or test utilities are defined
-- The first real suite should establish structure explicitly rather than assuming a pre-existing pattern
+- Current frontend verification is manual plus compile/lint gates
+- Pentest tests use fixture trees under `tools/penetration/tests/fixtures/`
+- The app itself still has no browser or component-test baseline
 
 ## Mocking
 
 **Framework:**
-- None committed
+- Pentest tests use Python standard-library `unittest`
+- No JS mocking framework is committed
 
 **Patterns:**
-- No mocking helpers or module-mocking strategy exist yet
+- Pentest tests create temporary directories and fake tool binaries for integration coverage
+- No frontend module-mocking strategy exists
 
 **What to Mock:**
-- Not established
+- Pentest tests mock external scanners and tool payloads rather than calling live binaries
+- Frontend mocking is not established
 
 **What NOT to Mock:**
-- Not established
+- Scope-validation and report-builder contracts should keep exercising the real local scripts
+- Frontend guidance is not established
 
 ## Fixtures and Factories
 
 **Test Data:**
-- No fixtures, factories, or shared test data modules are present
+- Pentest fixtures are committed under `tools/penetration/tests/fixtures/`
+- No frontend fixtures or factories are present
 
 **Location:**
-- Not established
+- Pentest fixtures: `tools/penetration/tests/fixtures/`
+- Frontend fixtures: not established
 
 ## Coverage
 
 **Requirements:**
-- No enforced coverage target
-- No coverage tooling or report generation is configured
+- No enforced frontend coverage target
+- No repository-wide coverage report is configured
 
 **Configuration:**
 - None
@@ -85,21 +104,25 @@ src/
 ## Test Types
 
 **Unit Tests:**
-- Not present
+- Present for the pentest workflow under `tools/penetration/tests/`
+- Not present yet for the Next.js app
 
 **Integration Tests:**
-- Not present
+- Present for pentest runners, validators, and report generation
+- Not present yet for the website UI
 
 **E2E Tests:**
-- Not present
+- Not present for the website UI
+- Pentest workflow has no browser E2E suite; it relies on script-level integration tests
 
 ## Common Patterns
 
 **Async Testing:**
-- No async test pattern is established because no tests exist
+- No frontend async test pattern is established
 
 **Error Testing:**
-- No error-test pattern is established because no tests exist
+- Pentest tests assert fail-closed behavior for invalid scope, missing tools, and packaging contracts
+- No frontend error-test pattern is established
 
 **Snapshot Testing:**
 - Not used
@@ -107,6 +130,8 @@ src/
 **Current Practical Baseline:**
 - `npm run lint` confirms lint-rule compliance
 - `npm run build` confirms the App Router route, TypeScript config, and production bundle compile successfully
+- `npm run verify` wraps the current verification path in one command
+- `python3 -m unittest discover -s tools/penetration/tests` covers the imported pentest suite
 - Browser checks must currently be performed manually through `npm run dev`
 
 ---
