@@ -28,6 +28,7 @@ type Frontmatter = {
   description?: string;
   toc?: boolean;
   hide_in_nav?: boolean;
+  difficulty?: "unknown" | "basic" | "intermediate" | "advanced" | "expert" | "specialist";
   icon?: string;
 };
 
@@ -41,15 +42,26 @@ export type DocNavItem = {
   title: string;
   href: string;
   icon?: string;
+  description: string | null;
   page?: boolean;
   children: DocNavItem[];
+};
+
+export type DocLandingCard = {
+  title: string;
+  href: string;
+  icon?: string;
+  description: string | null;
 };
 
 export type LoadedDocPage = {
   title: string;
   description: string | null;
   kind: "markdown" | "html";
+  frameHtml: string | null;
+  frameHeightHint: number | null;
   html: string;
+  landingCards: DocLandingCard[];
   shadowHtml: string | null;
   tocItems: TocItem[];
 };
@@ -77,6 +89,29 @@ type PageRecord = {
 
 const SUPPORTED_EXTENSIONS = [".md", ".html"];
 const CONTENT_ASSET_ROUTE_PREFIX = "/content-assets";
+const ARTICLE_ASSET_ROUTE_PREFIX = "/articles";
+const ARTICLE_ASSET_ROOT = path.resolve(process.cwd(), "docs/articles");
+const INLINE_CONTENT_REFERENCE_PATTERN = /^content\/[A-Za-z0-9._/-]+\.(?:md|html)$/u;
+const referenceTitleCache = new Map<string, string>();
+const headingAnchorCache = new Map<string, Map<string, string>>();
+const DIFFICULTY_ICON_MAP = {
+  unknown: "carbon:unknown",
+  basic: "mdi:alpha-a-circle-outline",
+  intermediate: "mdi:alpha-b-circle-outline",
+  advanced: "mdi:alpha-c-circle-outline",
+  expert: "mdi:alpha-d-circle-outline",
+  specialist: "mdi:alpha-e-circle-outline",
+} as const;
+
+function resolveDifficultyIcon(
+  difficulty: Frontmatter["difficulty"] | undefined,
+): (typeof DIFFICULTY_ICON_MAP)[keyof typeof DIFFICULTY_ICON_MAP] | undefined {
+  if (!difficulty) {
+    return undefined;
+  }
+
+  return DIFFICULTY_ICON_MAP[difficulty];
+}
 
 function isPrivateEntry(entryName: string): boolean {
   return entryName.startsWith("_");
@@ -97,8 +132,22 @@ function titleFromFilePath(filePath: string): string {
   return titleFromSegment(path.basename(filePath, path.extname(filePath)));
 }
 
+function slugifyHeadingAnchor(value: string): string {
+  return encodeURIComponent(
+    value
+      .trim()
+      .toLowerCase()
+      .replace(/[^\p{Letter}\p{Number}\s-]+/gu, "")
+      .replace(/\s+/g, "-"),
+  );
+}
+
 function usesFilenamePageTitle(folderMeta: FolderMeta): boolean {
   return folderMeta.page_title_source === "filename";
+}
+
+function prefersFilenamePageTitle(folderMeta: FolderMeta, stem: string): boolean {
+  return usesFilenamePageTitle(folderMeta) && stem !== "index";
 }
 
 function usesFilenameLinkText(folderMeta: FolderMeta): boolean {
@@ -168,6 +217,10 @@ export function urlForContentAsset(domain: DomainConfig, assetPath: string): str
   return `${CONTENT_ASSET_ROUTE_PREFIX}/${encodeURIComponent(domain.id)}/${encodeUrlPathSegments(assetPath)}`;
 }
 
+export function urlForArticleAsset(assetPath: string): string {
+  return `${ARTICLE_ASSET_ROUTE_PREFIX}/${encodeUrlPathSegments(assetPath)}`;
+}
+
 export function resolveDomainAssetFile(domain: DomainConfig, assetSegments: string[]): string | null {
   const rootDir = resolveDomainRoot(domain);
   const targetPath = path.resolve(rootDir, ...assetSegments);
@@ -177,6 +230,216 @@ export function resolveDomainAssetFile(domain: DomainConfig, assetSegments: stri
   }
 
   return resolveExistingAssetFile(targetPath);
+}
+
+export function resolveArticleAssetFile(assetSegments: string[]): string | null {
+  const targetPath = path.resolve(ARTICLE_ASSET_ROOT, ...assetSegments);
+
+  if (!isPathInsideRoot(ARTICLE_ASSET_ROOT, targetPath)) {
+    return null;
+  }
+
+  return resolveExistingAssetFile(targetPath);
+}
+
+function resolveRelativeArticleAssetPath(relativePath: string): string | null {
+  const normalizedPath = path.posix.normalize(relativePath.replaceAll("\\", "/"));
+  const match = normalizedPath.match(/^(?:\.\.\/)+articles\/(.+)$/u);
+
+  if (!match) {
+    return null;
+  }
+
+  const articleAssetPath = match[1]
+    .split("/")
+    .map((segment) => segment.trim())
+    .filter(Boolean)
+    .join("/");
+
+  if (!articleAssetPath) {
+    return null;
+  }
+
+  return resolveArticleAssetFile(articleAssetPath.split("/")) ? articleAssetPath : null;
+}
+
+function readReferenceTitle(filePath: string): string {
+  const cachedTitle = referenceTitleCache.get(filePath);
+
+  if (cachedTitle) {
+    return cachedTitle;
+  }
+
+  const fallbackTitle = titleFromFilePath(filePath);
+  const extension = path.extname(filePath).toLowerCase();
+  let resolvedTitle = fallbackTitle;
+
+  if (extension === ".md") {
+    const raw = fs.readFileSync(filePath, "utf8");
+    const { data, content } = matter(raw);
+    const frontmatter = data as Frontmatter;
+    const firstHeading = content.match(/^#\s+(.+)$/mu)?.[1]?.trim();
+    resolvedTitle = frontmatter.title?.trim() || firstHeading || fallbackTitle;
+  } else if (extension === ".html") {
+    const document = load(fs.readFileSync(filePath, "utf8"));
+    resolvedTitle =
+      document("title").first().text().trim() || document("h1").first().text().trim() || fallbackTitle;
+  }
+
+  referenceTitleCache.set(filePath, resolvedTitle);
+  return resolvedTitle;
+}
+
+function normalizeSectionLabel(value: string): string {
+  const compactValue = value.replace(/^appendix\s+/iu, "").trim();
+
+  if (/^[a-z]/u.test(compactValue)) {
+    return `${compactValue[0].toUpperCase()}${compactValue.slice(1)}`;
+  }
+
+  return compactValue;
+}
+
+function extractHeadingSectionLabel(headingText: string): string | null {
+  const appendixMatch = headingText.match(/^Appendix\s+([A-Z])\./u);
+
+  if (appendixMatch) {
+    return appendixMatch[1];
+  }
+
+  const alphanumericMatch = headingText.match(/^([A-Z]\.\d+(?:\.\d+)*)\b/u);
+
+  if (alphanumericMatch) {
+    return alphanumericMatch[1];
+  }
+
+  const numericMatch = headingText.match(/^(\d+(?:\.\d+)*)\b/u);
+
+  if (numericMatch) {
+    return numericMatch[1];
+  }
+
+  return null;
+}
+
+function getHeadingAnchorMap(filePath: string): Map<string, string> {
+  const cachedMap = headingAnchorCache.get(filePath);
+
+  if (cachedMap) {
+    return cachedMap;
+  }
+
+  if (path.extname(filePath).toLowerCase() !== ".md") {
+    const emptyMap = new Map<string, string>();
+    headingAnchorCache.set(filePath, emptyMap);
+    return emptyMap;
+  }
+
+  const { content } = matter(fs.readFileSync(filePath, "utf8"));
+  const headingMap = new Map<string, string>();
+  const fenceStack: string[] = [];
+
+  for (const line of content.split(/\r?\n/u)) {
+    const trimmedLine = line.trim();
+    const fenceMatch = trimmedLine.match(/^(```+|~~~+)/u);
+
+    if (fenceMatch) {
+      const fenceMarker = fenceMatch[1][0];
+
+      if (fenceStack.at(-1) === fenceMarker) {
+        fenceStack.pop();
+      } else if (fenceStack.length === 0) {
+        fenceStack.push(fenceMarker);
+      }
+
+      continue;
+    }
+
+    if (fenceStack.length > 0) {
+      continue;
+    }
+
+    const headingMatch = line.match(/^(#{2,6})\s+(.+)$/u);
+
+    if (!headingMatch) {
+      continue;
+    }
+
+    const headingText = headingMatch[2].trim();
+    const label = extractHeadingSectionLabel(headingText);
+
+    if (!label || headingMap.has(label)) {
+      continue;
+    }
+
+    headingMap.set(label, slugifyHeadingAnchor(headingText));
+  }
+
+  headingAnchorCache.set(filePath, headingMap);
+  return headingMap;
+}
+
+function resolveSectionAnchorFromTail(filePath: string, tailText: string): string | null {
+  const normalizedTail = tailText.trimStart();
+
+  if (!normalizedTail) {
+    return null;
+  }
+
+  const directSectionMatch = normalizedTail.match(
+    /^(?:section|sections)\s+((?:appendix\s+)?[A-Z](?:\.\d+)*|\d+(?:\.\d+)*)\b/iu,
+  );
+  const appendixMatch = normalizedTail.match(/^(?:appendix|appendices)\s+([A-Z](?:\.\d+)*)\b/iu);
+  const sectionLabel = normalizeSectionLabel(directSectionMatch?.[1] ?? appendixMatch?.[1] ?? "");
+
+  if (!sectionLabel) {
+    return null;
+  }
+
+  return getHeadingAnchorMap(filePath).get(sectionLabel) ?? null;
+}
+
+function resolveContentReferencePath(referencePath: string): {
+  filePath: string;
+  href: string;
+  title: string;
+} | null {
+  const normalizedPath = referencePath.trim().replaceAll("\\", "/");
+
+  if (!INLINE_CONTENT_REFERENCE_PATTERN.test(normalizedPath)) {
+    return null;
+  }
+
+  const pathSegments = normalizedPath.split("/").filter(Boolean);
+
+  if (pathSegments.length < 3 || pathSegments[0] !== "content") {
+    return null;
+  }
+
+  const domain = getDomainConfigById(pathSegments[1]);
+
+  if (!domain) {
+    return null;
+  }
+
+  const rootDir = resolveDomainRoot(domain);
+  const filePath = resolveSupportedContentFile(path.join(process.cwd(), normalizedPath));
+
+  if (!filePath) {
+    return null;
+  }
+
+  const slug = slugForFilePath(rootDir, filePath);
+
+  if (!slug) {
+    return null;
+  }
+
+  return {
+    filePath,
+    href: urlForSlug(domain, slug),
+    title: readReferenceTitle(filePath),
+  };
 }
 
 function normalizeContentStem(value: string): string {
@@ -290,6 +553,17 @@ function rewriteMarkdownContentLinks(
 ): string {
   const $ = load(html);
 
+  const applyArticleLinkBehavior = (element: Parameters<typeof $>[0], href: string) => {
+    const { pathname } = splitHref(href);
+
+    if (!pathname.startsWith(ARTICLE_ASSET_ROUTE_PREFIX)) {
+      return;
+    }
+
+    $(element).attr("target", "_blank");
+    $(element).attr("rel", "noopener noreferrer");
+  };
+
   const rewriteRelativeFileReference = (
     value: string,
     assign: (nextValue: string) => void,
@@ -326,6 +600,13 @@ function rewriteMarkdownContentLinks(
       return;
     }
 
+    const articleAssetPath = resolveRelativeArticleAssetPath(resolvedPathname);
+
+    if (articleAssetPath) {
+      assign(`${urlForArticleAsset(articleAssetPath)}${query}${hash}`);
+      return;
+    }
+
     const assetFile = resolveRelativeAssetFile(rootDir, currentFilePath, resolvedPathname);
 
     if (!assetFile) {
@@ -341,6 +622,7 @@ function rewriteMarkdownContentLinks(
 
     rewriteRelativeFileReference(href ?? "", (nextHref) => {
       $(element).attr("href", nextHref);
+      applyArticleLinkBehavior(element, nextHref);
 
       const { pathname } = splitHref(nextHref);
 
@@ -373,6 +655,30 @@ function rewriteMarkdownContentLinks(
     rewriteRelativeFileReference(src ?? "", (nextSrc) => {
       $(element).attr("src", nextSrc);
     });
+  });
+
+  $("code").each((_, element) => {
+    if ($(element).closest("pre").length > 0 || $(element).parent("a").length > 0) {
+      return;
+    }
+
+    const rawReference = $(element).text().trim();
+    const resolvedReference = resolveContentReferencePath(rawReference);
+
+    if (!resolvedReference) {
+      return;
+    }
+
+    const nextSibling = element.next;
+    const trailingText = nextSibling?.type === "text" ? nextSibling.data ?? "" : "";
+    const sectionAnchor = resolveSectionAnchorFromTail(resolvedReference.filePath, trailingText);
+    const targetHref = sectionAnchor
+      ? `${resolvedReference.href}#${sectionAnchor}`
+      : resolvedReference.href;
+
+    $(element).replaceWith(
+      `<a href="${escapeHtml(targetHref)}" data-inline-doc-reference="true">${escapeHtml(resolvedReference.title)}</a>`,
+    );
   });
 
   return $("body").length > 0 ? $("body").html() ?? html : $.root().html() ?? html;
@@ -435,7 +741,7 @@ function readPageMetadata(filePath: string, slug: string[], folderMeta: FolderMe
     const raw = fs.readFileSync(filePath, "utf8");
     const { data } = matter(raw);
     const frontmatter = data as Frontmatter;
-    const title = usesFilenamePageTitle(folderMeta)
+    const title = prefersFilenamePageTitle(folderMeta, stem)
       ? fallbackTitle
       : frontmatter.title ?? fallbackTitle;
 
@@ -446,7 +752,8 @@ function readPageMetadata(filePath: string, slug: string[], folderMeta: FolderMe
       description: frontmatter.description ?? null,
       hideInNav: frontmatter.hide_in_nav ?? false,
       icon: resolveNavIconKey({
-        explicitIcon: frontmatter.icon ?? configuredIcon,
+        explicitIcon:
+          frontmatter.icon ?? configuredIcon ?? resolveDifficultyIcon(frontmatter.difficulty),
         slug,
         title,
       }),
@@ -455,7 +762,7 @@ function readPageMetadata(filePath: string, slug: string[], folderMeta: FolderMe
 
   const raw = fs.readFileSync(filePath, "utf8");
   const $ = load(raw);
-  const title = usesFilenamePageTitle(folderMeta)
+  const title = prefersFilenamePageTitle(folderMeta, stem)
     ? fallbackTitle
     : $("title").first().text().trim() || fallbackTitle;
 
@@ -609,6 +916,7 @@ function buildNavigationTree(
           slug: childSlug,
           title,
         }),
+        description: landingPage?.description ?? null,
         page: Boolean(landingPage),
         children: childItems.filter((item) => item.href !== landingPage?.href),
       });
@@ -631,6 +939,7 @@ function buildNavigationTree(
       title: metadata.title,
       href: urlForSlug(domain, pageSlug),
       icon: metadata.icon,
+      description: metadata.description,
       page: true,
       children: [],
     });
@@ -750,25 +1059,45 @@ function escapeHtml(value: string): string {
     .replaceAll("'", "&#39;");
 }
 
-function renderNavList(items: DocNavItem[]): string {
-  if (items.length === 0) {
-    return "";
+function findNavigationItem(items: DocNavItem[], href: string): DocNavItem | null {
+  for (const item of items) {
+    if (item.href === href) {
+      return item;
+    }
+
+    const nestedMatch = findNavigationItem(item.children, href);
+
+    if (nestedMatch) {
+      return nestedMatch;
+    }
   }
 
-  const listItems = items
-    .map((item) => {
-      const children = renderNavList(item.children);
+  return null;
+}
 
-      return [
-        `<li>`,
-        `<a href="${escapeHtml(item.href)}">${escapeHtml(item.title)}</a>`,
-        children,
-        `</li>`,
-      ].join("");
-    })
-    .join("");
+function toLandingCard(item: DocNavItem): DocLandingCard {
+  return {
+    title: item.title,
+    href: item.href,
+    icon: item.icon,
+    description: item.description,
+  };
+}
 
-  return `<ul>${listItems}</ul>`;
+function resolveLandingCards(domain: DomainConfig, slug: string[]): DocLandingCard[] {
+  const navItems = getDomainNavigation(domain);
+
+  if (slug.length === 0) {
+    return navItems.map(toLandingCard);
+  }
+
+  const currentItem = findNavigationItem(navItems, urlForSlug(domain, slug));
+
+  if (!currentItem || currentItem.children.length === 0) {
+    return [];
+  }
+
+  return currentItem.children.map(toLandingCard);
 }
 
 function buildSyntheticDomainIndexPage(domain: DomainConfig): LoadedDocPage | null {
@@ -782,14 +1111,14 @@ function buildSyntheticDomainIndexPage(domain: DomainConfig): LoadedDocPage | nu
     title: domain.label,
     description: domain.description,
     kind: "html",
+    frameHtml: null,
+    frameHeightHint: null,
     html: [
       `<section class="space-y-6">`,
       `<p class="text-base text-base-content/72">${escapeHtml(domain.description)}</p>`,
-      `<div class="space-y-4">`,
-      renderNavList(navItems),
-      `</div>`,
       `</section>`,
     ].join(""),
+    landingCards: navItems.map(toLandingCard),
     shadowHtml: null,
     tocItems: [],
   };
@@ -844,6 +1173,9 @@ export function loadDomainPage(domain: DomainConfig, slug: string[]): LoadedDocP
   const pipeline = getContentPipelineConfig();
   const folderMeta = readFolderMeta(path.dirname(filePath));
   const fallbackTitle = titleFromFilePath(filePath);
+  const stem = path.basename(filePath, extension);
+  const preferFilenameTitle = prefersFilenamePageTitle(folderMeta, stem);
+  const landingCards = resolveLandingCards(domain, slug);
 
   if (extension === ".md") {
     const raw = fs.readFileSync(filePath, "utf8");
@@ -854,10 +1186,10 @@ export function loadDomainPage(domain: DomainConfig, slug: string[]): LoadedDocP
       domain,
       rootDir,
     });
-    const title = usesFilenamePageTitle(folderMeta)
+    const title = preferFilenameTitle
       ? fallbackTitle
       : resolveMarkdownPageTitle(renderedHtml, frontmatter.title, fallbackTitle);
-    const html = usesFilenamePageTitle(folderMeta)
+    const html = preferFilenameTitle
       ? stripLeadingMarkdownHeading(renderedHtml)
       : stripLeadingDuplicateMarkdownTitle(renderedHtml, title);
 
@@ -865,7 +1197,10 @@ export function loadDomainPage(domain: DomainConfig, slug: string[]): LoadedDocP
       title,
       description: frontmatter.description ?? null,
       kind: "markdown",
+      frameHtml: null,
+      frameHeightHint: null,
       html,
+      landingCards,
       shadowHtml: null,
       tocItems: frontmatter.toc === false ? [] : extractTocItems(html),
     };
@@ -874,10 +1209,13 @@ export function loadDomainPage(domain: DomainConfig, slug: string[]): LoadedDocP
   const rendered = renderHtmlDocument(fs.readFileSync(filePath, "utf8"), pipeline);
 
   return {
-    title: usesFilenamePageTitle(folderMeta) ? fallbackTitle : rendered.title ?? fallbackTitle,
+    title: preferFilenameTitle ? fallbackTitle : rendered.title ?? fallbackTitle,
     description: rendered.description,
     kind: "html",
+    frameHtml: rendered.frameHtml,
+    frameHeightHint: rendered.frameHeightHint,
     html: rendered.contentHtml,
+    landingCards,
     shadowHtml: rendered.shadowHtml,
     tocItems: [],
   };

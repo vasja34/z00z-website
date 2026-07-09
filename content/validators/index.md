@@ -1,10 +1,12 @@
 ---
-title: "Validators"
+title: "Validators Home"
 description: "Validator info, dashboards, and operator documentation."
+difficulty: basic
+icon: material-symbols:home-outline
 toc: true
 ---
 
-# Validators
+# Validators Home
 
 > [!tip]
 > This page activates the validator domain and establishes the shell for future operator dashboards.

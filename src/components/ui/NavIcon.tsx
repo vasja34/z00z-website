@@ -19,12 +19,27 @@ function IconBase({ children, ...props }: SVGProps<SVGSVGElement>) {
   );
 }
 
+function FillIconBase({
+  children,
+  viewBox,
+  ...props
+}: SVGProps<SVGSVGElement> & { viewBox: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox={viewBox}
+      fill="currentColor"
+      {...props}
+    >
+      {children}
+    </svg>
+  );
+}
+
 const HomeIcon: IconComponent = (props) => (
-  <IconBase {...props}>
-    <path d="M3.5 8.5 10 3l6.5 5.5" />
-    <path d="M5.5 7.8v8.2h9V7.8" />
-    <path d="M8.3 16v-4.7h3.4V16" />
-  </IconBase>
+  <FillIconBase viewBox="0 0 24 24" {...props}>
+    <path d="M6 19h3v-6h6v6h3v-9l-6-4.5L6 10zm-2 2V9l8-6l8 6v12h-7v-6h-2v6zm8-8.75" />
+  </FillIconBase>
 );
 
 const BookIcon: IconComponent = (props) => (
@@ -33,6 +48,12 @@ const BookIcon: IconComponent = (props) => (
     <path d="M4 4.5V18" />
     <path d="M8 6.5h5" />
   </IconBase>
+);
+
+const LearnOutlineIcon: IconComponent = (props) => (
+  <FillIconBase viewBox="0 0 24 24" {...props}>
+    <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9zm6.82 6L12 12.72L5.18 9L12 5.28zM17 16l-5 2.72L7 16v-3.73L12 15l5-2.73z" />
+  </FillIconBase>
 );
 
 const LayersIcon: IconComponent = (props) => (
@@ -161,6 +182,13 @@ const MonitorIcon: IconComponent = (props) => (
   </IconBase>
 );
 
+const EyeIcon: IconComponent = (props) => (
+  <IconBase {...props}>
+    <path d="M2.6 10s2.7-4.5 7.4-4.5 7.4 4.5 7.4 4.5-2.7 4.5-7.4 4.5S2.6 10 2.6 10Z" />
+    <circle cx="10" cy="10" r="2" />
+  </IconBase>
+);
+
 const FileIcon: IconComponent = (props) => (
   <IconBase {...props}>
     <path d="M6 2.5h5l4 4V17.5H6z" />
@@ -168,23 +196,122 @@ const FileIcon: IconComponent = (props) => (
   </IconBase>
 );
 
+const ScrollIcon: IconComponent = (props) => (
+  <IconBase {...props}>
+    <path d="M6.5 4.5h6.8a1.7 1.7 0 0 1 1.7 1.7v8.1a1.7 1.7 0 0 1-1.7 1.7H8.2a2.2 2.2 0 1 1 0-4.4H15" />
+    <path d="M6.5 4.5A2.2 2.2 0 1 0 8.7 6.7V15" />
+    <path d="M9.5 8h3.5" />
+    <path d="M9.5 11h3.5" />
+  </IconBase>
+);
+
+const BrochureIcon: IconComponent = ({ children, ...props }) => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 256 256"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="16"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    {children}
+    <g>
+      <path d="M 16.110084,16.110084 H 160.04176 L 96.072129,64.087313" />
+      <path d="m 16.110084,16.110084 -0.000002,175.916496 h 79.962047" />
+      <path d="M 96.072132,64.087313 H 240.00381 V 240.0038 H 96.072129 l 0.000003,-175.916487" />
+      <path d="M 160.04176,16.110084 V 64.087313" />
+    </g>
+  </svg>
+);
+
+const BankOutlineIcon: IconComponent = ({ children, ...props }) => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    {...props}
+  >
+    {children}
+    <path d="M6.5 10h-2v7h2zm6 0h-2v7h2zm8.5 9H2v2h19zm-2.5-9h-2v7h2zm-7-6.74L16.71 6H6.29zm0-2.26L2 6v2h19V6z" />
+  </svg>
+);
+
+const UnknownIcon: IconComponent = (props) => (
+  <FillIconBase viewBox="0 0 32 32" {...props}>
+    <circle cx="16" cy="22.5" r="1.5" />
+    <path d="M17 19h-2v-4h2c1.103 0 2-.897 2-2s-.897-2-2-2h-2c-1.103 0-2 .897-2 2v.5h-2V13c0-2.206 1.794-4 4-4h2c2.206 0 4 1.794 4 4s-1.794 4-4 4z" />
+    <path d="M29.391 14.527L17.473 2.609A2.08 2.08 0 0 0 16 2c-.533 0-1.067.203-1.473.609L2.609 14.527C2.203 14.933 2 15.466 2 16s.203 1.067.609 1.473L14.526 29.39c.407.407.941.61 1.474.61s1.067-.203 1.473-.609L29.39 17.474c.407-.407.61-.94.61-1.474s-.203-1.067-.609-1.473M16 28.036L3.965 16L16 3.964L28.036 16z" />
+  </FillIconBase>
+);
+
+const BasicDifficultyIcon: IconComponent = (props) => (
+  <FillIconBase viewBox="0 0 24 24" {...props}>
+    <path d="M11 7h2a2 2 0 0 1 2 2v8h-2v-4h-2v4H9V9a2 2 0 0 1 2-2m0 2v2h2V9zm1 11a8 8 0 0 0 8-8a8 8 0 0 0-8-8a8 8 0 0 0-8 8a8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10a10 10 0 0 1-10 10A10 10 0 0 1 2 12A10 10 0 0 1 12 2" />
+  </FillIconBase>
+);
+
+const IntermediateDifficultyIcon: IconComponent = (props) => (
+  <FillIconBase viewBox="0 0 24 24" {...props}>
+    <path d="M15 10.5c0 .8-.7 1.5-1.5 1.5c.8 0 1.5.7 1.5 1.5V15a2 2 0 0 1-2 2H9V7h4a2 2 0 0 1 2 2zM13 15v-2h-2v2zm0-4V9h-2v2zm-1-9a10 10 0 0 1 10 10a10 10 0 0 1-10 10A10 10 0 0 1 2 12A10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8a8 8 0 0 0 8 8a8 8 0 0 0 8-8a8 8 0 0 0-8-8" />
+  </FillIconBase>
+);
+
+const AdvancedDifficultyIcon: IconComponent = (props) => (
+  <FillIconBase viewBox="0 0 24 24" {...props}>
+    <path d="M11 7h2a2 2 0 0 1 2 2v1h-2V9h-2v6h2v-1h2v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2m1-5a10 10 0 0 1 10 10a10 10 0 0 1-10 10A10 10 0 0 1 2 12A10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8a8 8 0 0 0 8 8a8 8 0 0 0 8-8a8 8 0 0 0-8-8" />
+  </FillIconBase>
+);
+
+const ExpertDifficultyIcon: IconComponent = (props) => (
+  <FillIconBase viewBox="0 0 24 24" {...props}>
+    <path d="M9 7h4a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9zm2 2v6h2V9zm1-7a10 10 0 0 1 10 10a10 10 0 0 1-10 10A10 10 0 0 1 2 12A10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8a8 8 0 0 0 8 8a8 8 0 0 0 8-8a8 8 0 0 0-8-8" />
+  </FillIconBase>
+);
+
+const SpecialistDifficultyIcon: IconComponent = (props) => (
+  <FillIconBase viewBox="0 0 24 24" {...props}>
+    <path d="M9 7h6v2h-4v2h4v2h-4v2h4v2H9zm3-5a10 10 0 0 1 10 10a10 10 0 0 1-10 10A10 10 0 0 1 2 12A10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8a8 8 0 0 0 8 8a8 8 0 0 0 8-8a8 8 0 0 0-8-8" />
+  </FillIconBase>
+);
+
 const icons: Record<string, IconComponent> = {
+  "bank-outline": BankOutlineIcon,
   book: BookIcon,
+  brochure: BrochureIcon,
+  "carbon:unknown": UnknownIcon,
   chart: ChartIcon,
   compass: CompassIcon,
   code: CodeIcon,
   demo: PaletteIcon,
+  eye: EyeIcon,
   file: FileIcon,
   flask: FlaskIcon,
   home: HomeIcon,
   layers: LayersIcon,
   legal: ScalesIcon,
   map: MapIcon,
+  "material-symbols:home-outline": HomeIcon,
+  "mdi:learn-outline": LearnOutlineIcon,
+  "mdi:alpha-a": BasicDifficultyIcon,
+  "mdi:alpha-a-box-outline": BasicDifficultyIcon,
+  "mdi:alpha-a-circle-outline": BasicDifficultyIcon,
+  "mdi:alpha-b": IntermediateDifficultyIcon,
+  "mdi:alpha-b-box-outline": IntermediateDifficultyIcon,
+  "mdi:alpha-b-circle-outline": IntermediateDifficultyIcon,
+  "mdi:alpha-c-box-outline": AdvancedDifficultyIcon,
+  "mdi:alpha-c-circle-outline": AdvancedDifficultyIcon,
+  "mdi:alpha-d-box-outline": ExpertDifficultyIcon,
+  "mdi:alpha-d-circle-outline": ExpertDifficultyIcon,
+  "mdi:alpha-e-box-outline": SpecialistDifficultyIcon,
+  "mdi:alpha-e-circle-outline": SpecialistDifficultyIcon,
   monitor: MonitorIcon,
   network: NetworkIcon,
   palette: PaletteIcon,
   protocol: LayersIcon,
   research: FlaskIcon,
+  scroll: ScrollIcon,
   scales: ScalesIcon,
   security: ShieldIcon,
   shield: ShieldIcon,

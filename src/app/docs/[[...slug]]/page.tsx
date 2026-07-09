@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { DocPagePager } from "@/components/docs/DocPagePager";
+import { DocLandingCards } from "@/components/docs/DocLandingCards";
+import { HtmlDocumentFrame } from "@/components/docs/HtmlDocumentFrame";
 import { DocPageToc } from "@/components/docs/DocPageToc";
 import { MarkdownEnhancer } from "@/components/docs/MarkdownEnhancer";
 import { ShadowHtmlArticle } from "@/components/docs/ShadowHtmlArticle";
@@ -57,6 +59,8 @@ export default async function DocsPage({ params }: DocsPageProps) {
       label: titleFromSegment(segment),
     })),
   ];
+  const hasLandingCards = page.landingCards.length > 0;
+  const showLandingOnly = hasLandingCards;
 
   return (
     <div className="grid gap-10 xl:grid-cols-[minmax(0,66rem)_14rem]">
@@ -78,7 +82,15 @@ export default async function DocsPage({ params }: DocsPageProps) {
           </ol>
         </nav>
 
-        <header className="mb-8 border-b border-base-300 pb-6">
+        <header
+          className={
+            showLandingOnly
+              ? "mb-2"
+              : hasLandingCards
+                ? "mb-8 pb-6"
+                : "mb-8 border-b border-base-300 pb-6"
+          }
+        >
           <h1 className="text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{page.title}</h1>
           {page.description && (
             <p className="mt-3 max-w-3xl text-base leading-7 text-base-content/68">{page.description}</p>
@@ -86,14 +98,27 @@ export default async function DocsPage({ params }: DocsPageProps) {
         </header>
 
         <div className="min-w-0">
-          {page.shadowHtml ? (
+          <DocLandingCards items={page.landingCards} />
+
+          {!showLandingOnly && page.frameHtml ? (
+            <>
+              <div className="overflow-hidden rounded-md border border-base-300 bg-base-100">
+                <HtmlDocumentFrame
+                  key={`${enhancerKey}:frame`}
+                  html={page.frameHtml}
+                  initialHeight={page.frameHeightHint}
+                />
+              </div>
+              <DocPagePager previous={neighbors.previous} next={neighbors.next} />
+            </>
+          ) : !showLandingOnly && page.shadowHtml ? (
             <>
               <div className="overflow-hidden rounded-md border border-base-300 bg-base-100">
                 <ShadowHtmlArticle html={page.shadowHtml} />
               </div>
               <DocPagePager previous={neighbors.previous} next={neighbors.next} />
             </>
-          ) : (
+          ) : !showLandingOnly ? (
             <>
               <article
                 className={page.kind === "markdown" ? "docs-prose" : "docs-html"}
@@ -103,11 +128,11 @@ export default async function DocsPage({ params }: DocsPageProps) {
               {page.kind === "markdown" && <MarkdownEnhancer key={enhancerKey} />}
               <DocPagePager previous={neighbors.previous} next={neighbors.next} />
             </>
-          )}
+          ) : null}
         </div>
       </section>
 
-      <DocPageToc items={page.tocItems} />
+      <DocPageToc items={showLandingOnly ? [] : page.tocItems} />
     </div>
   );
 }

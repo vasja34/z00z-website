@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
+import { CODE_THEME_STORAGE_KEY, THEME_STORAGE_KEY } from "@/components/theme/themeStorage";
 import { Dropdown, DropdownContent, DropdownTrigger } from "@/components/ui/Dropdown";
 import {
   applyCodeTheme,
@@ -35,6 +36,52 @@ function resolveAvailableCodeTheme(
     codeThemes[0]?.id ??
     fallbackThemeId
   );
+}
+
+function subscribeToThemeStore(onStoreChange: () => void) {
+  if (typeof window === "undefined") {
+    return () => undefined;
+  }
+
+  const handleThemeChange = () => {
+    onStoreChange();
+  };
+  const handleStorageChange = (event: StorageEvent) => {
+    if (!event.key || event.key === THEME_STORAGE_KEY) {
+      onStoreChange();
+    }
+  };
+
+  window.addEventListener(THEME_EVENT_NAME, handleThemeChange as EventListener);
+  window.addEventListener("storage", handleStorageChange);
+
+  return () => {
+    window.removeEventListener(THEME_EVENT_NAME, handleThemeChange as EventListener);
+    window.removeEventListener("storage", handleStorageChange);
+  };
+}
+
+function subscribeToCodeThemeStore(onStoreChange: () => void) {
+  if (typeof window === "undefined") {
+    return () => undefined;
+  }
+
+  const handleCodeThemeChange = () => {
+    onStoreChange();
+  };
+  const handleStorageChange = (event: StorageEvent) => {
+    if (!event.key || event.key === CODE_THEME_STORAGE_KEY) {
+      onStoreChange();
+    }
+  };
+
+  window.addEventListener(CODE_THEME_EVENT_NAME, handleCodeThemeChange as EventListener);
+  window.addEventListener("storage", handleStorageChange);
+
+  return () => {
+    window.removeEventListener(CODE_THEME_EVENT_NAME, handleCodeThemeChange as EventListener);
+    window.removeEventListener("storage", handleStorageChange);
+  };
 }
 
 function PaletteIcon() {
@@ -125,29 +172,15 @@ function CodeThemePreview({ theme }: { theme: CodeThemeOption }) {
 }
 
 export function ThemeSwitcher({ defaultTheme, themes }: ThemeSwitcherProps) {
-  const [activeTheme, setActiveTheme] = useState(() => {
-    if (typeof window === "undefined") {
-      return defaultTheme;
-    }
-
-    return resolveAllowedTheme(
-      defaultTheme,
-      themes.map((theme) => theme.id),
-    );
-  });
-
-  useEffect(() => {
-    const handleThemeChange = (event: Event) => {
-      const customEvent = event as CustomEvent<{ theme: string }>;
-      setActiveTheme(customEvent.detail.theme);
-    };
-
-    window.addEventListener(THEME_EVENT_NAME, handleThemeChange as EventListener);
-
-    return () => {
-      window.removeEventListener(THEME_EVENT_NAME, handleThemeChange as EventListener);
-    };
-  }, [defaultTheme]);
+  const activeTheme = useSyncExternalStore(
+    subscribeToThemeStore,
+    () =>
+      resolveAllowedTheme(
+        defaultTheme,
+        themes.map((theme) => theme.id),
+      ),
+    () => defaultTheme,
+  );
 
   const activeThemeLabel = themes.find((theme) => theme.id === activeTheme)?.label ?? activeTheme;
 
@@ -181,7 +214,6 @@ export function ThemeSwitcher({ defaultTheme, themes }: ThemeSwitcherProps) {
                     : "border-base-300 bg-base-100 hover:border-base-content/20 hover:bg-base-200/70",
                 ].join(" ")}
                 onClick={() => {
-                  setActiveTheme(theme.id);
                   applyTheme(theme.id);
                 }}
               >
@@ -206,32 +238,16 @@ export function CodeThemeSwitcher({
   codeThemes,
   defaultCodeTheme,
 }: CodeThemeSwitcherProps) {
-  const [activeCodeTheme, setActiveCodeTheme] = useState(() => {
-    if (typeof window === "undefined") {
-      return resolveAvailableCodeTheme(codeThemes, defaultCodeTheme, defaultCodeTheme);
-    }
-
-    return resolveAvailableCodeTheme(
-      codeThemes,
-      resolveInitialCodeTheme(defaultCodeTheme),
-      defaultCodeTheme,
-    );
-  });
-
-  useEffect(() => {
-    const handleCodeThemeChange = (event: Event) => {
-      const customEvent = event as CustomEvent<{ theme: string }>;
-      setActiveCodeTheme(
-        resolveAvailableCodeTheme(codeThemes, customEvent.detail.theme, defaultCodeTheme),
-      );
-    };
-
-    window.addEventListener(CODE_THEME_EVENT_NAME, handleCodeThemeChange as EventListener);
-
-    return () => {
-      window.removeEventListener(CODE_THEME_EVENT_NAME, handleCodeThemeChange as EventListener);
-    };
-  }, [codeThemes, defaultCodeTheme]);
+  const activeCodeTheme = useSyncExternalStore(
+    subscribeToCodeThemeStore,
+    () =>
+      resolveAvailableCodeTheme(
+        codeThemes,
+        resolveInitialCodeTheme(defaultCodeTheme),
+        defaultCodeTheme,
+      ),
+    () => resolveAvailableCodeTheme(codeThemes, defaultCodeTheme, defaultCodeTheme),
+  );
 
   if (codeThemeMode !== "selectable" || codeThemes.length === 0) {
     return null;
@@ -256,7 +272,6 @@ export function CodeThemeSwitcher({
             : "border-base-300 bg-base-100 hover:border-base-content/20 hover:bg-base-200/70",
         ].join(" ")}
         onClick={() => {
-          setActiveCodeTheme(theme.id);
           applyCodeTheme(theme);
         }}
       >

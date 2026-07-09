@@ -1,10 +1,12 @@
 ---
-title: "Tools"
+title: "Tools Home"
 description: "Tool catalog, guides, and interactive utilities for the Z00Z ecosystem."
+difficulty: basic
+icon: material-symbols:home-outline
 toc: true
 ---
 
-# Tools
+# Tools Home
 
 > [!note]
 > This route is active now so the domain switcher can land on a real page before the full tool catalog is shipped.

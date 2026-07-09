@@ -1,81 +1,91 @@
 ---
 title: "OnionNet"
-description: "Anonymous ingress target: deterministic active-set, client-owned route construction, replay durability, and runtime-bound handoff."
+description: "Privacy-ingress guide for route ownership, lane contracts, and transport-layer non-claims in Z00Z."
+difficulty: advanced
+icon: mdi:alpha-c-circle-outline
 toc: true
 ---
+
 # OnionNet
+
 > [!warning]
-> **Docs route:** `/docs/network/onionnet`
+> **Maturity:** `Target privacy-ingress architecture`
 >
-> **Target site route:** `/network/onionnet`
->
-> **Maturity:** `Reserved boundary`
->
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Use this page when:** You need to discuss network privacy, route validation, and ingress hardening without overstating what transport alone can achieve.
 
-## Page Brief
+OnionNet matters because state privacy and transport privacy are not the same thing. Z00Z can keep ownership meaning out of public settlement state and still leak too much through timing, route exposure, helper dependence, or ingress centralization. OnionNet is the family name for the transport-side answer to that problem. It describes how route ownership, lane selection, witness material, and bounded topology disclosure should work so that publishing a package does not automatically expose more about the sender than the protocol intends.
 
-What
-: Anonymous ingress target: deterministic active-set, client-owned route construction, replay durability, and runtime-bound handoff.
+This page should be read carefully: the current repository does not claim to ship a finished OnionNet implementation. What it provides is the conceptual contract that later transport work must preserve.
 
-When
-: Used when discussing network privacy, ingress metadata, route ownership, or transport anonymity.
+## What OnionNet Is Trying To Protect
 
-Where
-: Network and Security.
+The transport problem is broader than "hide the IP address":
 
-Who
-: Network engineers, privacy researchers, wallet SDK authors, and reviewers.
-
-Why
-: Z00Z state privacy and transport anonymity are separate; the site must not overclaim production OnionNet.
-
-How
-: Mark crate as placeholder, then document target modules: config, identity, bootstrap, transport, link crypto, packet, route, session, bridge, edge, relay, exit, telemetry.
-
-## Reader Lenses
-
-::: tabs
-
-@tab:active Purpose
-Anonymous ingress target: deterministic active-set, client-owned route construction, replay durability, and runtime-bound handoff.
-
-@tab Audience
-Primary readers: Network engineers, privacy researchers, wallet SDK authors, and reviewers.
-
-@tab Delivery
-Mark crate as placeholder, then document target modules: config, identity, bootstrap, transport, link crypto, packet, route, session, bridge, edge, relay, exit, telemetry.
-
-:::
-
-## Section Lens
-
-Source
-: runtime service crates, rollup-node surfaces, OnionNet paper, multi-DA paper, watcher code, and telemetry docs.
-
-Message
-: operator roles, publication layers, observation data, and settlement authority are separate layers.
-
-UX
-: an operator-oriented control-plane guide with status cards, failure-state tables, and links to support runbooks.
-
-Include
-: role diagrams, health signals, config surfaces, provider lifecycle, alert semantics, and privacy-safe explorer rules.
-
-Avoid
-: implying observability equals consensus truth or exposing wallet/private meaning through explorer labels.
-
-## Navigation Links
-
-| Link | Why it matters |
+| Protection goal | Why it matters |
 | --- | --- |
-| [Network](/docs/network) | Parent hub and primary context for this page. |
-| [Data Infrastructure](/docs/network/data-infrastructure) | Previous page in the same section order. |
-| [Data Availability](/docs/network/data-availability) | Next page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
+| Client-owned route construction | Prevents a helper service from becoming the route authority |
+| Bounded topology disclosure | Reduces how much a single observer can infer from ingress structure |
+| Route-validity proofs | Lets clients verify compatibility without blindly trusting a relay |
+| Replay-aware ingress durability | Keeps transport privacy compatible with later public settlement |
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-OnionNet-Whitepaper.md, crates/z00z_networks/onionnet/src/lib.rs`
-- Section: `Network`
-- Section message: operator roles, publication layers, observation data, and settlement authority are separate layers.
-+++
+These goals are transport goals, not settlement goals. That distinction should stay visible throughout the page.
+
+## The Key OnionNet Terms
+
+The terminology reference gives the transport layer a disciplined vocabulary:
+
+| Term | Why it matters |
+| --- | --- |
+| `Public membership registry` | The public state that commits node identity and capability metadata |
+| `Eligible set` | The pool from which active routing participants may be chosen |
+| `Lane contract` | The public output that defines compatibility and route-validity rules |
+| `Route witness` | Authenticated evidence that a route or bucket membership claim is valid |
+| `Epoch witness bundle` | Bulk witness material that supports privacy-preserving route validation |
+
+This vocabulary is useful because it prevents OnionNet from being described as a hand-wavy "private tunnel." The transport layer is meant to have real public commitments and validation rules without collapsing into a central planner.
+
+## What OnionNet Does Not Solve By Itself
+
+The biggest documentation risk is overclaim:
+
+| Overclaim | Why it is wrong |
+| --- | --- |
+| "OnionNet means end-to-end privacy is solved." | Transport is only one privacy axis among several |
+| "If transport is private, public data can be sloppy." | State, observation, and explorer surfaces still matter |
+| "A route proof is equivalent to settlement proof." | Route validity and settlement validity live on different authority planes |
+| "Transport privacy eliminates service trust questions." | Relays, helpers, and ingress operators can still shape risk |
+
+These corrections are central to keeping the network docs honest.
+
+## How To Read Maturity Here
+
+OnionNet is a good example of a target architecture page:
+
+| What is real now | What remains target work |
+| --- | --- |
+| The problem statement and vocabulary | Full implementation closure in this repository |
+| The separation between transport privacy and state privacy | Concrete deployed route, relay, and witness services |
+| The need for route-validity commitments | Operational hardening, performance tuning, and rollout ergonomics |
+
+That is still valuable. Good transport architecture should be precise before it is popular.
+
+## Why This Page Still Belongs In The Current Repo
+
+Even without a local transport implementation, the page matters because:
+
+1. Security and support pages will inherit its language.
+2. Public status and explorer surfaces need its non-claims.
+3. Wallet and network docs must agree on where privacy promises start and stop.
+
+That makes OnionNet a foundational explanation page, not a speculative appendix.
+
+## Read Next
+
+Continue to [Data Availability](/docs/network/data-availability) for the publication side that follows ingress, or revisit [Watchers](/docs/network/watchers) if your next concern is what transport-side observers should and should not be able to infer.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/OnionNet.md` is the primary source for the route, lane, witness, and topology vocabulary summarized on this page.
+- `content/whitepapers/Privacy-Threat-Model.md` explains why transport privacy is necessary but not sufficient.
+- `content/whitepapers/Corpus-Terminology-Reference.md` standardizes `Public membership registry`, `Eligible set`, `Lane contract`, `Route witness`, and `Epoch witness bundle`.
+- `content/whitepapers/Main-Whitepaper.md` provides the broader protocol context that keeps privacy-ingress work subordinate to wallet-local possession and checkpoint-bound settlement.

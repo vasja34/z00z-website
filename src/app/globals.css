@@ -133,7 +133,6 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     --docs-link-color: var(--color-primary);
     --docs-link-hover-color: var(--color-primary);
     --docs-link-decoration: color-mix(in srgb, var(--docs-link-color) 30%, transparent);
@@ -302,6 +301,28 @@
   .docs-prose p,
   .docs-prose li {
     @apply text-base-content/78;
+  }
+
+  .docs-prose ul:not(.table-of-contents-list),
+  .docs-html ul:not(.table-of-contents-list) {
+    @apply my-4 list-disc space-y-2 pl-6;
+  }
+
+  .docs-prose ol,
+  .docs-html ol {
+    @apply my-4 list-decimal space-y-2 pl-6;
+  }
+
+  .docs-prose li > ul:not(.table-of-contents-list),
+  .docs-prose li > ol,
+  .docs-html li > ul:not(.table-of-contents-list),
+  .docs-html li > ol {
+    @apply mt-2;
+  }
+
+  .docs-prose li::marker,
+  .docs-html li::marker {
+    color: color-mix(in srgb, var(--color-base-content) 72%, transparent);
   }
 
   .docs-prose a,

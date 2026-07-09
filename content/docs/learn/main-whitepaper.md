@@ -1,81 +1,59 @@
 ---
 title: "Main Whitepaper"
 description: "Canonical long-form protocol thesis: private asset objects, wallet-local possession, checkpoint settlement, visibility boundaries, and roadmap scope."
+difficulty: basic
+icon: mdi:alpha-a-circle-outline
 toc: true
 ---
+
 # Main Whitepaper
+
 > [!warning]
-> **Docs route:** `/docs/learn/main-whitepaper`
->
-> **Target site route:** `/learn/main-whitepaper`
->
 > **Maturity:** `Live core + target extensions`
 >
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Reading rule:** The main whitepaper is the canonical thesis document, but it intentionally mixes current protocol boundaries with future expansion lanes. Read it as a map with maturity labels, not as one undifferentiated production claim.
 
-## Page Brief
+The main whitepaper is the center of gravity for the public Z00Z story. If someone asks which document owns the protocol thesis, the answer is `content/whitepapers/Main-Whitepaper.md`. It is where the corpus explains why public-state blockchains leak too much by default, why Z00Z centers wallet-local possession instead of public accounts, how transaction packages and checkpoints bound final settlement, and how the project expands from private cash toward a broader rights-first architecture.
 
-What
-: Canonical long-form protocol thesis: private asset objects, wallet-local possession, checkpoint settlement, visibility boundaries, and roadmap scope.
+That makes this page less about paraphrasing the entire paper and more about teaching you how to use it well. The whitepaper is strong when you need the full argument, the named protocol objects, the checkpoint settlement model, and the boundary between live core and target architecture. It is weaker when you want a five-minute summary or a page-by-page implementation checklist. For those jobs, this docs layer exists to compress and route.
 
-When
-: Used when readers need defensible detail after the overview.
+## What The Main Whitepaper Owns
 
-Where
-: Learn and Research hubs, with cross-links into Protocol and Developers pages.
+| Whitepaper area | What it answers | When to use it |
+| --- | --- | --- |
+| Sections 1 and 2 | Why Z00Z exists and how its category differs from public account chains or generic privacy layers. | Use when you need the shortest rigorous explanation of the thesis. |
+| Section 3 | Canonical state objects, transaction packages, replay boundaries, and checkpoint logic. | Use when you need the protocol nouns and the settlement discipline. |
+| Sections 4 through 6 | Rollup architecture, digital cash, offline ownership, privacy, and selective disclosure boundaries. | Use when you need system-level behavior rather than a slogan. |
+| Sections 7 through 11 | External assets, scalability, security, governance, legal boundary, and native-asset posture. | Use when you need the broader architecture and responsibility map. |
+| Section 12 and appendices | Implementation status, roadmap, glossary, comparison boundary, and detailed technical limits. | Use when you need maturity discipline and supporting detail. |
 
-Who
-: Technical readers, reviewers, researchers, counsel, ecosystem partners, and serious contributors.
+## How To Read It Without Overclaiming
 
-Why
-: Keeps all public claims grounded in the primary corpus document.
+Start with the first two sections even if you think you already know the thesis. They set the corpus vocabulary and the comparison boundary that everything else assumes. Then decide what kind of reader you are:
 
-How
-: Expose a readable document page plus anchored side navigation, glossary popovers, maturity notes, and links to companion papers.
+- If you are a builder, jump from section 3 into the protocol and developer docs so the object model stays attached to real surfaces.
+- If you are reviewing claims, read section 12 and the comparison appendix early so you do not accidentally turn target architecture into present-tense fact.
+- If you care about legal or communications posture, read sections 10 and 11 alongside the legal corpus, not in isolation.
 
-## Reader Lenses
+The key discipline is to separate three layers that the whitepaper keeps distinct: the live core direction, target extensions, and external or optional service layers. Z00Z becomes misleading only when those layers are collapsed into one marketing sentence.
 
-::: tabs
+## What The Whitepaper Does Not Replace
 
-@tab:active Purpose
-Canonical long-form protocol thesis: private asset objects, wallet-local possession, checkpoint settlement, visibility boundaries, and roadmap scope.
+The main whitepaper is not the whole corpus. It points outward to companion documents because some topics need their own narrower authority:
 
-@tab Audience
-Primary readers: Technical readers, reviewers, researchers, counsel, ecosystem partners, and serious contributors.
+- terminology and abbreviation discipline belong in the corpus reference;
+- detailed legal firewall logic belongs in the legal architecture paper;
+- governance and treasury boundaries belong in the DAO and tokenomics papers;
+- post-quantum migration has its own dedicated paper so the main thesis stays focused.
 
-@tab Delivery
-Expose a readable document page plus anchored side navigation, glossary popovers, maturity notes, and links to companion papers.
+That division is a strength. It lets the main paper stay readable while still anchoring the bigger system.
 
-:::
+## Suggested Next Stops
 
-## Section Lens
+After the main whitepaper page, most readers should move to [Terminology And Abbreviations](/docs/learn/terminology) or directly into [Protocol](/docs/protocol), depending on whether the vocabulary already feels stable. If you are still deciding how safe the public claims are, visit [Roadmap And Maturity](/docs/learn/roadmap) before you quote or summarize the paper elsewhere.
 
-Source
-: introductory whitepapers, terminology tables, roadmap notes, and comparison documents.
+## Evidence and Further Reading
 
-Message
-: new readers should understand the model, vocabulary, maturity, and category boundary before deep protocol pages.
-
-UX
-: a progressive education flow with short pages first and deeper source documents one click away.
-
-Include
-: plain-language summaries, diagrams, glossary links, reading order, current-vs-target badges, and comparison tables.
-
-Avoid
-: raw technical dumps, speculative roadmap language without maturity tags, and claims that bypass the corpus.
-
-## Navigation Links
-
-| Link | Why it matters |
-| --- | --- |
-| [Learn](/docs/learn) | Parent hub and primary context for this page. |
-| [Litepaper](/docs/learn/litepaper) | Previous page in the same section order. |
-| [Terminology And Abbreviations](/docs/learn/terminology) | Next page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
-
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-Main-Whitepaper.md`
-- Section: `Learn`
-- Section message: new readers should understand the model, vocabulary, maturity, and category boundary before deep protocol pages.
-+++
+- `content/whitepapers/Main-Whitepaper.md` is the canonical source for the claims summarized here, especially sections 1 through 3 and section 12.
+- `content/whitepapers/Corpus-Terminology-Reference.md` complements the main paper by fixing term meaning, abbreviations, and cross-paper authority boundaries.
+- `content/whitepapers/Uniqueness.md` sharpens the comparison boundary when you need a more explicit explanation of why Z00Z should not be reduced to privacy coins, public accounts, or generic smart-contract chains.

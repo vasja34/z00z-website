@@ -1,12 +1,20 @@
+---
+title: "Z00Z Main Whitepaper"
+description: "Core protocol paper describing wallet-local possession, confidential settlement objects, checkpointed reconciliation, and narrow public evidence."
+difficulty: advanced
+icon: mdi:alpha-c-circle-outline
+toc: true
+---
+
 # Z00Z Main Whitepaper
 
 [TOC]
 
-Version: 2026-06-15
+Version: 2026-07-09
 
 ## Key Terms Used In This Paper
 
-This paper uses a small set of protocol terms repeatedly. The list below is intentionally short. A fuller reference appears in Appendix A and in [Z00Z Corpus Terminology And Abbreviations Reference](Z00Z-Corpus-Terminology-Reference.md).
+This paper uses a small set of protocol terms repeatedly. The list below is intentionally short. A fuller reference appears in Appendix A and in [Z00Z Corpus Terminology And Abbreviations Reference](Corpus-Terminology-Reference.md).
 
 - `AssetLeaf`: The public, checkpointed settlement object that represents a confidential asset right in canonical state.
 - `RightLeaf`: The live HJMT settlement object for a confidential non-coin right under the current generalized settlement contract; this paper may also use it to discuss broader rights-layer direction where stated explicitly.
@@ -22,7 +30,7 @@ This paper uses a small set of protocol terms repeatedly. The list below is inte
 
 Z00Z exists because public-state blockchains are excellent at publishing shared facts and poor at preserving cash-like privacy. A transparent chain can make consensus easier, but it also turns balances, counterparties, timing, and behavioral patterns into durable public data. Even when a system hides part of a transaction payload, a reusable address surface and a permanently inspectable history still leak enough structure to reconstruct treasury flows, supplier graphs, payroll rhythms, and personal spending habits. That leakage is not an implementation bug layered on top of an otherwise private design. It is the natural output of a state model that treats public balances and address-linked histories as the default truth.
 
-Z00Z starts from the opposite assumption. If digital cash is meant to behave like cash, **privacy cannot be bolted onto a transparent account ledger after the fact**. The protocol must begin from wallet-local possession, verifier-minimal settlement evidence, and explicit replay-safe transition rules. In Z00Z's live core, that direction already appears in the contract surface: the wallet public API is receiver-native and explicitly avoids account semantics, while the canonical committed settlement model is organized around checkpointed `AssetLeaf` objects, canonical asset paths, and settlement-verifier boundaries rather than around a global table of reusable identities and balances.
+Z00Z starts from the opposite assumption. If digital cash is meant to behave like cash, **privacy cannot be bolted onto a transparent account ledger after the fact**. The protocol must begin from wallet-local possession, verifier-minimal settlement evidence, and explicit replay-safe transition rules. In Z00Z's live core, that direction already appears in the contract surface: the wallet public API is receiver-native and explicitly avoids account semantics, while the canonical committed settlement model is organized around checkpointed `AssetLeaf` objects, canonical settlement paths, and settlement-verifier boundaries rather than around a global table of reusable identities and balances.
 
 Z00Z is unique not because it hides a transaction, but because it turns money, rights, access, claims, rewards, and intents into private wallet-local objects that can move before they become public settlement evidence.
 
@@ -98,7 +106,7 @@ This is already visible in the live protocol surfaces. `TxVerifierImpl` and `ver
 
 #### Public Leaves, Private Possession
 
-“No public account balances” and “wallet-local possession” must not be misread as “no committed state exists on chain.” The narrower and more accurate phrasing is this: public `AssetLeaf` records, canonical asset paths, checkpoint roots, and typed spent or created deltas are chain-visible settlement evidence. They are the public objects over which replay-safe settlement is proven. At the same time, wallet inventory, receiver secrets, signed receiver-routing material, asset-package preparation, and delayed handoff artifacts remain outside the blockchain and are reconciled later through publication and checkpointing.
+“No public account balances” and “wallet-local possession” must not be misread as “no committed state exists on chain.” The narrower and more accurate phrasing is this: public `AssetLeaf` records, canonical settlement paths, checkpoint roots, and typed spent or created deltas are chain-visible settlement evidence. They are the public objects over which replay-safe settlement is proven. At the same time, wallet inventory, receiver secrets, signed receiver-routing material, asset-package preparation, and delayed handoff artifacts remain outside the blockchain and are reconciled later through publication and checkpointing.
 
 This is the key division of labor. **The chain publishes the existence and transition of settlement objects**. The wallet carries the possession logic that lets a user recognize, prepare, and authorize those objects privately. Z00Z therefore does not erase public state. It narrows public state to the committed evidence that settlement actually requires.
 
@@ -239,7 +247,7 @@ This also explains why Z00Z’s state model is **object-oriented instead of bala
 
 The current object model is asset-centric because that is the most mature live contract in the repository. Even so, the same structure already suggests a wider capability model. A wallet-local object can represent not only coin-like value, but any bounded right whose lifecycle can be prepared privately, handed off under controlled conditions, and later reconciled through checkpointed public evidence. Claims already widen the space beyond ordinary transfer, policy-shaped asset definitions widen it further, and locker-oriented internal rights point toward private control over value that may be custodied elsewhere.
 
-This matters because it gives the paper a disciplined way to expand category without inventing new consensus nouns prematurely. The current protocol still settles `AssetLeaf` objects under canonical asset paths. The broader architectural idea is that those objects are the first concrete members of a more general family of spendable capability objects that future Z00Z workflows may encode more explicitly once the live core is stronger.
+This matters because it gives the paper a disciplined way to expand category without inventing new consensus nouns prematurely. The current protocol still settles `AssetLeaf` objects under canonical settlement paths. The broader architectural idea is that those objects are the first concrete members of a more general family of spendable capability objects that future Z00Z workflows may encode more explicitly once the live core is stronger.
 
 #### Confidential Asset Leaves
 
@@ -305,7 +313,7 @@ That boundary is stronger than early package admission because **it binds state 
 
 This is why checkpoints are described here as the current validation boundary instead of as a mere publication container. In Z00Z, a package can be structurally correct and still not be settled. Settlement begins when the package is bound to the execution input, checkpoint artifact, canonical link, and root continuity checks that let public verifiers reject a malformed transition without needing the wallet’s private state.
 
-The dedicated [Z00Z Multi-DA And Checkpoint Architecture Blueprint](tech-papers/Z00Z-Multi-DA-and-Checkpoint-Architecture.md) extends this boundary without changing it. Z00Z can expose checkpoint hashes, timestamp batches, and optional external meta-anchors as durable verification references, but those anchors remain evidence about a state boundary. They do not replace the settlement theorem, and they do not turn an external chain into the authority that decides Z00Z validity.
+The dedicated [Z00Z Multi-DA And Checkpoint Architecture Blueprint](../tech-papers/Z00Z-Multi-DA-and-Checkpoint-Architecture.md) extends this boundary without changing it. Z00Z can expose checkpoint hashes, timestamp batches, and optional external meta-anchors as durable verification references, but those anchors remain evidence about a state boundary. They do not replace the settlement theorem, and they do not turn an external chain into the authority that decides Z00Z validity.
 
 #### Settlement Theorem Path
 
@@ -319,7 +327,7 @@ The implication is simple: finality must pass through this theorem path or throu
 
 Replay protection in Z00Z lives in storage and checkpoint contracts, not in vague narrative assumptions about “the chain remembering a spend.” The storage layer checks that checkpoint execution rows match the actual store operations: what is marked spent in the execution input must match what is deleted or replaced in the store, and what is marked created must match the inserted leaf hashes. That is a stateful replay rule, not a storytelling convenience. If the replay inputs or root boundaries drift, the checkpoint path rejects them with typed mismatch errors.
 
-The same storage ownership principle explains claim replay. In the live repository, a claim is not just an ordinary transfer with a renamed flag. It is a separate `ClaimTxPackage` family that references a claim source by `claim_id_hex`, `claim_source_asset_id_hex`, and `claim_source_commitment_hex`, binds that source to one recipient and claim scope, and carries a separate claim-domain nullifier for replay control while creating recipient-facing output leaves under canonical asset paths. Claim publication verifies those claim packages, reuses the separate claim-nullifier reservation and replay path, and then applies the carried output leaves and claim replay rows into storage. A repeated claim nullifier is rejected as replay, while the authoritative output objects still enter storage as leaves under canonical paths. This is narrower and more precise than saying that nullifiers are “the” spent set.
+The same storage ownership principle explains claim replay. In the live repository, a claim is not just an ordinary transfer with a renamed flag. It is a separate `ClaimTxPackage` family that references a claim source by `claim_id_hex`, `claim_source_asset_id_hex`, and `claim_source_commitment_hex`, binds that source to one recipient and claim scope, and carries a separate claim-domain nullifier for replay control while creating recipient-facing output leaves under canonical settlement paths. Claim publication verifies those claim packages, reuses the separate claim-nullifier reservation and replay path, and then applies the carried output leaves and claim replay rows into storage. A repeated claim nullifier is rejected as replay, while the authoritative output objects still enter storage as leaves under canonical paths. This is narrower and more precise than saying that nullifiers are “the” spent set.
 
 The simulator’s boundary states the current operational limit in plain language: package-coupled checkpoint integrity exists, but publication is not yet strong enough to be called fully trustless and authoritative publish-proof closure is not finished. That staging remains explicit. Z00Z already has a real storage-owned replay and checkpoint validation boundary, while later publication and proof surfaces still belong to target architecture rather than to the fully landed live core.
 
@@ -335,7 +343,7 @@ The node-composition layer reinforces the same architecture. `NodeRuntime<A, V, 
 
 #### Celestia As Data-Availability Layer
 
-The repository is explicit about external DA direction, and Celestia is the primary currently named DA target in that direction. `NodeConfig` carries a `da_provider` selector, `DaAdapter` defines only two provider-facing operations, `publish` and `resolve`, and the current `z00z_rollup_node` carries the name `z00z_da_celestia`. Those facts are enough to describe Celestia as the currently chosen DA target in the architecture story.
+The repository is explicit about external DA direction, and Celestia is the primary currently named DA target in that direction. `NodeConfig` carries a `da_provider` selector, `DaAdapter` defines only two provider-facing operations, `publish` and `resolve`, and the live rollup crate already ships `CelestiaLocalAdapter` with `celestia-local://` publication references. The same publication path already materializes typed `CheckpointDaReferenceV1`, `CheckpointPublicationEvidenceV1`, and `CheckpointLifecycleV1` records. Those facts are enough to describe Celestia as the currently implemented DA direction in the architecture story while keeping the provider-maturity claim narrow.
 
 These surfaces identify Celestia as the primary currently named DA direction, but the live code exposes the abstraction seam and the provider choice more clearly than the final provider implementation. Z00Z is therefore presented as a rollup that externalizes data availability and currently names Celestia as its primary DA direction, while the provider-specific publication path remains an *active implementation surface rather than a completed operational fact*. The same seam also means Celestia is not the only conceivable external DA home in principle: any provider that can satisfy the same `publish` and `resolve` contract could fit this architecture. But the live implementation does not yet name, rank, or implement alternative providers with the same specificity, so they appear here only as seam-compatible possibilities rather than as parallel committed integrations.
 
@@ -1219,7 +1227,7 @@ flowchart TB
 
 #### Dedicated DA And Full Publishing Topology
 
-The current rollup node clearly anticipates an external DA layer, but it does not yet ship the full provider implementation. `NodeConfig` already carries a `da_provider` selector, `DaAdapter` exposes the narrow `publish` and `resolve` operations, `DaError` includes `NotConfigured`, and the current rollup-node README stub literally names `z00z_da_celestia`. Together with the broader architecture materials, that is enough to describe Celestia as the primary currently named DA direction.
+The current rollup node clearly anticipates an external DA layer, but it does not yet ship the full provider implementation. `NodeConfig` already carries a `da_provider` selector, `DaAdapter` exposes the narrow `publish` and `resolve` operations, the rollup crate ships `CelestiaLocalAdapter`, and publication records already include `CheckpointDaReferenceV1`, `CheckpointPublicationEvidenceV1`, and `CheckpointLifecycleV1`. Together with the broader architecture materials, that is enough to describe Celestia as the primary currently implemented DA direction.
 
 The current code ships **the seam and the provider direction more clearly than the provider implementation itself**. Dedicated DA publication remains an active implementation target built around a real interface boundary, not a completed operational subsystem.
 
@@ -1364,7 +1372,7 @@ The same rule becomes stricter higher up in transaction and claim packages. Asse
 
 This appendix provides **the shipped cryptographic boundary**: the current backend facade, stable public types, range-proof and signature APIs, domain registry, stealth KDF stack, and replay-boundary derivations that the live wallet, storage, and rollup crates already consume. It does not pretend to provide a mathematically complete proving-system monograph for every future surface or a finished disclosure-proof regime for future corporate workflows.
 
-Post-quantum migration is now handled as its own companion paper, [Z00Z PQ Migration Whitepaper](Z00Z-PQ-Migration-Whitepaper.md). The main whitepaper should keep the honest short claim: Z00Z has a comparatively migration-friendly settlement and storage boundary, but its current transaction cryptography is not end-to-end post-quantum secure. The dedicated migration paper owns the firewall, suite-versioning, hybrid-lane, and rewrap strategy.
+Post-quantum migration is now handled as its own companion paper, [Z00Z PQ Migration Whitepaper](PQ-Migration.md). The main whitepaper should keep the honest short claim: Z00Z has a comparatively migration-friendly settlement and storage boundary, but its current transaction cryptography is not end-to-end post-quantum secure. The dedicated migration paper owns the firewall, suite-versioning, hybrid-lane, and rewrap strategy.
 
 That boundary is healthy. The main paper relies on the cryptographic consequences already enforced in code, while Appendix B carries the deeper object-level details that explain how those consequences are currently achieved.
 

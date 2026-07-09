@@ -1,127 +1,85 @@
 ---
 title: "Protocol"
-description: "Protocol documentation hub for settlement, object model, privacy, checkpoints, economics, governance, and companion whitepapers."
+description: "System-model hub for Z00Z settlement, wallet-local possession, checkpoints, privacy, rights, incentives, and governance."
+difficulty: basic
+icon: mdi:alpha-a-circle-outline
 toc: true
 ---
+
 # Protocol
+
 > [!warning]
-> **Docs route:** `/docs/protocol`
->
-> **Target site route:** `/protocol`
->
 > **Maturity:** `Live core + target extensions`
 >
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Use this section when:** You already understand the category claim and now need the architecture boundary: what becomes public, what stays local, and where future ecosystem layers begin.
 
-## Page Brief
+The protocol family explains Z00Z as a private-object settlement model rather than as a public account chain with privacy added later. That distinction changes how every downstream page should be read. Wallets prepare and recognize confidential objects locally. Public verification checks only the artifacts needed to prove that a transition is authorized, replay safe, and consistent with checkpointed state. The result is a system that treats the chain more like a settlement notary than like a public wallet database.
 
-What
-: Protocol documentation hub for settlement, object model, privacy, checkpoints, economics, governance, and companion whitepapers.
+This hub is the map for that model. It keeps the core story narrow enough to stay honest about maturity and broad enough to show why later pages on privacy, rights, external assets, and incentives all still belong to one architecture. If a reader starts anywhere in the protocol section, they should leave with three ideas intact: public settlement evidence is intentionally narrow, wallet-local possession is a first-class protocol boundary, and optional service or ecosystem layers do not redefine settlement truth.
 
-When
-: Used after Learn, or directly by readers who already understand blockchain concepts.
+## The Shortest System Model
 
-Where
-: Primary header navigation and docs sidebar.
+```mermaid
+flowchart LR
+  Wallet["Wallet-local possession<br/>receiver material and package preparation"] --> Package["Portable package<br/>candidate spend or claim"]
+  Package --> Checkpoint["Checkpoint validation<br/>root continuity and replay safety"]
+  Checkpoint --> Evidence["Public evidence<br/>roots, deltas, proofs, links"]
 
-Who
-: Protocol engineers, researchers, reviewers, ecosystem architects, and serious builders.
+  style Wallet fill:#E3F2FD,stroke:#1E88E5,stroke-width:1px,color:#0D47A1
+  style Package fill:#ECEFF1,stroke:#546E7A,stroke-width:1px,color:#263238
+  style Checkpoint fill:#EDE7F6,stroke:#5E35B1,stroke-width:1px,color:#311B92
+  style Evidence fill:#FFE0B2,stroke:#F57C00,stroke-width:1px,color:#263238
+```
 
-Why
-: Mirrors the NEAR and Sui pattern of separating protocol concepts from developer implementation details.
+The flow is intentionally smaller than the full operating stack. A wallet can prepare or recognize a spendable object before the network has finalized anything. The package can then enter admission, ordering, and publication. But the authoritative line is the checkpoint boundary, because that is where previous root, created outputs, consumed paths, proof payloads, and canonical linkage are checked together. Only after that step does the public chain become a trustworthy record of the transition.
 
-How
-: Organize pages by settlement primitives first, then extension families and policy surfaces.
+## What This Family Treats As Authoritative
 
-## Reader Lenses
+| Layer | What it owns | What it must not overclaim |
+| --- | --- | --- |
+| Wallet | Receiver material, ownership recovery, local inventory, package preparation, delayed-connectivity handoff | Final public settlement |
+| Package | Portable spend or claim candidate with proof-bearing public fields | Automatic acceptance just because the package is well formed |
+| Checkpoint | Replay-safe transition from prior root to next root with typed deltas and proof linkage | Custody, reserves, or business obligations outside the protocol |
+| Public evidence | Roots, deltas, links, and published artifact references | A full public account graph of user ownership |
+| Service and ecosystem layers | UX, compliance overlays, custody, bridges, issuers, redemptions, monitoring | The ability to redefine valid settlement evidence |
 
-::: tabs
+This table is the discipline for the whole section. If a concept belongs to wallet-local preparation, it should not be described as already public. If it belongs to an external bridge, issuer, or custody layer, it should not be smuggled into the base theorem as if the chain already proves it. That is why later pages repeatedly separate live core from target extensions.
 
-@tab:active Purpose
-Protocol documentation hub for settlement, object model, privacy, checkpoints, economics, governance, and companion whitepapers.
+## Reading Order
 
-@tab Audience
-Primary readers: Protocol engineers, researchers, reviewers, ecosystem architects, and serious builders.
+If you want the shortest path through the section, read it in this order:
 
-@tab Delivery
-Organize pages by settlement primitives first, then extension families and policy surfaces.
+1. [Protocol Architecture](/docs/protocol/architecture) for the role map and authority boundaries.
+2. [Settlement Model](/docs/protocol/settlement-model) for the checkpoint objects that make finality real.
+3. [Wallet-Local Possession](/docs/protocol/wallet-local-possession) for the no-account ownership model and offline-first semantics.
+4. [Checkpoints And Public Evidence](/docs/protocol/checkpoints) for the publication, proof, and evidence stack.
+5. The remaining pages for bounded extensions: rights, smart cash, liability, privacy, cross-chain composition, tokenomics, governance, useful work, and PQ migration.
 
-:::
+That sequence mirrors the current maturity picture. The settlement spine is the live center. Everything else either explains why that center matters or shows how future layers can attach without changing the core meaning of valid settlement.
 
-## Section Lens
+## Live Core Versus Target Extensions
 
-Source
-: the main whitepaper, companion protocol papers, HJMT design notes, and core/storage/wallet crate surfaces.
+| Surface | What can be said in present tense | What still needs future implementation or proof |
+| --- | --- | --- |
+| Settlement core | The protocol already has typed packages, checkpoint artifacts, replay-aware storage rules, and a public settlement theorem path. | Stronger publication closure, richer operator tooling, and broader production hardening still continue. |
+| Wallet model | Wallet-local possession, receiver-native flows, and delayed-connectivity package handling are already central to the architecture. | Richer automated rights workflows and broader ecosystem UX are still future-facing. |
+| Privacy | Confidential objects, stealth reception, and narrow public evidence are part of the current direction. | Full transport-anonymity overlays and richer disclosure regimes remain separate work. |
+| External assets | The internal right-transfer model can already support future locker or wrapper ecosystems. | Reserve proofs, vault honesty, redemption liveness, and bridge-specific settlement are not yet base-layer facts. |
+| Governance and incentives | The corpus defines a bounded constitutional direction for fees, DAO policy, and useful-work rewards. | Final economic policy, treasury execution, and mature governance operations remain draft or target architecture. |
 
-Message
-: settlement authority, private possession, object semantics, checkpoints, and policy boundaries must stay distinct.
+This is the central anti-hype rule for the protocol docs. Z00Z becomes easier to evaluate when the live theorem path is treated as strong and specific, while optional ecosystems stay visibly conditional. The docs should reduce category confusion, not create it.
 
-UX
-: a technical reference page with diagrams first, then invariants, then implementation links.
+## Where The Section Connects Outward
 
-Include
-: state diagrams, object lifecycle diagrams, invariants, non-goals, maturity labels, and cross-links to developer APIs.
+- [Developers](/docs/developers) translates these concepts into repo-local builder surfaces and operational commands.
+- [Network](/docs/network) describes how aggregators, validators, watchers, and publication layers surround the settlement core without becoming settlement truth themselves.
+- [Security](/docs/security) expands the adversary model, threat boundaries, and residual risk posture.
+- [Legal](/docs/legal) keeps protocol, stewardship, wallet, issuer, and service responsibilities separate in public claims.
 
-Avoid
-: turning target architecture into present-tense implementation or merging DA, anchors, support, and settlement truth.
+Those families exist because the protocol family stays narrow. It does not have to absorb support, legal, custody, or operator narratives into one overloaded architecture page.
 
-## Section Pages
+## Evidence and Further Reading
 
-| Page | Role |
-| --- | --- |
-| [Protocol Architecture](/docs/protocol/architecture) | High-level architecture of wallet-local possession, package preparation, publication, checkpoint verification, and authoritative settlement. |
-| [Settlement Model](/docs/protocol/settlement-model) | Defines checkpoint-bound settlement, SettlementStateRoot, SettlementPath, terminal leaves, and proof envelopes. |
-| [Wallet-Local Possession](/docs/protocol/wallet-local-possession) | Explains why ownership meaning starts in wallet-held secrets, receiver material, scans, and portable packages rather than public account rows. |
-| [Checkpoints And Public Evidence](/docs/protocol/checkpoints) | Documents checkpoint validation, DA commitments, anchors, ZTS, and optional external witnesses as separate proof layers. |
-| [Assets, Vouchers, And Rights](/docs/protocol/assets-vouchers-rights) | Defines the clean split between final-value assets, conditional-value vouchers, and authority-bearing rights. |
-| [Smart Cash](/docs/protocol/smart-cash) | Explains bounded smart-cash semantics without presenting Z00Z as a universal hidden smart-contract VM. |
-| [Linked Liability](/docs/protocol/linked-liability) | Fraud realism layer for delayed, offline, and autonomous execution: honest use stays private, provable conflict activates responsibility. |
-| [Privacy Threat Model](/docs/protocol/privacy-threat-model) | Layered privacy model across ingress, internal movement, egress, wallet behavior, service disclosures, bridge edges, and fraud-triggered reveal. |
-| [Cross-Chain Rights](/docs/protocol/cross-chain-rights) | Shows how external systems can hold assets while Z00Z privately moves internal ownership rights. |
-| [Tokenomics And Incentives](/docs/protocol/tokenomics) | Economic constitution for Z00Z fees, fee credits, bonds, treasury compartments, bootstrap reserves, and useful-work funding. |
-| [DAO And Governance](/docs/protocol/governance) | Governance architecture with constitutional, policy, operational, and signaling lanes plus rule-bound AI assistance. |
-| [Proof Of Useful Work](/docs/protocol/proof-of-useful-work) | Rule-bound reward system for verifiable useful outcomes rather than passive holding, empty activity, or hype farming. |
-| [Post-Quantum Migration](/docs/protocol/post-quantum-migration) | Honest migration plan: Z00Z is not end-to-end post-quantum secure today, but has PQ-friendly settlement and storage boundaries. |
-| [Legal Architecture](/docs/protocol/legal-architecture) | Architecture-first legal boundary for neutral protocol, steward limits, rule-bound treasury, independent issuers, optional compliance wallets, and do-not-operate zones. |
-
-## Navigation Links
-
-| Link | Why it matters |
-| --- | --- |
-| [Z00Z Home](/docs) | Parent hub and primary context for this page. |
-| [Learn](/docs/learn) | Previous page in the same section order. |
-| [Developers](/docs/developers) | Next page in the same section order. |
-
-## Delivery Focus
-
-- [x] Route intent captured from the architecture scaffold
-- [x] Internal cross-links added for hub navigation
-- [x] Evidence anchors preserved for follow-up drafting
-- [ ] Final long-form prose and diagrams still need source-document expansion
-
-## Route Map
-
-@mermaidstart
-graph TD
-  protocol["Protocol"]
-  protocol --> protocol_architecture["Protocol Architecture"]
-  protocol --> protocol_settlement["Settlement Model"]
-  protocol --> protocol_wallet_local["Wallet-Local Possession"]
-  protocol --> protocol_checkpoints["Checkpoints And Public Evidence"]
-  protocol --> protocol_objects["Assets, Vouchers, And Rights"]
-  protocol --> protocol_smart_cash["Smart Cash"]
-  protocol --> protocol_linked_liability["Linked Liability"]
-  protocol --> protocol_privacy_threat["Privacy Threat Model"]
-  protocol --> protocol_cross_chain["Cross-Chain Rights"]
-  protocol --> protocol_tokenomics["Tokenomics And Incentives"]
-  protocol --> protocol_dao["DAO And Governance"]
-  protocol --> protocol_pouw["Proof Of Useful Work"]
-  protocol --> protocol_pq["Post-Quantum Migration"]
-  protocol --> protocol_legal["Legal Architecture"]
-@mermaidend
-
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-Main-Whitepaper.md, crates/z00z_core/src/lib.rs, crates/z00z_storage/README.md`
-- Section: `Protocol`
-- Section message: settlement authority, private possession, object semantics, checkpoints, and policy boundaries must stay distinct.
-+++
+- `content/whitepapers/Main-Whitepaper.md` sections 2 through 4 define the settlement-notary thesis, canonical objects, checkpoint boundary, and sovereign-rollup direction that anchor this hub.
+- `content/whitepapers/Privacy-Threat-Model.md` sections 3 and 4 explain why the protocol must minimize public observability without pretending the system has zero visible artifacts.
+- `content/whitepapers/Linked-Liability.md` section 2 and `content/whitepapers/Assets-Rights-Vauchers.md` sections 3 through 7 show how broader rights, voucher, and liability concepts can extend the same settlement nucleus without replacing it.

@@ -1,80 +1,68 @@
 ---
 title: "Public Claim Boundaries"
 description: "Messaging rules for what Z00Z can and cannot publicly claim about privacy, maturity, token economics, cross-chain, support, and legal posture."
+difficulty: specialist
+icon: mdi:alpha-e-circle-outline
 toc: true
 ---
+
 # Public Claim Boundaries
+
 > [!warning]
-> **Docs route:** `/docs/legal/public-claim-boundaries`
->
-> **Target site route:** `/legal/public-claim-boundaries`
->
 > **Maturity:** `Live docs + site policy`
 >
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Use this page when:** You are writing docs, a landing page, a deck, partner copy, or any other public-facing material about Z00Z.
 
-## Page Brief
+Public claims are part of the architecture surface. If the wording is sloppy, readers will infer capabilities, legal postures, or operational responsibilities that the corpus never granted. This page defines the editorial red lines that keep public messaging aligned with the whitepapers.
 
-What
-: Messaging rules for what Z00Z can and cannot publicly claim about privacy, maturity, token economics, cross-chain, support, and legal posture.
+## The Approved Category Sentence
 
-When
-: Used before publishing docs, pages, posts, videos, decks, or partner materials.
+The safest short formula is:
 
-Where
-: Legal, Marketing, and contributor docs.
+> Z00Z is a privacy-first digital cash and settlement architecture built around wallet-local possession, private spendable objects, and narrow checkpointed public evidence.
 
-Who
-: Authors, stewards, creators, counsel, partners, and contributors.
+This sentence is useful because it places Z00Z, protects its boundary, and leaves room for maturity qualifiers. It does not promise universal anonymity, finished cross-chain services, custody, exchange functions, or fully launched rights markets.
 
-Why
-: Marketing strategy explicitly warns against category drift and overclaiming.
+## Safe Claims Versus Unsafe Claims
 
-How
-: Provide approved category sentence, forbidden claims, maturity wording, review checklist, and escalation rules.
+| Topic | Safe claim | Unsafe claim |
+| --- | --- | --- |
+| Privacy | "Z00Z is designed to avoid public account-style default exposure and to keep settlement evidence narrow." | "Z00Z makes every action fully anonymous and untraceable." |
+| Maturity | "The corpus describes a live core direction plus target extensions." | "Every whitepaper feature is already implemented." |
+| Cross-chain and external assets | "The architecture includes a thesis for private rights over external assets." | "Z00Z already operates an official bridge or redemption layer." |
+| Token and incentives | "Tokenomics and governance boundaries are documented with explicit caveats." | "The token model guarantees value, yield, or stable economic outcomes." |
+| Legal posture | "The legal corpus separates protocol neutrality from independent services and issuer duties." | "Z00Z is automatically compliant everywhere" or "regulation-proof." |
+| Support and operations | "Independent tools and services may exist above the protocol." | "The project itself runs every wallet, market, issuer, or compliance surface." |
 
-## Reader Lenses
+## The Claims That Need Immediate Caution
 
-::: tabs
+Some phrases are especially risky because they compress too many unresolved questions into one slogan. Avoid language that sounds like:
 
-@tab:active Purpose
-Messaging rules for what Z00Z can and cannot publicly claim about privacy, maturity, token economics, cross-chain, support, and legal posture.
+- official exchange, official market maker, or official bridge;
+- anonymous stablecoin, guaranteed private payroll, or complete regulatory safety;
+- automatic compliance, automatic auditability, or universal legal approval;
+- fully launched agent economy if the current claim is only architectural direction.
 
-@tab Audience
-Primary readers: Authors, stewards, creators, counsel, partners, and contributors.
+When a sentence depends on those shortcuts, rewrite it until it points back to the narrower architectural truth instead.
 
-@tab Delivery
-Provide approved category sentence, forbidden claims, maturity wording, review checklist, and escalation rules.
+## A Simple Review Checklist
 
-:::
+Before publishing a new public sentence, ask:
 
-## Section Lens
+1. Does the sentence distinguish live core, active hardening, and target architecture?
+2. Does it imply service operation, endorsement, or custody that the docs cannot prove?
+3. Does it say more than the linked corpus files actually support?
+4. Would the sentence still look accurate if quoted without surrounding context?
 
-Source
-: legal architecture, DAO, tokenomics, marketing strategy, privacy threat model, and public-claim boundaries.
+If the answer to any of those questions is "no", the sentence needs revision or a stronger caveat.
 
-Message
-: public pages must separate protocol neutrality, website terms, issuer responsibility, token risk, and service-layer data handling.
+## Escalation Rule
 
-UX
-: a clear legal utility section with page-specific disclosure blocks and links back to technical authority.
+When a claim touches privacy guarantees, token value, compliance posture, cross-chain operation, or the responsibilities of independent issuers or service providers, do not improvise. Route the wording back through the legal architecture and disclosure pages first. In Z00Z, safe messaging is not about sounding smaller than the project. It is about sounding exactly as large as the evidence allows.
 
-Include
-: disclosures, non-advice language, maturity labels, independent-service boundaries, review checklists, and claim red lines.
+## Evidence and Further Reading
 
-Avoid
-: legal advice, custody implications, issuer endorsement, guaranteed compliance claims, or broad privacy guarantees.
-
-## Navigation Links
-
-| Link | Why it matters |
-| --- | --- |
-| [Legal](/docs/legal) | Parent hub and primary context for this page. |
-| [Disclosures](/docs/legal/disclosures) | Previous page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
-
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-Marketing-Srategy.md, docs/Z00Z-Legal-Architecture-Whitepaper.md`
-- Section: `Legal`
-- Section message: public pages must separate protocol neutrality, website terms, issuer responsibility, token risk, and service-layer data handling.
-+++
+- `content/whitepapers/Legal-Architecture.md` section 17 and Appendix A are the primary source for safe narrative formulas, claims that require caveats, and claims that must not be made.
+- `content/whitepapers/Main-Whitepaper.md` sections 2, 6, 10, and 12 support the category sentence, privacy boundary, protocol-versus-service split, and maturity discipline used here.
+- `content/whitepapers/Privacy-Threat-Model.md` sections 1, 3, 6, and 9 explain why overclaiming privacy or disclosure behavior is both inaccurate and harmful.
+- `content/whitepapers/Tokenomics.md` and `content/whitepapers/DAO.md` provide the bounded language needed for token, treasury, and governance claims.

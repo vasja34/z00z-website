@@ -1,81 +1,91 @@
 ---
 title: "Payment Requests And Receiver Intents"
-description: "Builder docs for signed receiver cards, payment requests, validation, one-time receiver material, and wallet-facing payment workflows."
+description: "Builder guide to receiver cards, payment requests, validation posture, and request-scoped handoff flows."
+difficulty: intermediate
+icon: mdi:alpha-b-circle-outline
 toc: true
 ---
+
 # Payment Requests And Receiver Intents
+
 > [!warning]
-> **Docs route:** `/docs/developers/payment-requests`
+> **Maturity:** `Live protocol request vocabulary + target integration detail`
 >
-> **Target site route:** `/developers/payment-requests`
->
-> **Maturity:** `Live wallet RPC + target tutorials`
->
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Use this page when:** You need to design or document receive flows without turning Z00Z requests into account-style payment addresses.
 
-## Page Brief
+Payment requests are where many builders are tempted to flatten Z00Z back into familiar patterns. A merchant wants a QR flow, an app wants a shareable request, or a wallet wants a "receive" button, and the easiest habit is to imagine a stable public address plus an amount. Z00Z takes a narrower path. The request layer is supposed to preserve a receiver-native, privacy-aware handoff model instead of recreating a reusable public account surface.
 
-What
-: Builder docs for signed receiver cards, payment requests, validation, one-time receiver material, and wallet-facing payment workflows.
+That is why this page focuses on intent and boundary first. In Z00Z, a payment request is not ownership itself. It is a scoped object that helps a sender and receiver coordinate a transfer without turning the receiver into a public balance identity.
 
-When
-: Used when integrating receive flows, QR payment requests, merchant requests, or app-level checkout with the Z00Z wallet.
+## Receiver Card Versus Payment Request
 
-Where
-: Developers wallet docs, Wallet product pages, examples, and support troubleshooting.
+The two most important objects are related but not identical:
 
-Who
-: Wallet developers, frontend teams, merchant-app builders, QA, and security reviewers.
+| Object | What it does | What it is not |
+| --- | --- | --- |
+| `ReceiverCard` | Supplies receiver-facing routing and approval input for a receive flow | A permanent public account address |
+| `PaymentRequest` | Packages receive intent, parameters, and handoff context for a specific transfer scenario | Final settlement proof or settled ownership |
 
-Why
-: NEAR and Sui both expose intent/payment flows as developer concepts; Z00Z has concrete wallet RPC around receiver cards and payment requests that deserves a focused page.
+Keeping those objects distinct matters because it shapes validation, UI, and replay expectations. A request can be checked, displayed, rejected, expired, or scoped without being confused for the final public record of value.
 
-How
-: Document `wallet.key.get_receiver_card`, `wallet.key.create_payment_request`, `wallet.key.validate_payment_request`, metadata limits, TOFU warnings, replay boundaries, UI states, and runnable examples.
+## A Builder-Friendly Flow
 
-## Reader Lenses
+The corpus implies a disciplined request flow:
 
-::: tabs
+1. The receiver prepares request material suitable for a specific handoff.
+2. The sender interprets the request, constructs a compatible package, and preserves the wallet-side privacy model.
+3. The receiver validates the request context and later recognizes the incoming object locally.
+4. Public settlement evidence appears only when publication and checkpointing happen.
 
-@tab:active Purpose
-Builder docs for signed receiver cards, payment requests, validation, one-time receiver material, and wallet-facing payment workflows.
+This sequence is why request docs should talk about **coordination** and **validation posture**, not just "send funds to this destination." The request helps align the parties before final settlement exists.
 
-@tab Audience
-Primary readers: Wallet developers, frontend teams, merchant-app builders, QA, and security reviewers.
+## Validation Questions That Matter
 
-@tab Delivery
-Document `wallet.key.get_receiver_card`, `wallet.key.create_payment_request`, `wallet.key.validate_payment_request`, metadata limits, TOFU warnings, replay boundaries, UI states, and runnable examples.
+When you design request handling, the first questions should be these:
 
-:::
-
-## Section Lens
-
-Source
-: Cargo workspace metadata, crate READMEs, crate root exports, examples, tests, scripts, and generated docs.
-
-Message
-: builders need exact module ownership, runnable commands, API boundaries, and verification steps.
-
-UX
-: a dense builder guide with command blocks, module maps, tabs for roles, and explicit source-file links.
-
-Include
-: setup commands, crate maps, stable-vs-internal API labels, examples, failure modes, and verification gates.
-
-Avoid
-: invented SDK behavior, snippets that do not map to code, or tutorial prose that hides safety boundaries.
-
-## Navigation Links
-
-| Link | Why it matters |
+| Question | Why it matters |
 | --- | --- |
-| [Developers](/docs/developers) | Parent hub and primary context for this page. |
-| [Wallet SDK](/docs/developers/wallet) | Previous page in the same section order. |
-| [Storage And HJMT](/docs/developers/storage-hjmt) | Next page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
+| Is the request scoped enough to avoid behaving like a reusable account identifier? | Prevents privacy drift |
+| What part of the request can be validated locally before publication? | Keeps wallet-side checks useful and explicit |
+| What warnings should the UI surface about trust and context? | A request can be well-formed without guaranteeing business honesty |
+| What expires, what can be replayed, and what must be bound to later settlement evidence? | Prevents handoff convenience from weakening replay safety |
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `crates/z00z_wallets/src/adapters/rpc/methods/key.rs, crates/z00z_wallets/src/egui_views/ascii-mockups/wallet.receiver_card.md`
-- Section: `Developers`
-- Section message: builders need exact module ownership, runnable commands, API boundaries, and verification steps.
-+++
+These questions are more important than whether the request arrives as a QR code, a deep link, or an API payload. Transport can vary. The semantic contract should not.
+
+## Why Linked Liability Still Matters Here
+
+Request flows are not only about privacy and convenience. They also shape accountability. A scoped receive intent can later interact with dispute, liability, or fraud logic without forcing the protocol to publish a public account graph. That is one reason the broader Z00Z corpus links payment semantics to concepts such as linked liability and bounded reveal paths. Builders should keep that in mind when they write validation or recovery copy. A request should feel light to the user, but it still lives inside a disciplined settlement system.
+
+## What Not To Assume
+
+Avoid these shortcuts when documenting or implementing request flows:
+
+| Shortcut | Why it breaks the model |
+| --- | --- |
+| Treat the request as the user's public identity | Z00Z aims for scoped receiver coordination, not permanent exposure |
+| Treat validation as equivalent to settlement | A valid request can still be pre-final and wallet-side |
+| Treat transport as the trust boundary | Trust, replay, and finality are broader than message delivery |
+| Treat every request as interchangeable with every asset or right family | Different object families can impose different policies and semantics |
+
+A request layer that ignores those limits may still be ergonomic, but it will stop being distinctly Z00Z.
+
+## Current-Repo Usefulness
+
+This repository helps with request-flow work in three concrete ways:
+
+1. It gives you the canonical vocabulary and maturity framing in `content/whitepapers/`.
+2. It gives you reader-facing pages where the request model must stay consistent across docs.
+3. It lets you verify that diagrams, explanations, and navigation still build cleanly through the docs product.
+
+That is enough to improve the request experience honestly, even without claiming a complete local integration stack.
+
+## Read Next
+
+Continue to [RPC Transport](/docs/developers/rpc) if you need the message-delivery boundary next, or return to [Wallet SDK](/docs/developers/wallet) if the bigger question is still the wallet-side possession model.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/Main-Whitepaper.md` defines `ReceiverCard`, `PaymentRequest`, wallet-local possession, and the pre-checkpoint handoff model used on this page.
+- `content/whitepapers/Smart-Cash.md` explains why cash-like receive flows depend on private object handling rather than a public account ledger.
+- `content/whitepapers/Linked-Liability.md` gives context for why receive flows, validation posture, and bounded accountability should stay compatible.
+- `content/whitepapers/Corpus-Terminology-Reference.md` standardizes the request, receiver, and settlement nouns referenced here.

@@ -1,81 +1,69 @@
 ---
 title: "Post-Quantum Migration"
-description: "Honest migration plan: Z00Z is not end-to-end post-quantum secure today, but has PQ-friendly settlement and storage boundaries."
+description: "Migration posture for suite identity, hybrid receive and authorization, one-way rewrap, legacy cutoff, and the harder confidential-amount frontier."
+difficulty: expert
+icon: mdi:alpha-d-circle-outline
 toc: true
 ---
+
 # Post-Quantum Migration
+
 > [!warning]
-> **Docs route:** `/docs/protocol/post-quantum-migration`
+> **Maturity:** `Migration posture`
 >
-> **Target site route:** `/protocol/post-quantum-migration`
->
-> **Maturity:** `Migration target`
->
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Use this page when:** You need the honest PQ answer: what can be claimed today, what cannot, and what migration order best protects live value.
 
-## Page Brief
+Z00Z is not end-to-end post-quantum secure today. That sentence should stay visible. The more defensible claim is narrower: the protocol has a comparatively good settlement and storage boundary for migration because public truth is already organized around checkpointed roots, typed replay artifacts, canonical encodings, and wallet-local possession rather than around one reusable public account table. That helps migration. It does not finish it.
 
-What
-: Honest migration plan: Z00Z is not end-to-end post-quantum secure today, but has PQ-friendly settlement and storage boundaries.
+## The Current Boundary Is Uneven
 
-When
-: Used when discussing cryptographic agility, suite migration, receiver protection, authorization, and amount-validity frontiers.
+| Layer | Current posture under a future quantum threat | Why it matters |
+| --- | --- | --- |
+| Settlement and storage boundary | Relatively stronger | Hash-bound roots, paths, and replay artifacts are easier to migrate than reusable public accounts |
+| Receiver and stealth boundary | Weaker | Legacy key agreement threatens historical and future payload confidentiality |
+| Authorization boundary | Weaker | Legacy signatures are the most urgent live-value risk if they remain valid forever |
+| Confidential amount boundary | Hardest frontier | Commitments and range-proof semantics are not solved by one signature or KEM swap |
 
-Where
-: Protocol, Security, and Research.
+This unevenness is exactly why the page treats migration as a staged program instead of one primitive replacement.
 
-Who
-: Crypto engineers, researchers, auditors, and roadmap planners.
+## The Integrity Firewall
 
-Why
-: Prevents one-primitive-swap narratives and prioritizes migration firewall work.
+The most actionable concept in the PQ paper is the integrity firewall. Its job is simple: after a declared cutoff, legacy-only authorization should no longer be enough to move live value. That does **not** retroactively repair every historical ciphertext or prove that old confidential amount machinery is fully PQ-safe. It does prevent a future break of the legacy lane from automatically becoming a future spend-anything lane.
 
-How
-: Explain legacy lanes, migration lanes, hybrid suites, rewrap, integrity firewall, and the confidential amount frontier.
+This fits Z00Z well because value is already object-oriented and checkpoint-bound. A migration can consume one live right and create a stronger-suite right without rewriting a global account table.
 
-## Reader Lenses
+## Recommended Migration Order
 
-::: tabs
+1. **Make suite identity explicit.** Receiver material, outputs, packages, and proofs should carry a visible cryptographic suite identity instead of relying on contextual guesswork.
+2. **Protect new receive and authorization flows first.** Hybrid or stronger-lane protection for new outputs gives the best immediate value protection.
+3. **Use one-way rewrap.** Legacy outputs should be consumed into stronger-suite outputs rather than oscillating freely between old and new lanes.
+4. **Declare a legacy cutoff.** After activation, legacy-only proofs are no longer enough for new valid settlement.
+5. **Continue the confidential-amount frontier separately.** This remains the hardest problem and should not be hidden behind easier receiver or signature progress.
 
-@tab:active Purpose
-Honest migration plan: Z00Z is not end-to-end post-quantum secure today, but has PQ-friendly settlement and storage boundaries.
+That sequence is more important than any one algorithm family in this docs page. It is the architecture of the migration itself.
 
-@tab Audience
-Primary readers: Crypto engineers, researchers, auditors, and roadmap planners.
+## What The Firewall Does And Does Not Do
 
-@tab Delivery
-Explain legacy lanes, migration lanes, hybrid suites, rewrap, integrity firewall, and the confidential amount frontier.
-
-:::
-
-## Section Lens
-
-Source
-: the main whitepaper, companion protocol papers, HJMT design notes, and core/storage/wallet crate surfaces.
-
-Message
-: settlement authority, private possession, object semantics, checkpoints, and policy boundaries must stay distinct.
-
-UX
-: a technical reference page with diagrams first, then invariants, then implementation links.
-
-Include
-: state diagrams, object lifecycle diagrams, invariants, non-goals, maturity labels, and cross-links to developer APIs.
-
-Avoid
-: turning target architecture into present-tense implementation or merging DA, anchors, support, and settlement truth.
-
-## Navigation Links
-
-| Link | Why it matters |
+| The firewall does... | The firewall does not... |
 | --- | --- |
-| [Protocol](/docs/protocol) | Parent hub and primary context for this page. |
-| [Proof Of Useful Work](/docs/protocol/proof-of-useful-work) | Previous page in the same section order. |
-| [Legal Architecture](/docs/protocol/legal-architecture) | Next page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
+| Stop broken legacy authorization from moving future live value after cutoff | Retroactively re-encrypt or repair every historical payload |
+| Let the protocol define a clearer “old lane” versus “new lane” validity boundary | Prove that old confidential amount proofs are already PQ-safe |
+| Fit naturally with object-based rewrap and checkpointed state continuity | Remove every wallet, recovery, or operational migration challenge |
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-PQ-Migration-Whitepaper.md, crates/z00z_crypto/README.md`
-- Section: `Protocol`
-- Section message: settlement authority, private possession, object semantics, checkpoints, and policy boundaries must stay distinct.
-+++
+This distinction is important because overclaiming PQ readiness would be one of the most damaging forms of protocol drift in the current corpus.
+
+## Why The Confidential Amount Frontier Stays Separate
+
+Replacing receiver protection or authorization is not the same thing as replacing confidential-amount validity. Amount hiding and amount correctness are a harder frontier. A protocol can protect future authorization sooner than it fully replaces the amount-validity stack, as long as that limit is made explicit. Constrained migration lanes or selected high-assurance families may be justified before a universal PQ confidential-amount path exists.
+
+That is not an evasion. It is an honest sequencing rule.
+
+## What The Protocol Can Safely Say Today
+
+Z00Z can safely say that it has a migration-friendly settlement boundary, that it can version cryptographic suites more cleanly than a public-account system centered on one global state model, and that a one-way rewrap plus legacy cutoff is the right integrity-first migration direction. It should not say that the current system is already fully PQ-safe or that one primitive swap solves the whole stack.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/Post-Quantum-Migration.md` sections 1 through 10 define the current cryptographic boundary, threat model, risk matrix, migration principles, integrity firewall, and confidential-amount frontier summarized here.
+- `content/whitepapers/Main-Whitepaper.md` appendix sections on cryptographic boundary and canonical encoding explain why suite identity and checkpoint-bound replay rules matter for migration discipline.
+- `content/whitepapers/Privacy-Threat-Model.md` and `content/whitepapers/Linked-Liability.md` help explain why post-quantum migration should preserve the rights-first, selective-reveal, and wallet-local boundaries instead of collapsing toward transparent accounts.

@@ -19,6 +19,7 @@ type MermaidPanzoomBinding = {
 const mermaidPanzoomBindings = new Map<HTMLElement, MermaidPanzoomBinding>();
 let mermaidInitializationQueue = Promise.resolve();
 let mermaidRenderSequence = 0;
+const MERMAID_RETRY_DELAYS = [0, 120, 320, 700, 1400, 2200] as const;
 
 const MERMAID_THEME_CONFIG = {
   fontFamily: "Trebuchet MS, Verdana, Arial, sans-serif",
@@ -88,6 +89,17 @@ function readMermaidSource(node: HTMLElement): string {
 function hasPendingMermaidNodes(): boolean {
   return Array.from(document.querySelectorAll<HTMLElement>(".docs-prose .mermaid")).some(
     (node) => node.querySelector("svg") === null,
+  );
+}
+
+function nodeMayRequireMarkdownEnhancement(node: Node): boolean {
+  if (!(node instanceof HTMLElement)) {
+    return false;
+  }
+
+  return (
+    node.matches(".docs-prose, .docs-html, .mermaid, .tabs-block") ||
+    node.querySelector(".mermaid, .tabs-block") !== null
   );
 }
 
@@ -391,8 +403,16 @@ function bindMermaidPanzoom(node: HTMLElement) {
 
 export function MarkdownEnhancer() {
   useEffect(() => {
-    const retryTimeoutIds: number[] = [];
+    const retryTimeoutIds = new Set<number>();
     let animationFrameId = 0;
+    let mutationFrameId = 0;
+
+    const clearRetryTimeouts = () => {
+      retryTimeoutIds.forEach((timeoutId) => {
+        window.clearTimeout(timeoutId);
+      });
+      retryTimeoutIds.clear();
+    };
 
     const initializeContent = () => {
       initializeTabs();
@@ -407,15 +427,29 @@ export function MarkdownEnhancer() {
       void queueMermaidInitialization();
     };
 
-    initializeContent();
+    const schedulePendingMermaidRetries = () => {
+      clearRetryTimeouts();
+
+      MERMAID_RETRY_DELAYS.forEach((delay) => {
+        const timeoutId = window.setTimeout(() => {
+          retryTimeoutIds.delete(timeoutId);
+          retryMermaid();
+        }, delay);
+
+        retryTimeoutIds.add(timeoutId);
+      });
+    };
+
+    const refreshEnhancedContent = () => {
+      initializeContent();
+      schedulePendingMermaidRetries();
+    };
+
+    refreshEnhancedContent();
     animationFrameId = window.requestAnimationFrame(retryMermaid);
 
-    for (const delay of [160, 480]) {
-      retryTimeoutIds.push(window.setTimeout(retryMermaid, delay));
-    }
-
     const handleThemeChange = () => {
-      void queueMermaidInitialization();
+      refreshEnhancedContent();
     };
 
     const handleResize = () => {
@@ -445,15 +479,31 @@ export function MarkdownEnhancer() {
       jumpToHashTarget(id);
     };
 
+    const mutationObserver = new MutationObserver((records) => {
+      const shouldRefresh = records.some((record) =>
+        Array.from(record.addedNodes).some((node) => nodeMayRequireMarkdownEnhancement(node)),
+      );
+
+      if (!shouldRefresh) {
+        return;
+      }
+
+      window.cancelAnimationFrame(mutationFrameId);
+      mutationFrameId = window.requestAnimationFrame(() => {
+        refreshEnhancedContent();
+      });
+    });
+
     window.addEventListener(THEME_EVENT_NAME, handleThemeChange as EventListener);
     window.addEventListener("resize", handleResize);
     document.addEventListener("click", handleTableOfContentsClick);
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       window.cancelAnimationFrame(animationFrameId);
-      retryTimeoutIds.forEach((timeoutId) => {
-        window.clearTimeout(timeoutId);
-      });
+      window.cancelAnimationFrame(mutationFrameId);
+      clearRetryTimeouts();
+      mutationObserver.disconnect();
       cleanupAllMermaidPanzoom();
       window.removeEventListener(THEME_EVENT_NAME, handleThemeChange as EventListener);
       window.removeEventListener("resize", handleResize);

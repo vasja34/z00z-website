@@ -1,81 +1,86 @@
 ---
 title: "API Reference"
-description: "Reference hub for Rust crate APIs, RPC methods, wallet object namespace, and future generated docs."
+description: "Reference map for current docs-repo surfaces, protocol vocabulary, and future generated API detail."
+difficulty: specialist
+icon: mdi:alpha-e-circle-outline
 toc: true
 ---
+
 # API Reference
+
 > [!warning]
-> **Docs route:** `/docs/developers/api-reference`
+> **Maturity:** `Reference hub, not exhaustive generated catalog`
 >
-> **Target site route:** `/developers/api-reference`
->
-> **Maturity:** `Live code docs + generated docs target`
->
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Use this page when:** You need to find the right reference surface quickly without being misled into thinking this repo already publishes every runtime API in generated form.
 
-## Page Brief
+An API reference page is useful only when it tells the truth about what kind of reference it is. In this repository, the correct truth is that the page is a **reference map**, not a complete generated catalog. Readers still need a place to orient themselves: where is the canonical protocol vocabulary, where are the current local commands, where does the docs rendering logic live, and which pages explain wallet, transport, or runtime concepts? That is real reference value. Pretending the repo also publishes a finished runtime API browser would only make the page less trustworthy.
 
-What
-: Reference hub for Rust crate APIs, RPC methods, wallet object namespace, and future generated docs.
+## The Three Reference Layers
 
-When
-: Used when builders need exact types, methods, errors, or module ownership.
+Think of the current reference surface as three stacked layers:
 
-Where
-: Developers and footer.
-
-Who
-: Rust developers, SDK authors, wallet teams, and auditors.
-
-Why
-: Reference docs should be separate from conceptual docs.
-
-How
-: Link generated Rust docs, handwritten RPC surfaces, crate-specific module maps, and stable-vs-internal boundaries.
-
-## Reader Lenses
-
-::: tabs
-
-@tab:active Purpose
-Reference hub for Rust crate APIs, RPC methods, wallet object namespace, and future generated docs.
-
-@tab Audience
-Primary readers: Rust developers, SDK authors, wallet teams, and auditors.
-
-@tab Delivery
-Link generated Rust docs, handwritten RPC surfaces, crate-specific module maps, and stable-vs-internal boundaries.
-
-:::
-
-## Section Lens
-
-Source
-: Cargo workspace metadata, crate READMEs, crate root exports, examples, tests, scripts, and generated docs.
-
-Message
-: builders need exact module ownership, runnable commands, API boundaries, and verification steps.
-
-UX
-: a dense builder guide with command blocks, module maps, tabs for roles, and explicit source-file links.
-
-Include
-: setup commands, crate maps, stable-vs-internal API labels, examples, failure modes, and verification gates.
-
-Avoid
-: invented SDK behavior, snippets that do not map to code, or tutorial prose that hides safety boundaries.
-
-## Navigation Links
-
-| Link | Why it matters |
+| Layer | What it provides today |
 | --- | --- |
-| [Developers](/docs/developers) | Parent hub and primary context for this page. |
-| [Examples And Tutorials](/docs/developers/examples) | Previous page in the same section order. |
-| [Verification And Tests](/docs/developers/verification-tests) | Next page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
+| Protocol language | Canonical terms, boundaries, and maturity framing from the whitepaper corpus |
+| Repository workflow | Commands, rendering behavior, navigation, and verification surfaces that really exist locally |
+| Reader-facing subsystem docs | Curated explanations for wallets, transport, runtime roles, storage, and verification |
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `crate root lib.rs files, cargo doc`
-- Section: `Developers`
-- Section message: builders need exact module ownership, runnable commands, API boundaries, and verification steps.
-+++
+This is enough to answer many builder questions even before generated runtime docs exist.
+
+## Where To Look For What
+
+Use this table as the real entry point:
+
+| If you need... | Start here |
+| --- | --- |
+| Protocol object and settlement vocabulary | `content/whitepapers/Corpus-Terminology-Reference.md` and `content/docs/protocol/` |
+| Contributor commands and completion gates | `package.json`, `scripts/verify.sh`, `content/docs/developers/get-started.md` |
+| Markdown and content rendering behavior | `src/lib/content/markdown.ts` |
+| Current docs routing and delivery | `src/app/` and `content/docs/` |
+| AI-assisted workflow rules | `.github/copilot-instructions.md`, `.github/skills/`, `.github/prompts/` |
+
+That structure is more useful than a fake namespace list because it helps the reader reach evidence that actually exists.
+
+## What This Page Should Not Pretend To Be
+
+The current repo does not justify claiming:
+
+| Not justified here | Why |
+| --- | --- |
+| Exhaustive generated runtime method documentation | The implementation surface is not fully local in this tree |
+| Complete wallet, node, or service signatures | Many advanced subsystem pages are concept-plus-maturity guides |
+| Stable generated browser docs for every future package | That would require build artifacts or implementation sources not present here |
+
+The page should therefore guide readers toward the right **kind** of reference rather than fabricating precision.
+
+## A Useful Reference Habit For Builders
+
+When you hit a technical question, ask first which of these it is:
+
+1. A protocol meaning question.
+2. A local repo workflow question.
+3. A subsystem-orientation question.
+
+If it is a protocol meaning question, the whitepaper corpus is primary. If it is a local repo workflow question, the code and scripts in this repository are primary. If it is a subsystem-orientation question, the current docs pages should summarize the boundary and then hand off to the right evidence. This habit prevents the reference page from turning into a dumping ground for mismatched details.
+
+## Reference Anti-Patterns
+
+| Anti-pattern | Why it weakens the page |
+| --- | --- |
+| Listing future APIs as if they are locally published | It teaches readers to trust non-evidence |
+| Mixing conceptual terms and live commands in one undifferentiated list | Readers cannot tell what they can act on now |
+| Treating docs prose as equivalent to generated API contracts | The confidence level is different |
+| Omitting workflow surfaces because they are not "real APIs" | Builder productivity depends on them anyway |
+
+The best API reference page is not always the biggest one. It is the one with the clearest truth boundary.
+
+## Read Next
+
+Continue to [Verification And Tests](/docs/developers/verification-tests) for the local quality gates that validate this repository, or return to [Examples And Tutorials](/docs/developers/examples) if you need narrative walkthroughs rather than reference entry points.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/Main-Whitepaper.md` and `content/whitepapers/Corpus-Terminology-Reference.md` are the primary protocol reference surfaces for object, settlement, and maturity vocabulary.
+- `package.json`, `scripts/verify.sh`, and `src/lib/content/markdown.ts` are the main local reference surfaces for commands and content-rendering behavior in this repository.
+- `content/docs/developers/` and `content/docs/protocol/` provide the current curated subsystem explanations that this hub points readers toward.
+- `.github/copilot-instructions.md`, `.github/skills/`, and `.github/prompts/` are part of the live workflow reference surface for contributors using assistant-driven editing.

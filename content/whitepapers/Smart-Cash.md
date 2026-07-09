@@ -1,8 +1,16 @@
+---
+title: "Z00Z Smart Cash"
+description: "Explains what programmable cash means in Z00Z and how bounded wallet or service-side state machines differ from a universal public VM."
+difficulty: advanced
+icon: mdi:alpha-c-circle-outline
+toc: true
+---
+
 # Z00Z Smart Cash
 
 [TOC]
 
-Version: 2026-06-27
+Version: 2026-07-09
 
 ## Key Terms Used In This Paper
 
@@ -98,33 +106,33 @@ private execution remains future-proof-system work.
 The live corpus already splits the answer across a small set of documents that
 own different parts of the same boundary:
 
-- [Z00Z Main Whitepaper](Z00Z-Main-Whitepaper.md) defines the core protocol
+- [Z00Z Main Whitepaper](Main-Whitepaper.md) defines the core protocol
   thesis: wallet-local possession, checkpointed settlement evidence,
   `TxPackage` and `ClaimTxPackage`, and the distinction between private local
   ownership meaning and public replay-safe settlement.
-- [Z00Z Assets, Rights, And Vouchers Whitepaper](Z00Z-Assets-Rights-Vauchers-Whitepaper.md)
+- [Z00Z Assets, Rights, And Vouchers Whitepaper](Assets-Rights-Vauchers.md)
   defines the clean object split: native `Asset` as final value, `Voucher` as
   conditional value, and `Right` as authority, while narrowing where
   `CashPolicy`, `VoucherPolicy`, and `ActionPool` belong.
-- [Z00Z JMT Asset And Right Storage Design](tech-papers/done/Z00Z-HJMT-Design.md) defines the
+- [Z00Z JMT Asset And Right Storage Design](../tech-papers/done/Z00Z-HJMT-Design.md) defines the
   storage and object boundary: `SettlementPath` and `SettlementStateRoot` as
   the live generalized HJMT grammar, `AssetLeaf` and `RightLeaf` as the live
   terminal families, and `FeeEnvelope` as a separate processing-guarantee
   primitive rather than a hidden extension of the right.
-- [Z00Z Agentic Offline Economy Whitepaper](Z00Z-Agentic-Offline-Economy-Whitepaper.md)
+- [Z00Z Agentic Offline Economy Whitepaper](Agentic-Offline-Economy.md)
   defines the broader rights vocabulary that pressures the smart-cash
   boundary without dissolving it: spendable rights, spendable capability
   objects, machine capability objects, agent spending envelopes, offline
   receipts, and checkpointed reconciliation.
-- [Z00Z Linked Liability Whitepaper](Z00Z-Linked-Liability-Whitepaper.md)
+- [Z00Z Linked Liability Whitepaper](Linked-Liability.md)
   defines the accountability boundary for delayed-connectivity and autonomous
   rights. It introduces `FraudProof`, `BondRef`, `PenaltyPolicy`, and
   `LockRegistry`, while staying explicit that the full production enforcement
   loop remains future work.
-- [Z00Z Use Cases Whitepaper](Z00Z-UseCases-Whitepaper.md) defines the
+- [Z00Z Use Cases Whitepaper](UseCases.md) defines the
   strongest bounded policy and rights families that already fit the Z00Z
   architecture without requiring a universal public contract machine.
-- [Z00Z Roadmap Blueprint](tech-papers/Z00Z-Roadmap-Blueprint.md) defines the maturity
+- [Z00Z Roadmap Blueprint](../tech-papers/Z00Z-Roadmap-Blueprint.md) defines the maturity
   discipline that prevents this paper from overstating what is live, what is
   only reserved, and what still requires proof-backend or runtime closure.
 
@@ -1037,9 +1045,9 @@ FSM terminology.
 
 The corpus also constrains wording:
 
-- `RightLeaf` and `SettlementStateRoot` are already live HJMT contract terms,
-  while broader rights-runtime widening still requires explicit migration and
-  proof rules.
+- `RightLeaf`, `VoucherLeaf`, and `SettlementStateRoot` are already live HJMT
+  contract terms, while broader rights-runtime widening still requires
+  explicit migration and proof rules.
 - `FeeEnvelope` is a support object for processing guarantees, not hidden
   general wallet authority.
 - `TxPackage` and `ClaimTxPackage` are transport and settlement-candidate
@@ -1084,11 +1092,11 @@ claiming that those mechanisms are already live.
 
 | Source article anchor | Smart-cash extension | Required Z00Z wording or signature |
 | --- | --- | --- |
-| [Auditable, Anonymous Electronic Cash, pp. 1-2, 8, 10, 13](<articles/Auditable, Anonymous Electronic Cash.pdf#page=1>) | Smart cash should separate supply audit from transaction tracing. | A future issuer lane should define `SupplyAuditRoot`, `IssuanceCommitment`, and `InvalidationEvent` so an auditor can verify issued, outstanding, or invalidated supply without learning the ordinary holder graph behind `AssetLeaf` ownership. |
-| [Auditable, Anonymous Electronic Cash, pp. 2, 8, 13-15](<articles/Auditable, Anonymous Electronic Cash.pdf#page=2>) | Non-rigid invalidation belongs at the right or issuance domain, not at a public wallet identity. | Use `non_rigid_invalidation(policy_id, right_commitment)` for future revocation or correction flows. The invalidation target should be the bounded right, certificate, or issuance entry, not the user's whole wallet. |
-| [Fully Anonymous Transferable Ecash, pp. 7-14](<articles/Fully Anonymous Transferable Ecash.pdf#page=7>) | Portable cash objects need explicit size and compaction rules. | Future offline `TxPackage` or note-like wrappers should carry `PackageHistoryBound`. If the portable history exceeds policy, the wallet must reconcile, compact, cash in, or checkpoint before further transfer rather than growing an unbounded bearer object. |
-| [Anonymous Transferable E-Cash, pp. 17-22](<articles/Anonymous Transferable E-Cash.pdf#page=17>) and [A Survey on Anonymity, Confidentiality, and Auditability, pp. 5, 18](<articles/A Survey on Anonymity, Confidentiality, and Auditability.pdf#page=5>) | Re-randomized presentation is a useful smart-cash concept even if Z00Z does not adopt malleable signatures directly. | Future receipt or certificate design may use `refresh_presentation(old_evidence, context) -> unlinkable_evidence` as a requirement: the refreshed object must remain verifiable under the same settlement relation while avoiding stable presentation fingerprints. |
-| [Fully Anonymous Transferable Ecash, pp. 9-12, 14](<articles/Fully Anonymous Transferable Ecash.pdf#page=9>) | Issuer unlinkability should be explicit for private cash issuance. | If an issuer authorizes minting or claim conversion, the design should separate `IssuanceAuthorization` from the later `AssetLeaf` or `RightLeaf` appearance. The issuer may know it authorized supply, but should not automatically learn which later leaf belongs to the withdrawing wallet. |
-| [PCH-based privacy-preserving with reusability, pp. 1-7, 9, 11-14](<articles/PCH-based privacy-preserving with reusability.pdf#page=1>) | Reusable deposits are a future smart-cash channel pattern, not a base settlement replacement. | Introduce target nouns `ReusableDepositCertificate`, `DepositSplitProof`, and `VirtualChannelWallet` for a future L2 lane. These certificates should let a locked deposit be divided or reused across private virtual channels without turning the hub into a relationship graph oracle. |
-| [PCH-based privacy-preserving with reusability, pp. 5-7, 11](<articles/PCH-based privacy-preserving with reusability.pdf#page=5>) | Balance security must be stated independently from privacy. | A channel-style smart-cash lane should prove `old_balance = new_balance_left + new_balance_right + fee` under commitments and range constraints. Privacy is not enough if a hub or counterparty can claim more than its committed balance. |
-| [User-Perceived Privacy in Blockchain, pp. 10-15](<articles/User-Perceived Privacy in Blockchain.pdf#page=10>) and [Usability of Cryptocurrency Wallets, pp. 3-10](<articles/Usability of Cryptocurrency Wallets.pdf#page=3>) | Smart-cash UX must make fee, delay, and privacy posture visible before the user signs. | A wallet should expose `privacy_cost`, `delay_expectation`, `fee_source`, and `privacy_undo_risk` for policy-heavy cash flows. This does not make privacy optional by default; it prevents users from unknowingly creating fingerprints or undoing separation. |
+| [Auditable, Anonymous Electronic Cash, pp. 1-2, 8, 10, 13](<../articles/Auditable, Anonymous Electronic Cash.pdf#page=1>) | Smart cash should separate supply audit from transaction tracing. | A future issuer lane should define `SupplyAuditRoot`, `IssuanceCommitment`, and `InvalidationEvent` so an auditor can verify issued, outstanding, or invalidated supply without learning the ordinary holder graph behind `AssetLeaf` ownership. |
+| [Auditable, Anonymous Electronic Cash, pp. 2, 8, 13-15](<../articles/Auditable, Anonymous Electronic Cash.pdf#page=2>) | Non-rigid invalidation belongs at the right or issuance domain, not at a public wallet identity. | Use `non_rigid_invalidation(policy_id, right_commitment)` for future revocation or correction flows. The invalidation target should be the bounded right, certificate, or issuance entry, not the user's whole wallet. |
+| [Fully Anonymous Transferable Ecash, pp. 7-14](<../articles/Fully Anonymous Transferable Ecash.pdf#page=7>) | Portable cash objects need explicit size and compaction rules. | Future offline `TxPackage` or note-like wrappers should carry `PackageHistoryBound`. If the portable history exceeds policy, the wallet must reconcile, compact, cash in, or checkpoint before further transfer rather than growing an unbounded bearer object. |
+| [Anonymous Transferable E-Cash, pp. 17-22](<../articles/Anonymous Transferable E-Cash.pdf#page=17>) and [A Survey on Anonymity, Confidentiality, and Auditability, pp. 5, 18](<../articles/A Survey on Anonymity, Confidentiality, and Auditability.pdf#page=5>) | Re-randomized presentation is a useful smart-cash concept even if Z00Z does not adopt malleable signatures directly. | Future receipt or certificate design may use `refresh_presentation(old_evidence, context) -> unlinkable_evidence` as a requirement: the refreshed object must remain verifiable under the same settlement relation while avoiding stable presentation fingerprints. |
+| [Fully Anonymous Transferable Ecash, pp. 9-12, 14](<../articles/Fully Anonymous Transferable Ecash.pdf#page=9>) | Issuer unlinkability should be explicit for private cash issuance. | If an issuer authorizes minting or claim conversion, the design should separate `IssuanceAuthorization` from the later `AssetLeaf` or `RightLeaf` appearance. The issuer may know it authorized supply, but should not automatically learn which later leaf belongs to the withdrawing wallet. |
+| [PCH-based privacy-preserving with reusability, pp. 1-7, 9, 11-14](<../articles/PCH-based privacy-preserving with reusability.pdf#page=1>) | Reusable deposits are a future smart-cash channel pattern, not a base settlement replacement. | Introduce target nouns `ReusableDepositCertificate`, `DepositSplitProof`, and `VirtualChannelWallet` for a future L2 lane. These certificates should let a locked deposit be divided or reused across private virtual channels without turning the hub into a relationship graph oracle. |
+| [PCH-based privacy-preserving with reusability, pp. 5-7, 11](<../articles/PCH-based privacy-preserving with reusability.pdf#page=5>) | Balance security must be stated independently from privacy. | A channel-style smart-cash lane should prove `old_balance = new_balance_left + new_balance_right + fee` under commitments and range constraints. Privacy is not enough if a hub or counterparty can claim more than its committed balance. |
+| [User-Perceived Privacy in Blockchain, pp. 10-15](<../articles/User-Perceived Privacy in Blockchain.pdf#page=10>) and [Usability of Cryptocurrency Wallets, pp. 3-10](<../articles/Usability of Cryptocurrency Wallets.pdf#page=3>) | Smart-cash UX must make fee, delay, and privacy posture visible before the user signs. | A wallet should expose `privacy_cost`, `delay_expectation`, `fee_source`, and `privacy_undo_risk` for policy-heavy cash flows. This does not make privacy optional by default; it prevents users from unknowingly creating fingerprints or undoing separation. |

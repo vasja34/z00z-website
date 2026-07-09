@@ -1,81 +1,54 @@
 ---
 title: "Terms Of Use"
 description: "Website and documentation terms, separate from protocol legal architecture."
+difficulty: specialist
+icon: mdi:alpha-e-circle-outline
 toc: true
 ---
+
 # Terms Of Use
+
 > [!warning]
-> **Docs route:** `/docs/legal/terms`
->
-> **Target site route:** `/legal/terms`
->
 > **Maturity:** `Site legal target`
 >
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Reading rule:** This page describes the minimum posture the public site should preserve. It is not a finalized jurisdiction-specific contract, and readers should not treat it as one.
 
-## Page Brief
+The Z00Z website needs a terms posture that matches the architecture instead of fighting it. The point of the terms page is not to imitate a giant generic platform contract. The point is to say, in plain language, what the site is for, what it is not doing, and which responsibilities stay with the reader or with independent third-party services.
 
-What
-: Website and documentation terms, separate from protocol legal architecture.
+## What These Terms Need To Protect
 
-When
-: Used when publishing the public website.
+At minimum, the site should make four things clear.
 
-Where
-: Footer.
+First, the documentation is informational. It explains protocol design, maturity, boundaries, and intended use cases, but it is not financial advice, legal advice, or a guarantee that any described future surface is already available.
 
-Who
-: All site users, counsel, and maintainers.
+Second, the protocol thesis is self-custody and service separation. A public docs site should not imply that visiting the site creates a custody relationship, a brokerage relationship, or a promise that the project will intermediate user transactions.
 
-Why
-: The site itself needs terms even when protocol docs are not legal advice.
+Third, independent services remain independent. If a wallet, issuer, bridge, or other operator later offers a product related to Z00Z, that service owns its own terms, disclosures, and regulatory posture unless the docs explicitly say otherwise.
 
-How
-: Draft site-specific terms with counsel, include docs usage, no financial advice, no custody, no endorsement, and jurisdictional limits.
+Fourth, local law still matters. A neutral protocol narrative does not erase the responsibility of users, partners, or service operators to evaluate their own legal and compliance obligations.
 
-## Reader Lenses
+## The Minimum Terms Matrix
 
-::: tabs
-
-@tab:active Purpose
-Website and documentation terms, separate from protocol legal architecture.
-
-@tab Audience
-Primary readers: All site users, counsel, and maintainers.
-
-@tab Delivery
-Draft site-specific terms with counsel, include docs usage, no financial advice, no custody, no endorsement, and jurisdictional limits.
-
-:::
-
-## Section Lens
-
-Source
-: legal architecture, DAO, tokenomics, marketing strategy, privacy threat model, and public-claim boundaries.
-
-Message
-: public pages must separate protocol neutrality, website terms, issuer responsibility, token risk, and service-layer data handling.
-
-UX
-: a clear legal utility section with page-specific disclosure blocks and links back to technical authority.
-
-Include
-: disclosures, non-advice language, maturity labels, independent-service boundaries, review checklists, and claim red lines.
-
-Avoid
-: legal advice, custody implications, issuer endorsement, guaranteed compliance claims, or broad privacy guarantees.
-
-## Navigation Links
-
-| Link | Why it matters |
+| Topic | Safe baseline |
 | --- | --- |
-| [Legal](/docs/legal) | Parent hub and primary context for this page. |
-| [Legal Architecture](/docs/legal/architecture) | Previous page in the same section order. |
-| [Privacy Policy](/docs/legal/privacy) | Next page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
+| Nature of the site | Documentation and informational material about Z00Z and its corpus. |
+| Financial posture | No offer, solicitation, investment advice, or custody promise is created by reading the docs. |
+| Service boundary | Independent wallets, issuers, bridges, and other integrations own their own obligations unless explicitly stated. |
+| User responsibility | Readers remain responsible for their own decisions, jurisdictional analysis, and use of third-party tools. |
+| Maturity discipline | Target architecture, future work, and research lanes should stay labeled as such. |
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-Legal-Architecture-Whitepaper.md`
-- Section: `Legal`
-- Section message: public pages must separate protocol neutrality, website terms, issuer responsibility, token risk, and service-layer data handling.
-+++
+## Why This Matters For A Docs Site
+
+A docs page can create risk even when no transaction happens on the page itself. Overstated language can make a research-stage feature sound operational. Casual references to "our bridge", "our market", or "our issuer lane" can imply responsibility that the architecture is trying to avoid. That is why the terms posture should stay closer to the corpus boundary than to generic startup marketing copy.
+
+The practical standard is simple: if a statement would be hard to defend using the legal architecture paper and the main whitepaper, it probably does not belong in the site terms posture either.
+
+## What Comes Next
+
+This page should eventually sit beside a fuller counsel-reviewed terms package, but the architectural rules should remain the same. Until then, the public site should keep its promises narrow, explicit, and easy to audit against the corpus.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/Legal-Architecture.md` sections 3, 9, 12, and 17 define the non-operator posture, wallet boundary, external-service separation, and safe public-claim formulas reflected here.
+- `content/whitepapers/Main-Whitepaper.md` sections 10 and 11 support the protocol-versus-service split and the asset-neutral posture that the site should not overstate.
+- `content/whitepapers/Uniqueness.md` section 9 explains why trust boundaries and external dependencies should stay explicit rather than implied.

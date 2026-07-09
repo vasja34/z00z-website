@@ -1,135 +1,99 @@
 ---
 title: "Developers"
-description: "Builder hub for Rust workspace, APIs, wallets, storage, runtime services, simulator, configs, tests, and examples."
+description: "Builder hub for the Z00Z docs repo, whitepaper corpus, contributor workflows, and implementation boundaries."
+difficulty: basic
+icon: mdi:alpha-a-circle-outline
 toc: true
 ---
+
 # Developers
+
 > [!note]
-> **Docs route:** `/docs/developers`
+> **Maturity:** `Live docs site + whitepaper-grounded builder map`
 >
-> **Target site route:** `/developers`
->
-> **Maturity:** `Live code docs`
->
-> Keep the public wording aligned with the stated maturity and route intent.
+> **Use this page when:** You need to understand what this repository can prove directly, what it only describes conceptually, and where to start as a contributor or integrator.
 
-## Page Brief
+The most important fact about the Z00Z developer docs is also the easiest one to miss: **this repository is a documentation and delivery surface, not the full protocol runtime**. That is not a limitation to hide. It is the boundary that makes the rest of the builder guidance credible. You can verify the docs pipeline, the navigation model, the whitepaper corpus, the contributor workflows, and the content rendering stack here. You should not pretend that every runtime crate, wallet service, node process, or transport adapter already lives in this tree just because the broader protocol design describes them.
 
-What
-: Builder hub for Rust workspace, APIs, wallets, storage, runtime services, simulator, configs, tests, and examples.
+This section is therefore written as a builder hub, not as a fake monorepo index. It helps three kinds of readers. First, contributors who need to change the docs site itself can find the repo structure, verification commands, and authoring rules that are live now. Second, protocol and wallet builders can use these pages as a whitepaper-grounded vocabulary map before they touch implementation work elsewhere. Third, AI coding agents can understand which local artifacts are authoritative in this repo and which claims must stay explicitly conceptual.
 
-When
-: Used after conceptual onboarding or by contributors landing directly from GitHub.
+## What This Repository Can Prove
 
-Where
-: Primary navigation and docs sidebar.
+Use the current tree as evidence for these questions:
 
-Who
-: Rust contributors, wallet builders, protocol integrators, operators, auditors, and tool authors.
-
-Why
-: Sui and NEAR both make developer routes first-class; Z00Z needs an equally clear builder map.
-
-How
-: Start with quickstart, then crate-level docs, API references, examples, local simulation, and verification commands.
-
-## Reader Lenses
-
-::: tabs
-
-@tab:active Purpose
-Builder hub for Rust workspace, APIs, wallets, storage, runtime services, simulator, configs, tests, and examples.
-
-@tab Audience
-Primary readers: Rust contributors, wallet builders, protocol integrators, operators, auditors, and tool authors.
-
-@tab Delivery
-Start with quickstart, then crate-level docs, API references, examples, local simulation, and verification commands.
-
-:::
-
-## Section Lens
-
-Source
-: Cargo workspace metadata, crate READMEs, crate root exports, examples, tests, scripts, and generated docs.
-
-Message
-: builders need exact module ownership, runnable commands, API boundaries, and verification steps.
-
-UX
-: a dense builder guide with command blocks, module maps, tabs for roles, and explicit source-file links.
-
-Include
-: setup commands, crate maps, stable-vs-internal API labels, examples, failure modes, and verification gates.
-
-Avoid
-: invented SDK behavior, snippets that do not map to code, or tutorial prose that hides safety boundaries.
-
-## Section Pages
-
-| Page | Role |
+| Question | Where to verify it here |
 | --- | --- |
-| [Get Started](/docs/developers/get-started) | Minimal local setup for building, testing, and understanding the Rust workspace. |
-| [AI Agent Playbook](/docs/developers/ai-agent-playbook) | Agent-ready builder page for coding assistants working inside the Z00Z repository. |
-| [Migration Guides](/docs/developers/migration-guides) | Concept mapping for builders coming from account chains, public smart-contract platforms, wallet SDKs, or bridge-heavy systems. |
-| [Rust Workspace](/docs/developers/workspace) | Map of all active workspace crates and their ownership boundaries. |
-| [Core Protocol API](/docs/developers/core) | Developer docs for assets, actions, policies, rights, vouchers, genesis, hashing, and curated root exports. |
-| [Crypto Facade](/docs/developers/crypto) | Approved cryptographic API over Tari-backed primitives and Z00Z-owned domain, hash, KDF, AEAD, commitment, and proof surfaces. |
-| [Wallet SDK](/docs/developers/wallet) | Wallet API docs for receiver cards, payment requests, object inventory, backups, RPC namespace, WASM support, and service facades. |
-| [Payment Requests And Receiver Intents](/docs/developers/payment-requests) | Builder docs for signed receiver cards, payment requests, validation, one-time receiver material, and wallet-facing payment workflows. |
-| [Storage And HJMT](/docs/developers/storage-hjmt) | Developer docs for settlement storage, HJMT, checkpoints, serialization, snapshots, durable backend seams, and proof generation. |
-| [RPC Transport](/docs/developers/rpc) | Transport-focused RPC abstraction for dispatch, local testing, WASM clients, and pluggable transports. |
-| [Rollup Node](/docs/developers/rollup-node) | Proof verification and rollup-facing node process docs, including mode wiring, DA adapter seam, RPC state, runtime, and status snapshot. |
-| [Runtime Services](/docs/developers/runtime-services) | Developer hub for aggregators, validators, and watchers. |
-| [Simulator](/docs/developers/simulator) | Scenario-driven integration harness for replaying protocol, wallet, storage, RPC, and runtime flows. |
-| [Configuration And Genesis](/docs/developers/configuration-genesis) | Genesis, asset registry, rights-enabled YAML, runtime config, and reproducible bootstrap docs. |
-| [WASM Wallet](/docs/developers/wasm-wallet) | Browser-compatible wallet build and integration docs. |
-| [Examples And Tutorials](/docs/developers/examples) | Practical walkthroughs for wallets, transfers, claim packages, storage proofs, local simulator, and runtime verification. |
-| [API Reference](/docs/developers/api-reference) | Reference hub for Rust crate APIs, RPC methods, wallet object namespace, and future generated docs. |
-| [Verification And Tests](/docs/developers/verification-tests) | Verification strategy for unit tests, integration tests, benches, fuzzing, formal tools, security gates, and supply-chain checks. |
+| How the docs site is routed and rendered | `src/app/`, `src/lib/content/markdown.ts`, `content/docs/` |
+| Which whitepapers define the current protocol vocabulary | `content/whitepapers/` |
+| Which verification commands are part of the normal site workflow | `package.json`, `scripts/verify.sh` |
+| Which contributor and agent rules are active in this repo | `.github/copilot-instructions.md`, `.github/skills/`, `.github/prompts/` |
+| Which documentation pages are live in the navigation tree | `content/docs/**/_meta.yaml` |
 
-## Navigation Links
+Use the whitepaper corpus as evidence for these questions:
 
-| Link | Why it matters |
+| Question | Why the answer is conceptual here |
 | --- | --- |
-| [Z00Z Home](/docs) | Parent hub and primary context for this page. |
-| [Protocol](/docs/protocol) | Previous page in the same section order. |
-| [Network](/docs/network) | Next page in the same section order. |
+| What `AssetLeaf`, `TxPackage`, checkpoints, and wallet-local possession mean | Those are protocol concepts described in the corpus, not runtime APIs exported by this repo |
+| How payment requests, rights, vouchers, or smart cash should behave | The design is documented here, but the full service surface is not implemented in this tree |
+| How operator roles, bridges, or full runtime services compose | The target architecture exists in the papers, while this repo mainly exposes the explanatory surface |
 
-## Delivery Focus
+That distinction keeps the docs honest. A contributor can still do valuable work here: tighten protocol language, improve diagrams, align pages with the source corpus, and verify that the docs product itself builds and navigates correctly.
 
-- [x] Route intent captured from the architecture scaffold
-- [x] Internal cross-links added for hub navigation
-- [x] Evidence anchors preserved for follow-up drafting
-- [ ] Final long-form prose and diagrams still need source-document expansion
+## Recommended Reading Order
 
-## Route Map
+Start with the page that matches the question you actually have:
 
-@mermaidstart
-graph TD
-  developers["Developers"]
-  developers --> dev_get_started["Get Started"]
-  developers --> dev_agent_playbook["AI Agent Playbook"]
-  developers --> dev_migration_guides["Migration Guides"]
-  developers --> dev_workspace["Rust Workspace"]
-  developers --> dev_core_api["Core Protocol API"]
-  developers --> dev_crypto["Crypto Facade"]
-  developers --> dev_wallet["Wallet SDK"]
-  developers --> dev_payment_requests["Payment Requests And Receiver Intents"]
-  developers --> dev_storage["Storage And HJMT"]
-  developers --> dev_rpc["RPC Transport"]
-  developers --> dev_rollup_node["Rollup Node"]
-  developers --> dev_runtime["Runtime Services"]
-  developers --> dev_simulator["Simulator"]
-  developers --> dev_config_genesis["Configuration And Genesis"]
-  developers --> dev_wasm["WASM Wallet"]
-  developers --> dev_examples["Examples And Tutorials"]
-  developers --> dev_api_reference["API Reference"]
-  developers --> dev_verification["Verification And Tests"]
-@mermaidend
+1. [Get Started](/docs/developers/get-started) if you need the local command path for this repo.
+2. [AI Agent Playbook](/docs/developers/ai-agent-playbook) if you are using an assistant-driven workflow and need the local safety rules first.
+3. [Rust Workspace](/docs/developers/workspace) if you need the repo structure and content pipeline boundaries.
+4. [Core Protocol API](/docs/developers/core) if you need the protocol object vocabulary before implementation work.
+5. [Crypto Facade](/docs/developers/crypto), [Wallet SDK](/docs/developers/wallet), [Payment Requests And Receiver Intents](/docs/developers/payment-requests), and [RPC Transport](/docs/developers/rpc) if you are mapping a specific subsystem.
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `Cargo.toml, crates/z00z-crates-overview.md, crate README files`
-- Section: `Developers`
-- Section message: builders need exact module ownership, runnable commands, API boundaries, and verification steps.
-+++
+The later pages in this developer family do not all describe live code in this repository. They instead stabilize terminology and integration expectations so that future implementation work does not drift away from the protocol papers.
+
+## Builder Tasks This Hub Supports
+
+| Task | Best page to open first | What you can validate locally |
+| --- | --- | --- |
+| Fix docs copy, links, or page structure | [Get Started](/docs/developers/get-started) | Lint, search coverage, and build |
+| Change Markdown behavior or authoring patterns | [Rust Workspace](/docs/developers/workspace) | `src/lib/content/markdown.ts` and current content files |
+| Clarify protocol object language | [Core Protocol API](/docs/developers/core) | Whitepaper alignment and docs navigation |
+| Review privacy or cryptography wording | [Crypto Facade](/docs/developers/crypto) | Corpus citations and local instruction surfaces |
+| Design wallet or request UX copy | [Wallet SDK](/docs/developers/wallet) and [Payment Requests And Receiver Intents](/docs/developers/payment-requests) | Current docs pages, diagrams, and terminology |
+| Explain transport boundaries without overclaiming runtime status | [RPC Transport](/docs/developers/rpc) | Whitepaper and docs-site evidence |
+
+This is why the developer section is useful even before every downstream runtime page is complete. It gives contributors a stable map of what can be asserted now.
+
+## Repo-Local Surfaces Worth Knowing
+
+The local structure matters because Z00Z documentation work is not just prose editing.
+
+| Surface | Why builders use it |
+| --- | --- |
+| `content/docs/` | Human-facing documentation source files |
+| `content/whitepapers/` | Canonical protocol corpus for terms, boundaries, and maturity framing |
+| `src/app/` | Next.js App Router entry points for the site |
+| `src/lib/content/markdown.ts` | Markdown rendering pipeline, including Mermaid support and content plugins |
+| `config/` | Project-level configuration that shapes the site |
+| `public/` | Runtime-served assets |
+| `scripts/verify.sh` | The repo's bundled verification sequence |
+| `.github/` | Prompts, skills, agent rules, and workflow instructions used during docs work |
+
+If you remember only one operating rule, remember this one: **local paths justify local claims, and the whitepaper corpus justifies conceptual claims**. When a statement belongs to neither category, it probably needs to be rewritten or removed.
+
+## When To Escalate Beyond This Repo
+
+You should step outside this repository only when the task itself demands implementation evidence that is not present here. For example, if you need a production wallet API signature, a concrete node transport contract, or proof that an operator pipeline already exists in running code, this docs repo cannot honestly provide that. In those cases the correct move is not to invent detail. The correct move is to keep the page explicit about maturity and cite the whitepaper design language that exists today.
+
+That approach is not less technical. It is more disciplined. Z00Z is building a privacy-first system where terminology, authority boundaries, and public-claim discipline matter as much as code samples. A contributor who keeps those boundaries sharp is doing protocol work, not just editing copy.
+
+## Read Next
+
+Go to [Get Started](/docs/developers/get-started) for the local command path, or jump to [Core Protocol API](/docs/developers/core) if you already know the repo workflow and need the protocol object model first.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/Main-Whitepaper.md` sections 1, 2, 3, and 10 define the protocol thesis, wallet-local possession boundary, settlement-notary model, and protocol-versus-service separation used across this developer hub.
+- `content/whitepapers/Corpus-Terminology-Reference.md` is the naming authority for `AssetLeaf`, `TxPackage`, `PaymentRequest`, `ReceiverCard`, settlement evidence, and related terms referenced throughout this section.
+- `package.json` and `scripts/verify.sh` define the current repo verification surface that builder pages may describe as live.
+- `src/lib/content/markdown.ts` and `content/docs/` show that this repository is a real docs product with its own rendering, content, and verification boundaries.

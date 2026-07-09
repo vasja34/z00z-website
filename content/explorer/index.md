@@ -1,10 +1,12 @@
 ---
-title: "Explorer"
+title: "Explorer Home"
 description: "Live data views for accounts, transactions, checkpoints, and blocks."
+difficulty: basic
+icon: material-symbols:home-outline
 toc: true
 ---
 
-# Explorer
+# Explorer Home
 
 > [!tip]
 > This is the initial landing page for the explorer domain. It keeps the route live until dedicated app views replace it.

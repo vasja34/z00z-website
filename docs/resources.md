@@ -20,3 +20,27 @@
 - Если нужен огромный каталог по многим open-source наборам: `Iconify Icon Sets` — https://icon-sets.iconify.design/ . Там можно сразу видеть наборы и лицензии. Источник: https://icon-sets.iconify.design/ , https://iconify.design/docs/usage/
 
 Проверка: `npm run lint` и `npm run build` прошли. В build остались старые Turbopack warnings про file tracing в `content`, к этой правке они не относятся.
+
+----------
+
+
+
+Есть такие нормальные mono-варианты, и все они локально доступны через `next/font/google`:
+
+- `Source Code Pro` — сейчас уже подключён
+- `IBM Plex Mono`
+- `JetBrains Mono`
+- `Fira Code`
+- `Roboto Mono`
+- `Space Mono`
+- `Inconsolata`
+- `DM Mono`
+- `PT Mono`
+- `Ubuntu Mono`
+- `Anonymous Pro`
+
+-------
+
+
+
+Исправил в [DocsShell.tsx](/home/vadim/Projects/z00z-website/src/components/docs/DocsShell.tsx): для логотипа включил `unoptimized` у `next/image`, чтобы он брал raw PNG без optimizer Next. Это как раз тот слой, который чаще всего даёт чёрные углы/ореолы на прозрачных PNG.

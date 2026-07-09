@@ -1,10 +1,12 @@
 ---
-title: "Wallet"
+title: "Wallet Home"
 description: "Wallet-oriented product pages, support flows, and implementation references."
+difficulty: basic
+icon: material-symbols:home-outline
 toc: true
 ---
 
-# Wallet
+# Wallet Home
 
 > [!tip]
 > This landing page keeps the wallet domain active while dedicated product pages and app flows are still being built.

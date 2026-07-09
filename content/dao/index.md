@@ -1,10 +1,12 @@
 ---
-title: "DAO"
+title: "DAO Home"
 description: "Governance, constitutional lanes, and operational decision boundaries for Z00Z."
+difficulty: basic
+icon: material-symbols:home-outline
 toc: true
 ---
 
-# DAO
+# DAO Home
 
 > [!tip]
 > This landing page establishes the `dao` content surface and gives it a stable root entry for future expansion.

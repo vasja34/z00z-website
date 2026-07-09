@@ -1,80 +1,90 @@
 ---
 title: "Machine And Agent Rights"
 description: "Bounded private rights for machines, agents, API credits, compute budgets, DePIN resources, and useful-work claims."
+difficulty: expert
+icon: mdi:alpha-d-circle-outline
 toc: true
 ---
+
 # Machine And Agent Rights
+
 > [!warning]
-> **Docs route:** `/docs/use-cases/machine-agent-rights`
+> **Maturity:** `Expansion family with strong architectural fit and heavier ecosystem dependence`
 >
-> **Target site route:** `/use-cases/machine-agent-rights`
->
-> **Maturity:** `Target application`
->
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Use this page when:** You want to see how the Z00Z object model widens from money into bounded machine, service, and agent authority without claiming a universal private VM.
 
-## Page Brief
+This family is the disciplined expansion lane of the corpus. It matters because public-account permissions and broad wallet delegation are poorly shaped for machines and agents. A robot, API client, research agent, or workflow assistant usually does not need unrestricted wallet power. It needs a bounded right: one access window, one compute budget, one task escrow, one relay allowance, one fee envelope, or one useful-work claim path.
 
-What
-: Bounded private rights for machines, agents, API credits, compute budgets, DePIN resources, and useful-work claims.
+## The Core Thesis
 
-When
-: Used for non-human actors that need bounded authority without full wallet control.
+The agentic and machine papers both keep returning to one architectural move: replace reusable account power with spendable capability objects.
 
-Where
-: Use Cases, Protocol PoUW, and Ecosystem.
-
-Who
-: AI teams, DePIN operators, API providers, compute services, wallet designers, and security reviewers.
-
-Why
-: Agent authority should be scoped, private, fee-supported, and revocable rather than all-or-nothing wallet access.
-
-How
-: Document agent spending envelopes, fee credits, service receipts, local acceptance, linked liability, and reward claims.
-
-## Reader Lenses
-
-::: tabs
-
-@tab:active Purpose
-Bounded private rights for machines, agents, API credits, compute budgets, DePIN resources, and useful-work claims.
-
-@tab Audience
-Primary readers: AI teams, DePIN operators, API providers, compute services, wallet designers, and security reviewers.
-
-@tab Delivery
-Document agent spending envelopes, fee credits, service receipts, local acceptance, linked liability, and reward claims.
-
-:::
-
-## Section Lens
-
-Source
-: the use-case whitepaper plus the relevant protocol, legal, cross-chain, and wallet documents behind each scenario.
-
-Message
-: each use case should prove one architectural primitive through a concrete user journey.
-
-UX
-: scenario pages with visual flows, stakeholder columns, and clear handoffs into Protocol and Developers.
-
-Include
-: actor flows, before/after diagrams, trust boundaries, privacy boundaries, and implementation maturity.
-
-Avoid
-: market buzzwords, unsupported production promises, and use cases that ignore legal or custody boundaries.
-
-## Navigation Links
-
-| Link | Why it matters |
+| Object family | What it carries |
 | --- | --- |
-| [Use Cases](/docs/use-cases) | Parent hub and primary context for this page. |
-| [Private Distribution And Community Money](/docs/use-cases/private-distribution-community-money) | Previous page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
+| Spending envelope | Task-scoped budget and fee capacity without full wallet control |
+| Capability or service right | Access to data, compute, APIs, relays, rooms, routes, or other bounded services |
+| Reward or claim object | A private payout or task result that becomes redeemable only after defined proof or attestation |
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-Agentic-Offline-Economy-Whitepaper.md, docs/Z00Z-UseCases-Whitepaper.md`
-- Section: `Use Cases`
-- Section message: each use case should prove one architectural primitive through a concrete user journey.
-+++
+The same settlement logic still applies. Local use or acceptance may happen first. Canonical authority still arrives later through checkpointed reconciliation.
+
+## Why Public Permission Models Are Weak Here
+
+Public systems often solve machine or agent commerce by delegation over an account, smart account, API key, or session key. The corpus argues that this creates two problems:
+
+- too much authority is delegated if the agent or device is compromised;
+- too much strategy becomes visible if the payment or permission graph is public.
+
+Z00Z is a better fit when the right itself can carry the bound: provider scope, amount limit, expiry, one-time semantics, task category, or fee ceiling.
+
+## What FeeEnvelope Changes
+
+Machine and agent rights only make sense if the system also explains who pays for later publication and settlement. That is why `content/whitepapers/Agentic-Offline-Economy.md` treats `FeeEnvelope` as a separate primitive.
+
+| Right answers... | FeeEnvelope answers... |
+| --- | --- |
+| What action is allowed | Who pays for processing it |
+| Which provider or policy scope applies | Which asset, sponsor, or limit funds the processing path |
+| How much authority the holder has | How the later settlement lane remains operationally viable |
+
+Without that split, the system falls back toward broad wallet control, which is exactly what this family is trying to avoid.
+
+## Representative Scenario Groups
+
+| Scenario group | Why it fits |
+| --- | --- |
+| Offline machine economy | A device can present a bounded local right and reconcile later instead of waiting for live chain settlement |
+| API, compute, or data credits | A user or agent can consume bounded service privately without creating a reusable public billing graph |
+| Agent-to-agent commerce | One agent can buy or fund a task without receiving unrestricted account authority |
+| Useful-work and payout claims | A reward can stay private until proof, authorization, and anti-replay conditions are satisfied |
+
+These groups differ commercially, but the architecture is the same: a bounded private right becomes the economic primitive.
+
+## Current Versus Target Posture
+
+| Surface | Current posture | Target direction |
+| --- | --- | --- |
+| Rights-first conceptual fit | Strong in the current corpus | More object families can still land over time |
+| Bounded agent and machine semantics | Clear and useful as a design language | Operational standards, providers, and wallet tooling still need to mature |
+| Full multi-agent or machine ecosystem | Not a blanket live claim | Broader integrations, provider acceptance, and deployment evidence remain future-sensitive |
+| Useful-work reward linkage | Coherent through the reward papers | Richer evaluator markets and large-scale adoption remain research-heavy |
+
+This is why the use-cases paper places the family last. It is important, but it should widen the thesis only after the reader already accepts the cash and rights wedge.
+
+## What This Family Must Not Be Retold As
+
+The corpus is especially sensitive to overclaiming here.
+
+| Unsafe retelling | Safer retelling |
+| --- | --- |
+| "Z00Z is already a universal private AI economy." | "The corpus describes bounded private rights that can support agent and machine commerce as an expansion direction." |
+| "Agents get wallets." | "Agents get scoped spending envelopes, capability rights, and fee support rather than broad wallet authority." |
+| "This proves a private VM." | "This proves the usefulness of bounded rights and later settlement for service and machine workflows." |
+
+Those corrections keep the family strategically interesting without letting it become science fiction.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/Agentic-Offline-Economy.md` is the primary source for spendable capability objects, rights wallets, machine rights, agent spending envelopes, and `FeeEnvelope`.
+- `content/whitepapers/Proof-of-Useful-Work.md` is the companion source when the scenario depends on private reward claims, `WorkPackage`, `RewardAuthorization`, or anti-replay payout discipline.
+- `content/whitepapers/UseCases.md` is the source for ranking this family as the disciplined expansion lane rather than as the opening wedge.
+- `content/whitepapers/Linked-Liability.md` is useful when the scenario needs bounded fraud accountability for delayed or autonomous execution.

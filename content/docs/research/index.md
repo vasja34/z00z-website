@@ -1,113 +1,88 @@
 ---
 title: "Research"
 description: "Research hub for whitepapers, technical papers, benchmarks, verification, archive, and glossary."
+difficulty: basic
+icon: mdi:alpha-a-circle-outline
 toc: true
 ---
+
 # Research
+
 > [!note]
-> **Docs route:** `/docs/research`
+> **Maturity:** `Live research hub over a mixed live-plus-target corpus`
 >
-> **Target site route:** `/research`
->
-> **Maturity:** `Live docs`
->
-> Keep the public wording aligned with the stated maturity and route intent.
+> **Use this page when:** You want the shortest safe reading path into the whitepapers without treating every draft, benchmark, or extension idea as equal authority.
 
-## Page Brief
+The Z00Z corpus is broad enough that readers can easily lose the distinction between what is acting as the current protocol thesis, what is a supporting extension, and what is still historical or exploratory. This section exists to prevent that drift. It is not a second whitepaper. It is the map that tells you which document to trust first, which companion paper adds depth, and which materials should be read only as background.
 
-What
-: Research hub for whitepapers, technical papers, benchmarks, verification, archive, and glossary.
+The first rule is simple: start with the canonical papers before you start comparing scenarios, benchmarks, or governance overlays. The main protocol posture still lives in the current corpus files under `content/whitepapers/`, not in isolated excerpts, old outlines, or one attractive diagram.
 
-When
-: Used by readers who want source depth beyond product and developer docs.
+## Start With The Right Lane
 
-Where
-: Header resources menu and footer.
+Use the page that matches the question you are trying to answer.
 
-Who
-: Researchers, auditors, contributors, analysts, and protocol designers.
+| If your question is... | Start here | Why |
+| --- | --- | --- |
+| "What is Z00Z claiming as the main protocol story?" | [Whitepapers](/docs/research/whitepapers) | It separates the core papers from companion and archived material |
+| "Which papers matter for implementation or architecture pressure?" | [Technical Papers](/docs/research/technical-papers) | It groups the extension papers by the boundary they clarify |
+| "How should I read storage and settlement-tree discussion safely?" | [HJMT Research](/docs/research/hjmt) | It keeps design depth separate from blanket production claims |
+| "What do the current performance numbers actually prove?" | [Benchmarks](/docs/research/benchmarks) | It keeps benchmark evidence narrower than marketing throughput language |
+| "How is formal verification or assurance framed in the corpus?" | [Verification Orchestrator](/docs/research/verification-orchestrator) | It distinguishes current review surfaces from target verification programs |
+| "Where do older frames, superseded wording, or historical notes belong?" | [Archive](/docs/research/archive) | It keeps background context from becoming present-tense authority |
+| "Which terms are safe to reuse across papers?" | [Glossary](/docs/research/glossary) | It aligns research vocabulary with `/docs/learn/terminology` |
 
-Why
-: Z00Z has a large corpus; a research hub prevents the main navigation from becoming unwieldy.
+## Authority Order
 
-How
-: Organize active papers first, then tech papers, done papers, benchmarks, verification, and archive material.
+Readers usually do better with an authority order than with a flat list of files.
 
-## Reader Lenses
+| Authority level | What belongs there | How to use it |
+| --- | --- | --- |
+| Core authority | Main thesis papers that define the protocol category and scope | Read first, cite carefully, and treat as the baseline for present-tense wording |
+| Companion authority | Papers that sharpen one subsystem, scenario family, or governance boundary | Use after the core papers when you need more precise language |
+| Evidence support | Benchmarks, threat models, terminology references, and roadmap-style framing | Use to bound claims, define vocabulary, and check caveats |
+| Archive context | Older or superseded framing, background notes, and historical experiments | Read for provenance only, never as the sole basis for a live claim |
 
-::: tabs
+The practical consequence is that a benchmark cannot overrule the main corpus, an archive note cannot silently outrank a current whitepaper, and a scenario paper should not be used to back a claim that the main paper still labels as target architecture.
 
-@tab:active Purpose
-Research hub for whitepapers, technical papers, benchmarks, verification, archive, and glossary.
+## Recommended Reading Sequence
 
-@tab Audience
-Primary readers: Researchers, auditors, contributors, analysts, and protocol designers.
+For most technical readers, the safest sequence is:
 
-@tab Delivery
-Organize active papers first, then tech papers, done papers, benchmarks, verification, and archive material.
+1. [Whitepapers](/docs/research/whitepapers) for the present-tense category claim and scope discipline.
+2. [Technical Papers](/docs/research/technical-papers) for companion deep dives such as linked liability, cross-chain integration, useful-work incentives, and governance.
+3. [Glossary](/docs/research/glossary) when a term seems familiar but may be overloaded across papers.
+4. [Benchmarks](/docs/research/benchmarks) before repeating any performance number.
+5. [Archive](/docs/research/archive) only when you need historical provenance or superseded framing.
 
-:::
+This order is intentionally conservative. The goal is not to slow readers down. The goal is to stop old terminology, isolated numbers, or future-facing scenario language from becoming accidental protocol truth.
 
-## Section Lens
+## How To Read Research Material Safely
 
-Source
-: whitepapers, technical papers, done papers, benchmark notes, verification plans, and archive material.
+The research section is strongest when you ask four questions every time you cite it.
 
-Message
-: research pages should preserve source depth while separating active authority from historical context.
-
-UX
-: a document index with filters, abstracts, status labels, and deep links into exact source files.
-
-Include
-: status tags, reading order, source links, superseded notices, benchmark caveats, and open questions.
-
-Avoid
-: treating archive drafts as canonical or flattening all papers into an unprioritized list.
-
-## Section Pages
-
-| Page | Role |
+| Question | Why it matters |
 | --- | --- |
-| [Whitepapers](/docs/research/whitepapers) | Canonical whitepaper index with summaries, status, version dates, and recommended reading order. |
-| [Technical Papers](/docs/research/technical-papers) | Technical paper index for roadmap, multi-DA, storage, thin transaction mode, benchmarks, and verification notes. |
-| [HJMT Research](/docs/research/hjmt) | Research and design trail for bucketed root-chained JMT forest, settlement proofs, sharding, recovery, and performance. |
-| [Benchmarks](/docs/research/benchmarks) | Performance evidence for settlement inserts, deletes, proof generation, proof verification, proof sizes, and caveats. |
-| [Verification Orchestrator](/docs/research/verification-orchestrator) | Research plan for formal specifications, model checkers, theorem provers, Rust verification, fuzzing, and security gates. |
-| [Archive](/docs/research/archive) | Historical notes, external article reviews, exploratory drafts, and archived research. |
-| [Glossary](/docs/research/glossary) | Research-facing version of the corpus terminology reference with term authority and cross-links. |
+| Is this file describing a live contract, a target architecture, or a comparative research direction? | Many papers intentionally mix current and future surfaces |
+| Does this claim depend on protocol truth or on an external issuer, service, operator, or governance layer? | Z00Z repeatedly separates settlement truth from outside responsibility |
+| Is the evidence quantitative, architectural, or terminological? | Benchmarks, definitions, and design theses should not be interchanged |
+| Is there a newer current-corpus file that narrows or replaces this framing? | This prevents archive drift and duplicate authority |
 
-## Navigation Links
+These questions are especially important for research readers because the corpus is ambitious by design. It wants to describe cash, rights, external assets, useful-work incentives, agentic economies, and selective disclosure without collapsing them into one vague promise. The only reliable way to keep that ambition legible is to keep authority labels visible.
 
-| Link | Why it matters |
-| --- | --- |
-| [Z00Z Home](/docs) | Parent hub and primary context for this page. |
-| [Security](/docs/security) | Previous page in the same section order. |
-| [Support](/docs/support) | Next page in the same section order. |
+## What This Section Deliberately Avoids
 
-## Delivery Focus
+This section does not try to duplicate the content of the whitepapers themselves. It does not present a fresh protocol summary, and it does not flatten all research into one "read everything" list. The value of the section is navigation and authority labeling:
 
-- [x] Route intent captured from the architecture scaffold
-- [x] Internal cross-links added for hub navigation
-- [x] Evidence anchors preserved for follow-up drafting
-- [ ] Final long-form prose and diagrams still need source-document expansion
+- where to start;
+- which companion paper answers which question;
+- which files are safe for live claims;
+- which files are better treated as archive or support material.
 
-## Route Map
+That is also why the research pages repeatedly point back to `content/whitepapers/` instead of trying to replace those files with shorter paraphrases. If you need the actual argument, go to the paper. If you need to know which paper to trust, stay here.
 
-@mermaidstart
-graph TD
-  research["Research"]
-  research --> research_whitepapers["Whitepapers"]
-  research --> research_tech_papers["Technical Papers"]
-  research --> research_hjmt["HJMT Research"]
-  research --> research_benchmarks["Benchmarks"]
-  research --> research_verification["Verification Orchestrator"]
-  research --> research_archive["Archive"]
-  research --> research_glossary["Glossary"]
-@mermaidend
+## Evidence and Further Reading
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/*.md, docs/tech-papers/*.md, docs/tech-papers/done/*.md`
-- Section: `Research`
-- Section message: research pages should preserve source depth while separating active authority from historical context.
-+++
+- `content/whitepapers/Main-Whitepaper.md` is the baseline for protocol category, settlement scope, wallet-local possession, and implementation-status language.
+- `content/whitepapers/UseCases.md` explains how the scenario families fit together and why they must still be ordered by maturity.
+- `content/whitepapers/Corpus-Terminology-Reference.md` is the authority for shared vocabulary and cross-paper term discipline.
+- `content/whitepapers/Privacy-Threat-Model.md` is the source to consult before turning a privacy-friendly design goal into an unconditional privacy claim.

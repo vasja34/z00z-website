@@ -5,6 +5,8 @@ import type { ContentPipelineConfig } from "@/lib/config/site";
 
 export type RenderedHtmlDocument = {
   contentHtml: string;
+  frameHtml: string | null;
+  frameHeightHint: number | null;
   shadowHtml: string | null;
   title: string | null;
   description: string | null;
@@ -174,12 +176,22 @@ export function renderHtmlDocument(
   pipeline: ContentPipelineConfig,
 ): RenderedHtmlDocument {
   const $ = load(source);
+  const renderMode = $('meta[name="z00z-render-mode"]').attr("content")?.trim().toLowerCase() ?? "";
+  const frameHeightHintRaw = $('meta[name="z00z-frame-height"]').attr("content")?.trim() ?? "";
+  const isInteractiveDocument = renderMode === "interactive";
+  const parsedFrameHeightHint = Number.parseInt(frameHeightHintRaw, 10);
+  const frameHeightHint =
+    Number.isFinite(parsedFrameHeightHint) && parsedFrameHeightHint > 0
+      ? parsedFrameHeightHint
+      : null;
+  const allowDocumentScripts = pipeline.html.allow_scripts || isInteractiveDocument;
+  const allowInlineEventHandlers = pipeline.html.allow_inline_event_handlers || isInteractiveDocument;
 
-  if (!pipeline.html.allow_scripts) {
+  if (!allowDocumentScripts) {
     $("script").remove();
   }
 
-  if (!pipeline.html.allow_inline_event_handlers) {
+  if (!allowInlineEventHandlers) {
     $("*").each((_, element) => {
       const attributes =
         "attribs" in element && element.attribs
@@ -216,13 +228,16 @@ export function renderHtmlDocument(
     : "";
 
   const bodyHtml = $("body").length > 0 ? $("body").html() ?? "" : $.root().html() ?? "";
+  const frameHtml = isInteractiveDocument ? $.html() : null;
   const shadowHtml =
-    headStyles.length > 0
+    !isInteractiveDocument && headStyles.length > 0
       ? `<style>${SHADOW_HTML_BASE_CSS}</style><style>${headStyles}</style><style>${SHADOW_HTML_THEME_BRIDGE_CSS}</style>${bodyHtml}`
       : null;
 
   return {
     contentHtml: bodyHtml,
+    frameHtml,
+    frameHeightHint,
     shadowHtml,
     title,
     description,

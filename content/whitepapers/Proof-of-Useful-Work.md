@@ -1,8 +1,16 @@
+---
+title: "Z00Z Proof-of-Useful-Work Whitepaper"
+description: "Defines a rule-bound reward system for verifiable useful outcomes, evidence review, and treasury-limited payout authorization."
+difficulty: advanced
+icon: mdi:alpha-c-circle-outline
+toc: true
+---
+
 # Z00Z Proof-of-Useful-Work Whitepaper
 
 [TOC]
 
-Version: 2026-05-24
+Version: 2026-07-09
 
 ## Key Terms Used In This Paper
 
@@ -14,7 +22,7 @@ This paper uses a narrow useful-work vocabulary because the argument depends on 
 - `WorkReceipt`: A signed or attestable artifact proving that a service, task, or operational contribution occurred.
 - `RewardAuthorization`: The bounded authorization object produced by the external validation and valuation process and consumed by the Z00Z payout path.
 - `Private reward claim`: The Z00Z-side claim-domain reward path that preserves contributor privacy while still enforcing treasury policy.
-- `ClaimNullifier`: The anti-double-claim artifact that prevents the same reward authorization from being redeemed more than once.
+- `ClaimNullifier`: The live claim-domain anti-double-claim artifact that a future reward-authorization redemption path can reuse to prevent the same authorization from being redeemed more than once.
 - `Challenge window`: The bounded review period during which claims, scores, proofs, or valuations may be contested.
 - `Negative value`: A harmful or manipulative output that should not merely receive a low score, but should be rejected or penalized.
 - `Rule-bound treasury`: A treasury whose payout behavior is constrained by published caps, challenge windows, authorization checks, and policy limits rather than by open-ended human discretion.
@@ -800,6 +808,10 @@ Several parts of the architecture are already stable enough to define in whitepa
 #### Stable Conceptual Contracts
 
 The stable conceptual contracts are the heart of the paper: bounded work categories, normalized `WorkPackage` submission, declared proof families, role-separated review, challenge windows, slashing-capable dispute surfaces, rule-bound treasury gates, `RewardAuthorization`, private claim redemption, and nullifier-style anti-replay enforcement. These are not implementation trivia. They are the architectural contracts that let the useful-work system stay compatible with the broader Z00Z thesis.
+
+In present-tense repository terms, the concrete replay anchor that already
+exists is `ClaimNullifier`; `WorkPackage` and `RewardAuthorization` remain
+whitepaper and roadmap nouns until a reward module lands.
 
 Even if the first deployed versions are simpler than the long-term target, these contracts are still worth stating now because they define what "PoUW-compatible" should mean inside the Z00Z ecosystem.
 

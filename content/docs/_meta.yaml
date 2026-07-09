@@ -1,6 +1,6 @@
 title: "Z00Z Docs"
 page_icons:
-  index: home
+  index: material-symbols:home-outline
 order:
   - index
   - learn

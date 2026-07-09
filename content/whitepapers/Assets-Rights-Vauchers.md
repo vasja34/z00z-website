@@ -1,8 +1,16 @@
+---
+title: "Z00Z Assets, Rights, And Vouchers Whitepaper"
+description: "Defines the object boundary between assets, rights, and vouchers so value, authority, and conditional claims stay distinct in Z00Z."
+difficulty: advanced
+icon: mdi:alpha-c-circle-outline
+toc: true
+---
+
 # Z00Z Assets, Rights, And Vouchers Whitepaper
 
 [TOC]
 
-Version: 2026-06-15
+Version: 2026-07-09
 
 ## Key Terms Used In This Paper
 
@@ -123,34 +131,36 @@ about cash, claims, vouchers, delegated budgets, and rights.
 
 | Paper | What it owns | What this paper adds |
 | --- | --- | --- |
-| [Z00Z Main Whitepaper](Z00Z-Main-Whitepaper.md) | wallet-local possession, checkpoint settlement, asset-centric public evidence | clarifies how final value, conditional value, and authority should split into distinct objects |
-| [Z00Z Smart Cash](Z00Z-Smart-Cash-Whitepaper.md) | the smart-cash boundary versus a universal private VM | pins smart cash to clean native cash plus bounded vouchers and rights |
-| [Z00Z Use Cases Whitepaper](Z00Z-UseCases-Whitepaper.md) | where the architecture matters in practice | explains which object owns each use-case semantic: cash, voucher, or right |
-| [Z00Z Uniqueness Whitepaper](Z00Z-Uniqueness-Whitepaper.md) | rights-first uniqueness against public-account systems | narrows the object model so the uniqueness claim does not become vague |
-| [Z00Z JMT Asset And Right Storage Design](tech-papers/done/Z00Z-HJMT-Design.md) | storage, semantic roots, canonical object paths | anchors this paper's object model to the live `SettlementStateRoot` / `SettlementPath` HJMT contract |
+| [Z00Z Main Whitepaper](Main-Whitepaper.md) | wallet-local possession, checkpoint settlement, asset-centric public evidence | clarifies how final value, conditional value, and authority should split into distinct objects |
+| [Z00Z Smart Cash](Smart-Cash.md) | the smart-cash boundary versus a universal private VM | pins smart cash to clean native cash plus bounded vouchers and rights |
+| [Z00Z Use Cases Whitepaper](UseCases.md) | where the architecture matters in practice | explains which object owns each use-case semantic: cash, voucher, or right |
+| [Z00Z Uniqueness Whitepaper](Uniqueness.md) | rights-first uniqueness against public-account systems | narrows the object model so the uniqueness claim does not become vague |
+| [Z00Z JMT Asset And Right Storage Design](../tech-papers/done/Z00Z-HJMT-Design.md) | storage, semantic roots, canonical object paths | anchors this paper's object model to the live `SettlementStateRoot` / `SettlementPath` HJMT contract |
 
 ### 2.2 Current Maturity Versus Target Architecture
 
 This paper is intentionally disciplined about maturity.
 
-It does **not** claim that the current repository already ships a finished live
-`VoucherLeaf`. Current HJMT code and companion documents expose one live
-`SettlementStateRoot`, one canonical `SettlementPath`, asset-bearing
-`SettlementLeaf::Terminal(TerminalLeaf)` state whose inner payload is
-`AssetLeaf`, and live `SettlementLeaf::Right(RightLeaf)` state.
-This paper proposes the object boundary that the companion architecture should
-converge toward without overstating current runtime nouns.
+It does **not** claim that the current repository already ships the full
+voucher semantics described here. Current HJMT code and companion documents
+already expose one live `SettlementStateRoot`, one canonical `SettlementPath`,
+asset-bearing `SettlementLeaf::Terminal(TerminalLeaf)` state whose inner
+payload is `AssetLeaf`, live `SettlementLeaf::Right(RightLeaf)` state, and
+live `SettlementLeaf::Voucher(VoucherLeaf)` state. This paper proposes the
+wider object boundary that the companion architecture should converge toward
+without overstating current runtime maturity.
 
 The maturity split is:
 
 - the current corpus already supports wallet-local possession, checkpointed
-  settlement evidence, asset-bearing canonical state under HJMT, and a live
-  `RightLeaf` lane under the same settlement family;
-- this paper defines the target semantic split for that widening;
+  settlement evidence, asset-bearing canonical state under HJMT, and live
+  `RightLeaf` and `VoucherLeaf` lanes under the same settlement family;
+- this paper defines the target semantic split and policy discipline for that
+  widening;
 - where it discusses `VoucherLeaf` or a typed `Asset / Voucher / Right`
-  semantic view,
-  it speaks in design-direction language unless another corpus source already
-  treats the term as current.
+  semantic view beyond the current committed record shape, it speaks in
+  design-direction language unless another corpus source already treats the
+  term as current.
 
 That maturity discipline matters because this paper is meant to clarify the
 architecture, not to overstate current implementation status.
@@ -830,11 +840,11 @@ In live HJMT terms today:
   asset-side payload;
 - `RightLeaf` is the live non-coin terminal variant under the same settlement
   family, not a second tree;
-- `VoucherLeaf` in this paper is target-only shorthand for future
-  conditional-value state. It is not a current HJMT enum variant or committed
-  record name in the repository.
+- `VoucherLeaf` is also a live `SettlementLeaf` variant and committed record
+  name in the repository, but this paper sometimes uses the noun for a wider
+  conditional-value semantics than the current runtime fully enforces.
 
-The semantic rule is simple regardless of the final voucher record naming:
+The semantic rule is simple regardless of the final voucher policy surface:
 
 - `Asset` contributes to final value supply;
 - `Voucher` contributes to conditional reserved value supply;
@@ -1297,7 +1307,7 @@ The paper is strongest when its promises remain explicit.
 | --- | --- |
 | Native `Z00Z` cash should stay semantically clean. | Every future Z00Z object must be as simple as native cash. |
 | Conditional value belongs in vouchers, not in poisoned cash outputs. | Every voucher family is equally safe or equally mature. |
-| Rights should remain authority objects and should not carry value. | Current code already ships a live `VoucherLeaf`, or that the voucher lane and generalized `RightLeaf` lane are both at full target maturity. |
+| Rights should remain authority objects and should not carry value. | Current code already ships the full voucher semantics and policy surface described here, or that the voucher lane and generalized `RightLeaf` lane are both at full target maturity. |
 | Voucher programmability should be bounded and declarative. | Z00Z core should become a universal private smart-contract VM. |
 | One live settlement-root contract can host a typed `Asset / Voucher / Right` object model. | All real-world conditions should be core protocol conditions. |
 
@@ -1305,8 +1315,8 @@ The paper is strongest when its promises remain explicit.
 
 | If the next question is... | Read... |
 | --- | --- |
-| How does the live settlement core work today? | [Z00Z Main Whitepaper](Z00Z-Main-Whitepaper.md) |
-| Why is Z00Z framed as smart cash rather than as a universal private VM? | [Z00Z Smart Cash](Z00Z-Smart-Cash-Whitepaper.md) |
-| Where does the rights-first architecture matter most in practice? | [Z00Z Use Cases Whitepaper](Z00Z-UseCases-Whitepaper.md) |
-| Why is Z00Z a different category from public-account systems? | [Z00Z Uniqueness Whitepaper](Z00Z-Uniqueness-Whitepaper.md) |
-| How do storage paths and committed object roots fit together? | [Z00Z JMT Asset And Right Storage Design](tech-papers/done/Z00Z-HJMT-Design.md) |
+| How does the live settlement core work today? | [Z00Z Main Whitepaper](Main-Whitepaper.md) |
+| Why is Z00Z framed as smart cash rather than as a universal private VM? | [Z00Z Smart Cash](Smart-Cash.md) |
+| Where does the rights-first architecture matter most in practice? | [Z00Z Use Cases Whitepaper](UseCases.md) |
+| Why is Z00Z a different category from public-account systems? | [Z00Z Uniqueness Whitepaper](Uniqueness.md) |
+| How do storage paths and committed object roots fit together? | [Z00Z JMT Asset And Right Storage Design](../tech-papers/done/Z00Z-HJMT-Design.md) |

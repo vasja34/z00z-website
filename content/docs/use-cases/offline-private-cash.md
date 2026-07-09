@@ -1,80 +1,86 @@
 ---
 title: "Offline-First Private Cash"
 description: "Cash-like private transfer using wallet-local possession, package handoff, delayed publication, and checkpoint reconciliation."
+difficulty: intermediate
+icon: mdi:alpha-b-circle-outline
 toc: true
 ---
+
 # Offline-First Private Cash
+
 > [!warning]
-> **Docs route:** `/docs/use-cases/offline-private-cash`
+> **Maturity:** `Live direction with current delayed-connectivity evidence and broader target UX`
 >
-> **Target site route:** `/use-cases/offline-private-cash`
->
-> **Maturity:** `Live direction + target UX`
->
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Use this page when:** You want the clearest example of the Z00Z model in practice: local handoff first, canonical settlement later.
 
-## Page Brief
+Offline-first private cash is the cleanest entry point into the whole corpus because it proves the core architecture without needing a complex issuer, enterprise, or agent layer. A holder controls a wallet-local object. That object can be prepared and exchanged under intermittent connectivity. The chain later acts as the replay-safe reconciliation boundary. If you understand this family, the rest of the use-case map becomes easier to read.
 
-What
-: Cash-like private transfer using wallet-local possession, package handoff, delayed publication, and checkpoint reconciliation.
+## Why This Scenario Matters
 
-When
-: Used for local payments, intermittent connectivity, QR-cash, and merchant flows.
+Public account systems usually assume that payment becomes meaningful only when the network sees the transfer immediately. The Z00Z papers argue for a narrower and more cash-like posture: the receiver can verify a bounded transfer candidate locally, but final authority still belongs to later checkpoint settlement. The difference is not cosmetic. It changes what a wallet, merchant, or field user can do when connectivity is weak or delayed.
 
-Where
-: Use Cases and Wallet pages.
+## The Core Flow
 
-Who
-: Wallet teams, merchants, local communities, and user researchers.
+| Stage | What happens locally | What is still unresolved |
+| --- | --- | --- |
+| Receiver handoff | The payer obtains a signed receive surface such as a `ReceiverCard` or `PaymentRequest` | No spend has been admitted or settled yet |
+| Package preparation | The sender prepares a portable transfer candidate | No canonical public transition exists yet |
+| Local import and verification | The receiver verifies structure, chain context, and wallet-owned outputs, then stores the candidate locally | There is still no final statement that the spend was unique or accepted network-wide |
+| Publication and reconcile | The package later reaches publication and checkpointed review | Only here does the system decide whether the transition becomes authoritative |
 
-Why
-: It is the clearest existence proof for Z00Z's architecture.
+This is the spend-then-reconcile pattern described across `content/whitepapers/Main-Whitepaper.md` and `content/whitepapers/UseCases.md`. The local exchange matters economically before the final checkpoint does, but it is still bounded by later replay-safe settlement.
 
-How
-: Explain spend-then-reconcile, local risk, receiver material, package import/export, soft confirmation, and final checkpoint settlement.
+## What Z00Z Fits Better Than A Public Account Rail
 
-## Reader Lenses
+The family is strongest when the payment event is meaningful even before a live RPC roundtrip is available:
 
-::: tabs
+- local payments between people under intermittent connectivity;
+- merchant acceptance where later publication is acceptable;
+- field or low-connectivity environments where a public-account update cannot be the first source of ownership meaning;
+- wallet experiences where privacy of the relationship matters as much as the amount.
 
-@tab:active Purpose
-Cash-like private transfer using wallet-local possession, package handoff, delayed publication, and checkpoint reconciliation.
+The important advantage is not only that the amount can stay confidential. It is that the ownership object does not need to begin life as a visible public account mutation.
 
-@tab Audience
-Primary readers: Wallet teams, merchants, local communities, and user researchers.
+## What The Receiver Still Has To Trust
 
-@tab Delivery
-Explain spend-then-reconcile, local risk, receiver material, package import/export, soft confirmation, and final checkpoint settlement.
+Offline-first does not mean risk-free. The current corpus is explicit that a local handoff is not a universal theorem of finality.
 
-:::
-
-## Section Lens
-
-Source
-: the use-case whitepaper plus the relevant protocol, legal, cross-chain, and wallet documents behind each scenario.
-
-Message
-: each use case should prove one architectural primitive through a concrete user journey.
-
-UX
-: scenario pages with visual flows, stakeholder columns, and clear handoffs into Protocol and Developers.
-
-Include
-: actor flows, before/after diagrams, trust boundaries, privacy boundaries, and implementation maturity.
-
-Avoid
-: market buzzwords, unsupported production promises, and use cases that ignore legal or custody boundaries.
-
-## Navigation Links
-
-| Link | Why it matters |
+| Boundary | Why it still matters |
 | --- | --- |
-| [Use Cases](/docs/use-cases) | Parent hub and primary context for this page. |
-| [Private Rights Over External Assets](/docs/use-cases/private-external-asset-rights) | Next page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
+| Double-spend or conflict risk | The same local right may later prove incompatible during reconciliation |
+| Publication return path | Someone still needs to carry the package back into the settlement lane |
+| Wallet validation quality | Receiver-side parsing, request handling, and import checks must stay fail-closed |
+| Later checkpoint evidence | The final state still depends on proof, roots, and replay-safe continuity |
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-UseCases-Whitepaper.md, docs/Z00Z-Main-Whitepaper.md, crates/z00z_wallets/README.md`
-- Section: `Use Cases`
-- Section message: each use case should prove one architectural primitive through a concrete user journey.
-+++
+This is why the safer phrase is "offline-first private cash" rather than "fully final offline cash." The first phrase matches the current corpus. The second overstates it.
+
+## Current Versus Target Posture
+
+The main whitepaper gives a useful maturity split.
+
+| Surface | Current posture | Target direction |
+| --- | --- | --- |
+| Delayed-connectivity exchange | Strongly supported by the current package and receive model | Richer consumer UX, broader channels, and more packaging options can still improve |
+| Wallet-local possession | Core to the current thesis | The surrounding wallets can still get better at recovery, routing, and conflict handling |
+| Replay-safe final settlement | Current protocol center of gravity | More operator-grade tooling and publishing closure can still mature |
+| Full consumer offline-cash ecosystem | Not a blanket live claim | Future extensions may widen merchant, hardware, or field-operation support |
+
+That is the right maturity balance for public docs. The direction is real. The most ambitious UX interpretation is still future-sensitive.
+
+## Why This Family Comes First
+
+The use-cases paper ranks offline cash first because it teaches the architecture with the least narrative friction. It shows that:
+
+- value can stay wallet-local before publication;
+- local acceptance can happen before final settlement;
+- the public chain does not need to become a reusable account graph;
+- privacy and delayed settlement can coexist without pretending conflict risk disappears.
+
+The same pattern later reappears in private external-asset rights, vouchers, machine rights, and agent budgets. This is simply the easiest place to see it.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/Main-Whitepaper.md` sections on wallet-local possession, offline payments, request-bound receive, and implementation status are the main current-corpus source.
+- `content/whitepapers/UseCases.md` is the source for the family ranking and for the spend-then-reconcile explanation of the offline cash wedge.
+- `content/whitepapers/Linked-Liability.md` is the companion paper to read when you need the bounded accountability story for delayed or conflicting offline use.
+- `content/whitepapers/Privacy-Threat-Model.md` is the source for ingress, internal movement, egress, wallet, and operator privacy caveats around this family.

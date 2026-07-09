@@ -1,8 +1,16 @@
+---
+title: "Z00Z Legal Architecture Whitepaper"
+description: "Defines the legal and communications boundary between the Z00Z protocol, steward entities, issuers, wallets, and service operators."
+difficulty: advanced
+icon: mdi:alpha-c-circle-outline
+toc: true
+---
+
 # Z00Z Legal Architecture Whitepaper
 
 [TOC]
 
-Version: 2026-06-02
+Version: 2026-07-09
 
 *Status: Full draft through Sections 1–20 and Appendices A–C.*
 
@@ -11,7 +19,7 @@ This document is the legal-architecture companion to the main Z00Z protocol pape
 ## Key Terms Used In This Paper
 
 This paper defines legal-boundary terms locally and reuses shared protocol nouns
-through [Z00Z Corpus Terminology And Abbreviations Reference](Z00Z-Corpus-Terminology-Reference.md) where the broader corpus already has a stable meaning contract.
+through [Z00Z Corpus Terminology And Abbreviations Reference](Corpus-Terminology-Reference.md) where the broader corpus already has a stable meaning contract.
 
 - **Neutral protocol:** A published cryptographic and settlement system that validates correctness, finality, and policy boundaries, but does not itself custody funds, open accounts, route conversions, or administer payments as a business.
 - **Steward:** A legal wrapper or coordination entity whose legitimate functions are documentation, research, audits, IP holding, public explanations, and ecosystem support rather than operation of exchanges, bridges, wallets, or redemption desks.

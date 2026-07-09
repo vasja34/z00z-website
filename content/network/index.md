@@ -1,10 +1,12 @@
 ---
-title: "Network"
+title: "Network Home"
 description: "Status, topology, metrics, and technical explanation for the Z00Z network."
+difficulty: basic
+icon: material-symbols:home-outline
 toc: true
 ---
 
-# Network
+# Network Home
 
 > [!note]
 > This landing page gives the network domain a live home route for `Switch Domain` and future operator-focused expansion.

@@ -17,17 +17,17 @@
   default_canvas: content
   show_toc: true
   route_strategy: content-catchall
-- id: wiki
-  label: "Wiki"
-  description: "Research notes, design rationale, and knowledge base."
-  icon: "flask"
+- id: whitepapers
+  label: "Whitepapers"
+  description: "Long-form whitepapers, research papers, and canonical references."
+  icon: "brochure"
   mode: content
   status: active
-  home_path: "/wiki"
-  content_root: "content/wiki"
+  home_path: "/whitepapers"
+  content_root: "content/whitepapers"
   hostnames:
-    - "wiki.z00z.io"
-  default_theme: "corporate"
+    - "whitepapers.z00z.io"
+  default_theme: "dockyard"
   allowed_themes: *shared_allowed_themes
   default_canvas: content
   show_toc: true
@@ -110,7 +110,7 @@
 - id: watchers
   label: "Watchers"
   description: "Monitoring guides and live system views."
-  icon: "monitor"
+  icon: "eye"
   mode: hybrid
   status: active
   home_path: "/watchers"
@@ -155,28 +155,13 @@
 - id: treasury
   label: "Treasury"
   description: "Treasury policies, operations, and financial planning materials."
-  icon: "wallet"
+  icon: "bank-outline"
   mode: content
   status: active
   home_path: "/treasury"
   content_root: "content/treasury"
   hostnames:
     - "treasury.z00z.io"
-  default_theme: "dockyard"
-  allowed_themes: *shared_allowed_themes
-  default_canvas: content
-  show_toc: true
-  route_strategy: content-catchall
-- id: whitepapers
-  label: "Whitepapers"
-  description: "Long-form whitepapers, research papers, and canonical references."
-  icon: "flask"
-  mode: content
-  status: active
-  home_path: "/whitepapers"
-  content_root: "content/whitepapers"
-  hostnames:
-    - "whitepapers.z00z.io"
   default_theme: "dockyard"
   allowed_themes: *shared_allowed_themes
   default_canvas: content

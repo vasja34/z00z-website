@@ -1,8 +1,16 @@
+---
+title: "Z00Z Cross-Chain Integration Whitepaper"
+description: "Explains how Z00Z settles private rights while integrating with external custody, issuance, liquidity, and attestation systems without surrendering settlement truth."
+difficulty: advanced
+icon: mdi:alpha-c-circle-outline
+toc: true
+---
+
 # Z00Z Cross-Chain Integration Whitepaper
 
 [TOC]
 
-Version: 2026-05-24
+Version: 2026-07-09
 
 ## Key Terms Used In This Paper
 
@@ -50,7 +58,7 @@ The integration thesis therefore begins by treating these public systems as host
 
 Z00Z should be understood as the layer that holds and privately transfers the internal right, not as the layer that must always hold the external asset itself. In the source material, that pattern appears repeatedly: a user locks an external asset, an attested entry event creates an internal private object, the object moves privately between wallets, and a later exit consumes that object in order to release or re-mint value outside Z00Z. Between those two public edges, the meaningful thing is not a public token account. It is wallet-local possession of a privately spendable right.
 
-This is also why the whitepaper must describe Z00Z in terms of `AssetLeaf`, `AssetPath`, checkpoint roots, and replay-safe state transitions rather than in terms of public user balances. The chain sees committed state objects and their settlement evidence. The wallet sees the local ownership logic. Cross-chain integration is valuable precisely because it preserves that division of labor: public systems can see entry and exit, while Z00Z protects the private transfer interval between them.
+This is also why the whitepaper must describe Z00Z in terms of `AssetLeaf`, `SettlementPath`, checkpoint roots, and replay-safe state transitions rather than in terms of public user balances. The chain sees committed state objects and their settlement evidence. The wallet sees the local ownership logic. Cross-chain integration is valuable precisely because it preserves that division of labor: public systems can see entry and exit, while Z00Z protects the private transfer interval between them.
 
 ### 1.2 Design Goals
 

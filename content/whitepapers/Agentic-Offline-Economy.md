@@ -1,12 +1,20 @@
+---
+title: "Z00Z Agentic Offline Economy Whitepaper"
+description: "Explains how Z00Z can carry offline machine, agent, and capability-driven economic flows as private wallet-local rights with later checkpointed reconciliation."
+difficulty: expert
+icon: mdi:alpha-d-circle-outline
+toc: true
+---
+
 # Z00Z Agentic Offline Economy Whitepaper
 
 [TOC]
 
-Version: 2026-06-15
+Version: 2026-07-09
 
 ## Key Terms Used In This Paper
 
-This paper uses a focused vocabulary because the argument depends on a small number of recurring ideas. Appendix A and [Z00Z Corpus Terminology And Abbreviations Reference](Z00Z-Corpus-Terminology-Reference.md) provide the broader reference layer, while the main text keeps the core nouns stable and disciplined.
+This paper uses a focused vocabulary because the argument depends on a small number of recurring ideas. Appendix A and [Z00Z Corpus Terminology And Abbreviations Reference](Corpus-Terminology-Reference.md) provide the broader reference layer, while the main text keeps the core nouns stable and disciplined.
 
 - `Spendable right`: A private wallet-local object that represents bounded economic authority rather than a reusable public account permission.
 - `Spendable capability object`: A broader private right object representing bounded service, machine, access, compute, data, mandate, or reward authority rather than only money.

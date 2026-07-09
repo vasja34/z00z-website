@@ -1,108 +1,58 @@
 ---
 title: "Legal"
 description: "Legal and public-claims hub for protocol neutrality, disclosures, terms, privacy policy, claim boundaries, and independent service responsibilities."
+difficulty: basic
+icon: mdi:alpha-a-circle-outline
 toc: true
 ---
+
 # Legal
+
 > [!warning]
-> **Docs route:** `/docs/legal`
->
-> **Target site route:** `/legal`
->
 > **Maturity:** `Drafted legal architecture + site legal target`
 >
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Reading rule:** This section explains the legal and communications boundary the corpus supports. It is not legal advice, and it should not be used to imply that every site policy, issuer flow, or service overlay is already finalized.
 
-## Page Brief
+The Legal section exists because the Z00Z corpus treats legal posture as part of architecture, not as a marketing afterthought. The whitepapers repeatedly separate the protocol itself from the people and services that may build around it. That separation matters for communications, diligence, wallet design, token disclosures, issuer boundaries, and site policy language. If the project says the wrong thing about control, custody, compliance, or guarantees, the technical architecture will not save the narrative.
 
-What
-: Legal and public-claims hub for protocol neutrality, disclosures, terms, privacy policy, claim boundaries, and independent service responsibilities.
+## The Boundary This Section Protects
 
-When
-: Used before partnerships, public communications, issuer listings, wallet compliance features, or website legal pages.
+| Layer | What belongs there | What must stay out |
+| --- | --- | --- |
+| Protocol | Private objects, checkpointed settlement, replay-safe evidence, and neutral validation rules. | Hosted custody, official listings, public balance surveillance, or discretionary operating promises. |
+| Steward or foundation | Documentation, maintenance, limited governance process, and boundary-setting policy. | Acting like an exchange, redemption desk, asset sponsor, or universal compliance oracle. |
+| Site policy | Terms, privacy disclosures, claim hygiene, and warnings about what readers should not infer. | Statements that turn architecture papers into legal guarantees or production certifications. |
+| Third-party services | Wallet UX, issuers, bridges, compliance overlays, auditors, or local operators. | Silent redefinition of protocol guarantees or implicit endorsement by the docs. |
 
-Where
-: Footer and legal utility nav.
+This table is the reason the Legal section sits beside Learn, Protocol, and Developers instead of behind them. Readers should know early where the architecture stops and where independent actors begin.
 
-Who
-: Counsel, stewards, partners, wallet teams, issuers, and public communications teams.
+## What You Will Find Here
 
-Why
-: The legal architecture is core to how Z00Z must describe itself.
-
-How
-: Separate legal architecture from site terms, disclaimers, independent issuer responsibility, privacy policy, and public claim rules.
-
-## Reader Lenses
-
-::: tabs
-
-@tab:active Purpose
-Legal and public-claims hub for protocol neutrality, disclosures, terms, privacy policy, claim boundaries, and independent service responsibilities.
-
-@tab Audience
-Primary readers: Counsel, stewards, partners, wallet teams, issuers, and public communications teams.
-
-@tab Delivery
-Separate legal architecture from site terms, disclaimers, independent issuer responsibility, privacy policy, and public claim rules.
-
-:::
-
-## Section Lens
-
-Source
-: legal architecture, DAO, tokenomics, marketing strategy, privacy threat model, and public-claim boundaries.
-
-Message
-: public pages must separate protocol neutrality, website terms, issuer responsibility, token risk, and service-layer data handling.
-
-UX
-: a clear legal utility section with page-specific disclosure blocks and links back to technical authority.
-
-Include
-: disclosures, non-advice language, maturity labels, independent-service boundaries, review checklists, and claim red lines.
-
-Avoid
-: legal advice, custody implications, issuer endorsement, guaranteed compliance claims, or broad privacy guarantees.
-
-## Section Pages
-
-| Page | Role |
+| Page | What it does |
 | --- | --- |
-| [Legal Architecture](/docs/legal/architecture) | Readable legal-architecture summary for neutral protocol, steward role, do-not-operate zones, and proof-of-non-control. |
-| [Terms Of Use](/docs/legal/terms) | Website and documentation terms, separate from protocol legal architecture. |
-| [Privacy Policy](/docs/legal/privacy) | Website privacy policy and service-layer data handling, distinct from protocol privacy claims. |
-| [Disclosures](/docs/legal/disclosures) | Public disclosures for maturity, risk, tokenomics, third-party services, independent issuers, and non-endorsement. |
-| [Public Claim Boundaries](/docs/legal/public-claim-boundaries) | Messaging rules for what Z00Z can and cannot publicly claim about privacy, maturity, token economics, cross-chain, support, and legal posture. |
+| [Legal Architecture](/docs/legal/architecture) | Explains the neutral-protocol thesis, steward limits, and the "do-not-operate" boundary in plain language. |
+| [Legal Architecture Companion](/docs/legal/legal-architecture) | Connects the architecture paper to diligence questions, protocol semantics, and current-tree reader expectations. |
+| [Terms Of Use](/docs/legal/terms) | States the minimum posture the public site should preserve around informational use, self-custody, and non-endorsement. |
+| [Privacy Policy](/docs/legal/privacy) | Separates website or service-layer data handling from protocol privacy claims. |
+| [Disclosures](/docs/legal/disclosures) | Normalizes the maturity, risk, token, issuer, and third-party-service disclaimers public pages should carry. |
+| [Public Claim Boundaries](/docs/legal/public-claim-boundaries) | Gives the red-line rules for what Z00Z can and cannot safely claim in docs, decks, and partner materials. |
 
-## Navigation Links
+## How To Read The Legal Pages Safely
 
-| Link | Why it matters |
-| --- | --- |
-| [Z00Z Home](/docs) | Parent hub and primary context for this page. |
-| [Support](/docs/support) | Previous page in the same section order. |
+These pages are written for clarity, not for theater. They do not try to simulate a full jurisdiction-specific legal package inside a docs site. Instead, they provide the architectural and communications constraints that any later counsel-reviewed documents should preserve. That is why you will see explicit maturity labels, non-claim language, and repeated reminders that protocol behavior and service behavior are not the same thing.
 
-## Delivery Focus
+The safest way to use this section is to combine it with the technical corpus:
 
-- [x] Route intent captured from the architecture scaffold
-- [x] Internal cross-links added for hub navigation
-- [x] Evidence anchors preserved for follow-up drafting
-- [ ] Final long-form prose and diagrams still need source-document expansion
+- use the legal architecture pages when you need the control, stewardship, or service boundary;
+- use Learn and Protocol when you need to confirm what the architecture actually claims;
+- use this section before publishing a new public statement, not after the statement is already live.
 
-## Route Map
+## What This Section Does Not Do
 
-@mermaidstart
-graph TD
-  legal["Legal"]
-  legal --> legal_architecture["Legal Architecture"]
-  legal --> legal_terms["Terms Of Use"]
-  legal --> legal_privacy["Privacy Policy"]
-  legal --> legal_disclosures["Disclosures"]
-  legal --> legal_claims["Public Claim Boundaries"]
-@mermaidend
+This section does not tell a reader that Z00Z is licensed, approved, or compliant everywhere. It does not convert target architecture into present-tense guarantees. It does not make operational promises about third-party assets, stablecoins, bridges, or wallet services that the repo cannot prove. It keeps the narrative smaller than the temptation to oversell it, which is exactly what the corpus asks public docs to do.
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-Legal-Architecture-Whitepaper.md, docs/Z00Z-DAO-Whitepaper.md, docs/Z00Z-Tokenomics-Incentives-Whitepaper.md`
-- Section: `Legal`
-- Section message: public pages must separate protocol neutrality, website terms, issuer responsibility, token risk, and service-layer data handling.
-+++
+## Evidence and Further Reading
+
+- `content/whitepapers/Legal-Architecture.md` sections 3 through 5 and section 17 define the protocol minimalism covenant, stewardship boundary, and safe public-claim formulas that shape this hub.
+- `content/whitepapers/Main-Whitepaper.md` sections 10 and 11 describe the protocol-versus-service boundary and the native-asset/ecosystem posture that the legal pages must preserve.
+- `content/whitepapers/Privacy-Threat-Model.md` section 9 helps separate protocol privacy posture from disclosure and audit layers above the core.

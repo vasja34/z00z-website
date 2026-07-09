@@ -1,81 +1,64 @@
 ---
 title: "Terminology And Abbreviations"
 description: "Shared vocabulary contract for objects such as AssetLeaf, RightLeaf, SettlementPath, Checkpoint, TxPackage, and FeeEnvelope."
+difficulty: specialist
+icon: mdi:alpha-e-circle-outline
 toc: true
 ---
+
 # Terminology And Abbreviations
+
 > [!note]
-> **Docs route:** `/docs/learn/terminology`
->
-> **Target site route:** `/learn/terminology`
->
 > **Maturity:** `Live docs`
 >
-> Keep the public wording aligned with the stated maturity and route intent.
+> **Use this page when:** You want the shortest stable definitions before you read protocol, legal, or developer pages.
 
-## Page Brief
+Z00Z spans a large corpus, and many misunderstandings start as vocabulary mistakes. This page exists to keep the most repeated terms stable in normal reading, not only inside a glossary appendix. The goal is practical: if you understand the difference between a wallet-local object, a checkpoint, a transaction package, and public settlement evidence, the rest of the documentation becomes much easier to follow.
 
-What
-: Shared vocabulary contract for objects such as AssetLeaf, RightLeaf, SettlementPath, Checkpoint, TxPackage, and FeeEnvelope.
+The full authority for naming and abbreviation discipline lives in `content/whitepapers/Corpus-Terminology-Reference.md`. This page is the reader-friendly bridge into that document. It keeps the terms short, explains why they matter, and highlights the scope rules that prevent category drift.
 
-When
-: Used whenever readers or contributors need exact meanings across papers and code.
+## Core Terms You Will See Repeatedly
 
-Where
-: Learn, Research, and Developer sidebars.
+AssetLeaf
+: The public, checkpointed settlement object that represents a confidential asset right in canonical state. It is not a public account balance. It is the committed settlement fact that verifiers can reason about.
 
-Who
-: Documentation authors, engineers, reviewers, translators, and integrators.
+RightLeaf
+: A live settlement object for non-coin rights under the broader rights-oriented contract direction. It matters because the corpus wants to generalize the model beyond cash without pretending that every future rights lane is already live.
 
-Why
-: Prevents concept drift across a large corpus and codebase.
+Checkpoint
+: The validation boundary that turns ordered publication into final, replay-safe settlement. A package reaching the network is not the same thing as a package crossing the checkpoint boundary.
 
-How
-: Provide searchable term tables, preferred meanings, scope rules, primary authority links, and deprecated aliases.
+Settlement evidence
+: The public roots, deltas, proofs, and link artifacts that let an observer verify a transition without reconstructing a full private wallet history.
 
-## Reader Lenses
+Wallet-local possession
+: The design rule that ownership material and transfer preparation stay in the wallet until publication is required. This is one of the clearest differences between Z00Z and public account systems.
 
-::: tabs
+TxPackage
+: The wallet-side canonical envelope for ordinary transfer preparation. It bundles the data that later needs to be checked for structure, authorization, and replay-safe settlement consistency.
 
-@tab:active Purpose
-Shared vocabulary contract for objects such as AssetLeaf, RightLeaf, SettlementPath, Checkpoint, TxPackage, and FeeEnvelope.
+Nullifier
+: A domain-separated anti-replay artifact used in current flows. It is part of the replay boundary, not a generic synonym for "spent state."
 
-@tab Audience
-Primary readers: Documentation authors, engineers, reviewers, translators, and integrators.
+Soft confirmation
+: A pre-checkpoint acknowledgement that something entered the publication path without yet becoming final settlement.
 
-@tab Delivery
-Provide searchable term tables, preferred meanings, scope rules, primary authority links, and deprecated aliases.
+## Reading Rules That Prevent Confusion
 
-:::
+Three habits make the corpus much easier to read.
 
-## Section Lens
+First, do not translate these terms back into public-account language unless the paper explicitly does so. `AssetLeaf` is not just "an account row with privacy." `Checkpoint` is not just "a block" or "a mempool event." `Wallet-local possession` is not just "a client feature." Each term exists because the architecture is trying to move the default truth boundary.
 
-Source
-: introductory whitepapers, terminology tables, roadmap notes, and comparison documents.
+Second, watch for maturity cues. Some terms describe live or current surfaces, while others are used to explain future or generalized direction. The terminology reference is careful about that distinction, and the docs pages should be equally careful.
 
-Message
-: new readers should understand the model, vocabulary, maturity, and category boundary before deep protocol pages.
+Third, keep protocol terms separate from service terms. The legal corpus makes this especially important. A wallet, steward, issuer, bridge, or compliance overlay may add important behavior, but those layers should not silently redefine the core protocol vocabulary.
 
-UX
-: a progressive education flow with short pages first and deeper source documents one click away.
+## Common Abbreviation Posture
 
-Include
-: plain-language summaries, diagrams, glossary links, reading order, current-vs-target badges, and comparison tables.
+The corpus allows concise names such as `TxPackage`, `AssetLeaf`, `RightLeaf`, and `PQ` because they carry repeated technical meaning. It avoids vague abbreviations that hide the role of an object. When in doubt, prefer the longer plain-language phrase once, then introduce the corpus term. That keeps docs readable for new readers without flattening the underlying model.
 
-Avoid
-: raw technical dumps, speculative roadmap language without maturity tags, and claims that bypass the corpus.
+## Evidence and Further Reading
 
-## Navigation Links
-
-| Link | Why it matters |
-| --- | --- |
-| [Learn](/docs/learn) | Parent hub and primary context for this page. |
-| [Main Whitepaper](/docs/learn/main-whitepaper) | Previous page in the same section order. |
-| [Roadmap And Maturity](/docs/learn/roadmap) | Next page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
-
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-Corpus-Terminology-Reference.md`
-- Section: `Learn`
-- Section message: new readers should understand the model, vocabulary, maturity, and category boundary before deep protocol pages.
-+++
+- `content/whitepapers/Corpus-Terminology-Reference.md` sections 3 through 5 are the primary authority for the shared term contract and abbreviation list.
+- `content/whitepapers/Main-Whitepaper.md` "Key Terms Used In This Paper" and sections 3 through 6 show how the same vocabulary behaves inside the core protocol thesis.
+- `content/whitepapers/Uniqueness.md` uses the terms in comparison-driven context, which is useful when you need to understand why naming precision changes the public category claim.

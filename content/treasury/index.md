@@ -1,10 +1,12 @@
 ---
-title: "Treasury"
+title: "Treasury Home"
 description: "Treasury structure, budget logic, incentive lanes, and funding boundaries for Z00Z."
+difficulty: basic
+icon: material-symbols:home-outline
 toc: true
 ---
 
-# Treasury
+# Treasury Home
 
 > [!note]
 > This landing page creates a stable root for treasury-specific content while the detailed information architecture is still pending.

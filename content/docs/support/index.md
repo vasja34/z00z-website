@@ -1,111 +1,78 @@
 ---
 title: "Support"
 description: "Support hub for FAQs, troubleshooting, wallet recovery, developer help, contact, and contribution paths."
+difficulty: basic
+icon: mdi:alpha-a-circle-outline
 toc: true
 ---
+
 # Support
+
 > [!note]
-> **Docs route:** `/docs/support`
+> **Maturity:** `Live docs support surface with mixed downstream service maturity`
 >
-> **Target site route:** `/support`
->
-> **Maturity:** `Site support`
->
-> Keep the public wording aligned with the stated maturity and route intent.
+> **Use this page when:** You hit a problem, need the right next page quickly, or want to know which questions belong in support versus security.
 
-## Page Brief
+Support is only useful if it lowers risk before it offers convenience. In a privacy-focused project, the wrong support habit can be worse than no support at all. Sending secrets to a stranger, posting exploit details in a public issue, or assuming the protocol has a hidden recovery switch are all support mistakes that create security incidents. This section exists to route readers away from those failures first.
 
-What
-: Support hub for FAQs, troubleshooting, wallet recovery, developer help, contact, and contribution paths.
+## The First Three Rules
 
-When
-: Used by users or builders who hit a problem or need a human handoff.
+Before you read anything else, keep these rules visible:
 
-Where
-: Header utility nav and footer.
+1. never share seed phrases, private keys, wallet exports, or recovery bundles;
+2. never rely on social DMs as the default support path;
+3. move security-sensitive findings to [/docs/security](/docs/security), not ordinary troubleshooting.
 
-Who
-: Users, developers, operators, wallet teams, and contributors.
+Those rules apply whether you are a new reader, a wallet user, or a developer debugging a docs problem.
 
-Why
-: Support should be searchable and safety-first, not scattered across community channels.
+## Where To Start
 
-How
-: Use issue categories, safety warnings, official-channel verification, and links to technical docs.
+Pick the page that matches the problem you actually have.
 
-## Reader Lenses
+| If you need... | Open this page first | Why |
+| --- | --- | --- |
+| Quick answers about scope, maturity, and common misunderstandings | [FAQ](/docs/support/faq) | It clarifies what this repo and project can claim today |
+| Concrete command-based help for the docs repository | [Troubleshooting](/docs/support/troubleshooting) | It stays aligned with the local `npm` and verify workflow |
+| Guidance about backups, restores, phishing, or unsafe support requests | [Wallet Recovery And Safety](/docs/support/wallet-recovery-safety) | It keeps the no-secret boundary explicit |
+| Builder-facing help and reproduction discipline | [Developer Support](/docs/support/developer-support) | It routes technical questions into the deeper developer docs |
+| Contact routing and channel verification | [Contact](/docs/support/contact) | It explains what is actually published and what is not |
+| Contribution workflow for docs, fixes, and research-backed edits | [Contribute](/docs/support/contribute) | It turns interest into a verifiable repo workflow |
+| Security-sensitive disclosure | [/docs/security](/docs/security) | Privacy, fraud, and exploit issues need a different path |
 
-::: tabs
+This ordering is intentional. Support should reduce avoidable harm before it expands into broader discussion.
 
-@tab:active Purpose
-Support hub for FAQs, troubleshooting, wallet recovery, developer help, contact, and contribution paths.
+## What This Repository Can Help With Directly
 
-@tab Audience
-Primary readers: Users, developers, operators, wallet teams, and contributors.
+Because this repository is a docs and site workspace, the strongest live support surface here is the one tied to current local evidence:
 
-@tab Delivery
-Use issue categories, safety warnings, official-channel verification, and links to technical docs.
-
-:::
-
-## Section Lens
-
-Source
-: wallet docs, troubleshooting notes, repo scripts, marketing support boundaries, and security disclosure policy.
-
-Message
-: support must reduce risk first, then route users to the correct technical or human path.
-
-UX
-: a task-focused support surface with decision trees, checklists, and contact categories.
-
-Include
-: issue categories, exact commands, logs to collect, no-secret warnings, official-channel checks, and escalation routes.
-
-Avoid
-: asking for secrets, relying on DMs, mixing security disclosure with ordinary support, or hiding response limits.
-
-## Section Pages
-
-| Page | Role |
+| Current repo support topic | Why this repo can help |
 | --- | --- |
-| [FAQ](/docs/support/faq) | Common questions about Z00Z category, privacy, settlement, wallets, tokens, use cases, and maturity. |
-| [Troubleshooting](/docs/support/troubleshooting) | Step-by-step fixes for setup, wallet build, WASM, RPC, simulator, node, and verification failures. |
-| [Wallet Recovery And Safety](/docs/support/wallet-recovery-safety) | User-facing wallet safety, backups, restore, seed phrase handling, phishing warnings, and support boundaries. |
-| [Developer Support](/docs/support/developer-support) | Support path for builder questions, bug reports, integration issues, and design-partner requests. |
-| [Contact](/docs/support/contact) | Official contact routes for support, partnerships, security, media, legal, and ecosystem programs. |
-| [Contribute](/docs/support/contribute) | Contributor guide for code, docs, tests, research, audits, examples, and useful-work submissions. |
+| Running the docs site locally | `README.md`, `package.json`, and the developer pages define the real commands |
+| Fixing lint, build, or search-coverage issues | The verification scripts are local and inspectable |
+| Clarifying maturity, terminology, or safe public wording | The whitepaper corpus and rewritten docs live here |
+| Updating support copy or routing pages | These files are the published support surface |
 
-## Navigation Links
+This repo is weaker as evidence for things it does not directly ship, such as a universal wallet support desk, a staffed legal inbox, or full runtime operations. Good support docs say that plainly instead of hiding the gap behind friendly language.
 
-| Link | Why it matters |
-| --- | --- |
-| [Z00Z Home](/docs) | Parent hub and primary context for this page. |
-| [Research](/docs/research) | Previous page in the same section order. |
-| [Legal](/docs/legal) | Next page in the same section order. |
+## Support Versus Security
 
-## Delivery Focus
+Readers often start in support when the situation is actually security-sensitive. Use support for ordinary setup, content, build, and routing problems. Switch to the security path when the issue involves:
 
-- [x] Route intent captured from the architecture scaffold
-- [x] Internal cross-links added for hub navigation
-- [x] Evidence anchors preserved for follow-up drafting
-- [ ] Final long-form prose and diagrams still need source-document expansion
+- secrets or recovery material;
+- privacy leakage or unexpected disclosure;
+- replay, authorization, or value-validity concerns;
+- impersonation, scam channels, or pressure to send sensitive data;
+- anything that would become more dangerous if posted publicly in full detail.
 
-## Route Map
+That boundary protects both users and maintainers. It also keeps public issue trackers from becoming exploit catalogs.
 
-@mermaidstart
-graph TD
-  support["Support"]
-  support --> support_faq["FAQ"]
-  support --> support_troubleshooting["Troubleshooting"]
-  support --> support_wallet_recovery["Wallet Recovery And Safety"]
-  support --> support_developer["Developer Support"]
-  support --> support_contact["Contact"]
-  support --> support_contribute["Contribute"]
-@mermaidend
+## Why The Safety Tone Is Deliberate
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `docs/Z00Z-Marketing-Srategy.md, Hyperliquid support pattern`
-- Section: `Support`
-- Section message: support must reduce risk first, then route users to the correct technical or human path.
-+++
+Some support pages sound cautious because the corpus itself is cautious. The whitepapers argue for self-custody, optional disclosure, and narrow public observability. Those ideas become meaningless if support copy casually implies hidden recovery power, official endorsement of third-party services, or universal operational coverage. Support language should therefore be practical, but it should also be disciplined enough to preserve the same trust boundaries as the protocol papers.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/Main-Whitepaper.md` explains wallet-local possession, recovery limits, and the narrower public settlement boundary that support pages must preserve.
+- `content/whitepapers/Privacy-Threat-Model.md` is the main source for why support guidance must distinguish ordinary help from privacy- or exploit-sensitive disclosure.
+- `content/whitepapers/Legal-Architecture.md` defines the self-custodial, reference-implementation, and non-operator language that support pages should keep consistent.
+- `README.md`, `package.json`, and `scripts/verify.sh` provide the repo-local command and verification evidence used by the practical support pages in this section.

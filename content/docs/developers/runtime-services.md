@@ -1,81 +1,91 @@
 ---
 title: "Runtime Services"
-description: "Developer hub for aggregators, validators, and watchers."
+description: "Builder guide to aggregator, validator, and watcher roles around the Z00Z settlement core."
+difficulty: advanced
+icon: mdi:alpha-c-circle-outline
 toc: true
 ---
+
 # Runtime Services
-> [!tip]
-> **Docs route:** `/docs/developers/runtime-services`
+
+> [!warning]
+> **Maturity:** `In-progress service family + current docs evidence`
 >
-> **Target site route:** `/developers/runtime-services`
->
-> **Maturity:** `In progress`
->
-> This page mixes live evidence with in-progress work. Call out implemented surfaces separately from planned extensions.
+> **Use this page when:** You need to understand how surrounding operator services help move work toward settlement without becoming settlement authority themselves.
 
-## Page Brief
+Z00Z runtime services matter precisely because they are not the whole protocol. Aggregators, validators, watchers, and similar operators help the system publish, inspect, challenge, and observe state transitions. But if the docs let those services become the apparent source of truth, the architecture becomes misleading. The protocol must stay narrow enough that service coordination, operational visibility, and business logic can evolve without rewriting the core settlement theorem.
 
-What
-: Developer hub for aggregators, validators, and watchers.
+This page is therefore a service-boundary explainer, not a promise that every runtime role already ships in this repository.
 
-When
-: Used before implementing admission, ordering, validation, reconciliation, alerting, or publication oversight.
+## The Three Service Roles
 
-Where
-: Developers and Network.
+The builder-facing service map is easiest to understand in three role families:
 
-Who
-: Runtime engineers, operators, security reviewers, and simulator authors.
+| Role | Primary job | What it cannot claim |
+| --- | --- | --- |
+| Aggregator | Admit work, order or bundle it, and move it toward publication | Final settlement by itself |
+| Validator | Re-check public artifacts and reject inconsistent transitions | Ownership meaning outside the public evidence path |
+| Watcher | Observe, alert, export evidence, and surface operational anomalies | Authority to redefine protocol truth |
 
-Why
-: Runtime services move work toward settlement but should not redefine settlement truth.
+This split matters because it keeps performance and coordination concerns from silently becoming consensus claims.
 
-How
-: Split docs into aggregators, validators, watchers, shared types, service boundaries, examples, and tests.
+## Why Services Exist At All
 
-## Reader Lenses
+If wallets already prepare packages and checkpoints define settlement, why add runtime services? Because real systems still need:
 
-::: tabs
+1. Admission and ordering.
+2. Re-verification and challenge surfaces.
+3. Monitoring and recovery signals.
+4. A place to attach optional business or ecosystem workflows without changing protocol validity.
 
-@tab:active Purpose
-Developer hub for aggregators, validators, and watchers.
+The important part is where those jobs stop. A runtime service can help the protocol happen. It should not get to redefine what a valid protocol transition is.
 
-@tab Audience
-Primary readers: Runtime engineers, operators, security reviewers, and simulator authors.
+## Service Language That Keeps The Architecture Honest
 
-@tab Delivery
-Split docs into aggregators, validators, watchers, shared types, service boundaries, examples, and tests.
+When writing service docs, prefer these distinctions:
 
-:::
-
-## Section Lens
-
-Source
-: Cargo workspace metadata, crate READMEs, crate root exports, examples, tests, scripts, and generated docs.
-
-Message
-: builders need exact module ownership, runnable commands, API boundaries, and verification steps.
-
-UX
-: a dense builder guide with command blocks, module maps, tabs for roles, and explicit source-file links.
-
-Include
-: setup commands, crate maps, stable-vs-internal API labels, examples, failure modes, and verification gates.
-
-Avoid
-: invented SDK behavior, snippets that do not map to code, or tutorial prose that hides safety boundaries.
-
-## Navigation Links
-
-| Link | Why it matters |
+| Good distinction | Why it matters |
 | --- | --- |
-| [Developers](/docs/developers) | Parent hub and primary context for this page. |
-| [Rollup Node](/docs/developers/rollup-node) | Previous page in the same section order. |
-| [Simulator](/docs/developers/simulator) | Next page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
+| Operational status versus settlement finality | A service can report progress without conferring finality |
+| Monitoring surface versus authority plane | Watchers and dashboards can observe without owning truth |
+| Service layer versus protocol layer | Optional services should not be confused with core guarantees |
+| Runtime coordination versus wallet possession | Services work around the public boundary; wallets still own private possession |
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `crates/z00z_runtime/aggregators/src/lib.rs, crates/z00z_runtime/validators/src/lib.rs, crates/z00z_runtime/watchers/src/lib.rs`
-- Section: `Developers`
-- Section message: builders need exact module ownership, runnable commands, API boundaries, and verification steps.
-+++
+The cross-chain and privacy papers make these distinctions especially valuable because outside services can add useful capabilities while also becoming new leakage or trust surfaces.
+
+## What This Repo Can Support
+
+This repository can support runtime-service work in several honest ways:
+
+| Local activity | Why it is still valuable |
+| --- | --- |
+| Rewriting service docs for clearer authority boundaries | Prevents architecture drift before implementation |
+| Aligning runtime language with protocol and privacy pages | Keeps service docs from overstating their authority |
+| Improving diagrams or operator explanations | Makes surrounding roles legible to integrators and reviewers |
+| Tightening maturity notes | Helps readers understand what is live, in progress, or purely target architecture |
+
+That is not a substitute for an operator codebase, but it is not nothing. Service misunderstandings often begin in documentation.
+
+## Service Risks Builders Should Name
+
+Runtime-service docs should not sound generic. They should explicitly acknowledge the main risk classes:
+
+| Risk class | Why it belongs in service docs |
+| --- | --- |
+| Metadata and visibility leakage | Services can observe more than the base protocol publishes |
+| Liveness and ordering pressure | Operational roles can shape user experience without changing validity |
+| Incentive and challenge design | Some operator actions depend on bonds, reputation, or dispute incentives |
+| Ecosystem trust overlays | A service can be useful while still being optional or non-authoritative |
+
+This is also why privacy and operator docs must remain connected. A privacy-first protocol can still lose important privacy at the service layer if the documentation treats services as harmless plumbing.
+
+## Read Next
+
+Go to [Simulator](/docs/developers/simulator) if you want to think through multi-role scenarios, or return to [Rollup Node](/docs/developers/rollup-node) if the main question is still how public-artifact verification reaches the checkpoint boundary.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/Main-Whitepaper.md` defines the protocol-versus-service boundary and the role of public settlement evidence.
+- `content/whitepapers/Privacy-Threat-Model.md` explains why operator and service visibility are part of the real privacy story.
+- `content/whitepapers/Proof-of-Useful-Work.md` adds useful service-layer vocabulary for evidence handling, review, and bounded reward or challenge paths.
+- `content/whitepapers/Cross-Chain-Integration.md` helps keep external adapters, watchers, and other services in the correct non-authoritative lane.

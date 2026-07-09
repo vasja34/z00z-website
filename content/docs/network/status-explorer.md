@@ -1,80 +1,90 @@
 ---
 title: "Status And Explorer"
-description: "Public network status, explorer, telemetry, checkpoints, DA health, and proof receipt browsing."
+description: "Public-facing guide to network status, explorer scope, privacy-safe display rules, and authority non-claims."
+difficulty: intermediate
+icon: mdi:alpha-b-circle-outline
 toc: true
 ---
+
 # Status And Explorer
+
 > [!warning]
-> **Docs route:** `/docs/network/status-explorer`
+> **Maturity:** `Target public surface + current documentation guidance`
 >
-> **Target site route:** `/network/status-explorer`
->
-> **Maturity:** `Target public surface`
->
-> This page describes target or draft behavior. Avoid present-tense production claims unless implementation evidence is added.
+> **Use this page when:** You need to define what a public network status or explorer surface should reveal without turning it into a privacy leak or a fake authority engine.
 
-## Page Brief
+Public status pages are useful because they make systems legible to non-operators. Explorers are useful because they give public evidence a home that more people can inspect. In Z00Z, both tools need sharper discipline than usual. The protocol is deliberately designed so that public state does not become a reusable public account graph. A status page that carelessly rebuilds that graph through labels, timelines, or analytics would contradict the point of the architecture. An explorer that confuses observation with final authority would distort the network story just as badly.
 
-What
-: Public network status, explorer, telemetry, checkpoints, DA health, and proof receipt browsing.
+## What A Good Public Surface Should Show
 
-When
-: Used by users, operators, researchers, and support teams during normal operation or incidents.
+A public explorer or status surface should prioritize facts that are truly public and actually helpful:
 
-Where
-: Network header and utility nav.
-
-Who
-: Users, operators, ecosystem partners, and external observers.
-
-Why
-: NEAR exposes explorer access as a utility route; Z00Z should expose status without leaking private wallet meaning.
-
-How
-: Build read-only dashboards for checkpoint roots, provider health, alerts, proof references, and service status, with privacy-safe labels.
-
-## Reader Lenses
-
-::: tabs
-
-@tab:active Purpose
-Public network status, explorer, telemetry, checkpoints, DA health, and proof receipt browsing.
-
-@tab Audience
-Primary readers: Users, operators, ecosystem partners, and external observers.
-
-@tab Delivery
-Build read-only dashboards for checkpoint roots, provider health, alerts, proof references, and service status, with privacy-safe labels.
-
-:::
-
-## Section Lens
-
-Source
-: runtime service crates, rollup-node surfaces, OnionNet paper, multi-DA paper, watcher code, and telemetry docs.
-
-Message
-: operator roles, publication layers, observation data, and settlement authority are separate layers.
-
-UX
-: an operator-oriented control-plane guide with status cards, failure-state tables, and links to support runbooks.
-
-Include
-: role diagrams, health signals, config surfaces, provider lifecycle, alert semantics, and privacy-safe explorer rules.
-
-Avoid
-: implying observability equals consensus truth or exposing wallet/private meaning through explorer labels.
-
-## Navigation Links
-
-| Link | Why it matters |
+| Safe public surface | Why it helps |
 | --- | --- |
-| [Network](/docs/network) | Parent hub and primary context for this page. |
-| [Node Operations](/docs/network/node-operations) | Previous page in the same section order. |
-| [Z00Z Home](/docs) | Top-level entry for the full site architecture. |
+| Checkpoint progression and public roots | These are core public settlement facts |
+| Network or provider health summaries | Users and operators need coarse liveness visibility |
+| Published evidence references or anchor links | Reviewers need a path back to inspectable public artifacts |
+| Incident banners or degraded-mode notices | Public trust improves when issues are surfaced honestly |
 
-+++ Evidence and scaffold notes
-- Evidence anchors: `crates/z00z_telemetry/README.md, crates/z00z_runtime/watchers/src/lib.rs, website/z00z_website-6.yaml`
-- Section: `Network`
-- Section message: operator roles, publication layers, observation data, and settlement authority are separate layers.
-+++
+These are the kinds of surfaces that make a network understandable without turning it into a surveillance product.
+
+## What A Good Public Surface Should Avoid
+
+The corresponding non-claims are just as important:
+
+| Unsafe surface | Why it is risky |
+| --- | --- |
+| User- or wallet-centric ownership timelines | They recreate the public-account mental model the protocol rejects |
+| Over-detailed counterparty or route analytics | They can expose sensitive graph structure or operational metadata |
+| Status labels that imply settlement finality too early | Observation can lag or mislead if the authority plane is not explicit |
+| Business-meaning labels attached to raw public evidence | Public artifacts do not automatically reveal full real-world context |
+
+This is where explorer design and privacy discipline meet most directly. A page can be technically informative and still violate the product's privacy posture if it chooses the wrong display model.
+
+## A Useful Status Taxonomy
+
+One way to keep public tooling honest is to classify every visible item:
+
+| Category | What it can say |
+| --- | --- |
+| Authoritative settlement fact | A checkpointed root or similarly committed public fact |
+| Supportive operational fact | Provider health, lag, or watcher observation |
+| Reference artifact | An anchor, ZTS proof, or exported evidence package |
+| Informational product layer | A dashboard summary or explorer convenience view |
+
+Readers should always be able to tell which category they are looking at. If they cannot, the status surface is already misleading.
+
+## Current Repo Posture
+
+The current repository does not claim to ship a live public explorer. It does support the design discipline for one:
+
+| Source | Why it helps |
+| --- | --- |
+| `content/whitepapers/Privacy-Threat-Model.md` | Explains why public visibility needs privacy-safe limits |
+| `content/whitepapers/Main-Whitepaper.md` | Defines the public evidence model that an explorer should reflect |
+| `content/whitepapers/Corpus-Terminology-Reference.md` | Standardizes monitoring surfaces, anchors, and checkpoint-facing nouns |
+| `content/docs/network/watchers.md` and `content/docs/network/checkpoint-anchors-zts.md` | Provide adjacent role and evidence context inside the family |
+
+That makes this page a design contract for public tooling rather than an implementation inventory.
+
+## Common Explorer Overclaims
+
+| Overclaim | Better wording |
+| --- | --- |
+| "The explorer tells you who owns what." | "The explorer shows bounded public evidence and network status." |
+| "Green status means final settlement is complete everywhere." | "Green status means the displayed operational and public-evidence checks are currently healthy." |
+| "Anchor links prove the full transaction story." | "Anchor links point to supportive reference evidence around public artifacts." |
+| "More analytics always means better transparency." | "Analytics must be evaluated against privacy and authority boundaries." |
+
+These corrections matter because public tools often become the most visible explanation of a protocol, even when they should not be the only one.
+
+## Read Next
+
+Return to [Network](/docs/network) for the full family map, or revisit [Watchers](/docs/network/watchers) and [Checkpoint Anchors And ZTS](/docs/network/checkpoint-anchors-zts) if you are designing public visibility around a specific observation or proof-reference surface.
+
+## Evidence and Further Reading
+
+- `content/whitepapers/Privacy-Threat-Model.md` is the primary source for why public visibility must remain privacy-safe and carefully bounded.
+- `content/whitepapers/Main-Whitepaper.md` defines the narrow public settlement evidence model that status and explorer tooling should reflect.
+- `content/whitepapers/Corpus-Terminology-Reference.md` standardizes monitoring surface, checkpoint, anchor, and public-evidence vocabulary used on this page.
+- `content/docs/network/watchers.md` and `content/docs/network/checkpoint-anchors-zts.md` are the current repo-local companion pages for public observation and supportive proof-reference design.

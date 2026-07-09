@@ -2,6 +2,7 @@ title: "Research"
 icon: flask
 page_icons:
   index: flask
+  glossary: book-open
 order:
   - index
   - whitepapers

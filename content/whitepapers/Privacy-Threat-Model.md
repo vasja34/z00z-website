@@ -1,8 +1,16 @@
+---
+title: "Z00Z Privacy Threat Model And Metrics"
+description: "Defines the visibility boundary, adversary model, leakage patterns, and measurement posture for Z00Z privacy claims."
+difficulty: expert
+icon: mdi:alpha-d-circle-outline
+toc: true
+---
+
 # Z00Z Privacy Threat Model And Metrics
 
 [TOC]
 
-Version: 2026-05-27
+Version: 2026-07-09
 
 ## Key Terms Used In This Paper
 
@@ -92,13 +100,13 @@ without widening claims beyond what the corpus already supports.
 
 ### 2.1 Live Corpus Sources
 
-- [Z00Z Main Whitepaper](Z00Z-Main-Whitepaper.md)
-- [Z00Z OnionNet Whitepaper](Z00Z-OnionNet-Whitepaper.md)
-- [Z00Z Linked Liability Whitepaper](Z00Z-Linked-Liability-Whitepaper.md)
-- [Z00Z Agentic Offline Economy Whitepaper](Z00Z-Agentic-Offline-Economy-Whitepaper.md)
-- [Z00Z Cross-Chain Integration Whitepaper](Z00Z-Cross-Chain-Integration-Whitepaper.md)
-- [Z00Z Roadmap Blueprint](tech-papers/Z00Z-Roadmap-Blueprint.md)
-- [Z00Z Corpus Terminology And Abbreviations Reference](Z00Z-Corpus-Terminology-Reference.md)
+- [Z00Z Main Whitepaper](Main-Whitepaper.md)
+- [Z00Z OnionNet Whitepaper](OnionNet.md)
+- [Z00Z Linked Liability Whitepaper](Linked-Liability.md)
+- [Z00Z Agentic Offline Economy Whitepaper](Agentic-Offline-Economy.md)
+- [Z00Z Cross-Chain Integration Whitepaper](Cross-Chain-Integration.md)
+- [Z00Z Roadmap Blueprint](../tech-papers/Z00Z-Roadmap-Blueprint.md)
+- [Z00Z Corpus Terminology And Abbreviations Reference](Corpus-Terminology-Reference.md)
 
 ### 2.2 Authority Discipline
 
@@ -142,25 +150,25 @@ The easiest failure mode for this paper would be to blur protocol privacy,
 operational privacy, and measurement language into one slogan. The source-owner
 split below is meant to prevent that blur.
 
-- `Z00Z-Main-Whitepaper.md` anchors the base privacy model, the stealth
+- `Main-Whitepaper.md` anchors the base privacy model, the stealth
   ownership lane, the public settlement surface, the checkpoint boundary, and
   the corpus definition of `Privacy threat model`.
-- `Z00Z-OnionNet-Whitepaper.md` anchors network-origin privacy, client-owned
+- `OnionNet.md` anchors network-origin privacy, client-owned
   route construction, bounded topology disclosure, low-load privacy floors, and
   the non-claim against a fully global observer.
-- `Z00Z-Linked-Liability-Whitepaper.md` anchors fraud-triggered narrowing of
+- `Linked-Liability.md` anchors fraud-triggered narrowing of
   privacy, `Selective Reveal`, `Exculpability`, and the rule that punishment
   should bind to a `LiabilityDomain` rather than to a public account identity.
-- `Z00Z-Agentic-Offline-Economy-Whitepaper.md` anchors machine and
+- `Agentic-Offline-Economy.md` anchors machine and
   agent workflows where private rights, offline receipts, selective audit, and
   delayed reconciliation create real operational pressure on privacy.
-- `Z00Z-Cross-Chain-Integration-Whitepaper.md` anchors ingress, egress, trust
+- `Cross-Chain-Integration.md` anchors ingress, egress, trust
   tiers, external custody and issuer assumptions, and the claim that Z00Z
   privately moves rights while outside systems still own redemption truth.
 - `Z00Z-Roadmap-Blueprint.md` anchors maturity language so the paper stays
   honest about what is live, what is still in progress, and which surfaces
   remain target architecture.
-- `Z00Z-Corpus-Terminology-Reference.md` anchors term discipline and prevents
+- `Corpus-Terminology-Reference.md` anchors term discipline and prevents
   this paper from collapsing distinct notions such as `Selective disclosure`,
   `Selective audit`, and `Selective Reveal` into one vague synonym.
 
@@ -997,7 +1005,7 @@ term is corpus-backed but not a live API, the row says so explicitly.
 | `ClaimTxPackage` | Code-backed claim-domain envelope with `kind`, `package_type`, `version`, `chain_id`, `chain_type`, `chain_name`, `tx`, `tx_digest_hex`, and `status`. | Claim-domain replay and disclosure boundaries must stay distinct from ordinary spend privacy. |
 | `ScanStatePayload` | Code-backed wallet scan cursor with `last_scanned_height` and `last_scanned_hash`. | Scan progress is wallet-local operational state and should not become a shared behavioral graph. |
 | `CheckpointAudit` | Code-backed audit wrapper with `version`, `checkpoint_id`, and `fragment_ids`. | Audit evidence can be useful, but it remains outside canonical checkpoint artifact bytes and should be purpose-bound. |
-| `WorkItem`, `PublishedBatch`, `PublicationRecord`, and `SoftConfirmation` | Code-backed runtime publication and batching surfaces. | These surfaces can reveal admission, batching, retry, and publication timing; they must not be mistaken for wallet-local ownership truth. |
+| `WorkItem`, `PublishedBatch`, `PublicationRecord`, `SoftConfirmation`, `CheckpointDaReferenceV1`, `CheckpointPublicationEvidenceV1`, and `CheckpointLifecycleV1` | Code-backed runtime publication, DA-reference, and lifecycle surfaces. | These surfaces can reveal admission, batching, publication, retention, retry, and lifecycle timing; they must not be mistaken for wallet-local ownership truth. |
 | `ProviderSignal`, `Verdict`, and `EvidenceRecord` | Code-backed watcher and validator evidence surfaces combining provider stage/outcome, verdict class, publication data, and exported evidence keys. | Operational evidence is necessary for reliability, but export policy must avoid turning it into a richer privacy dataset than settlement itself. |
 | `Selective disclosure` | Corpus term for scoped visibility to a bounded audience and purpose. | Broad disclosure concept; not a synonym for audit or liability reveal. |
 | `Selective audit` | Corpus term from the agentic offline economy paper for reviewer, operator, enterprise, attester, or regulatory evidence. | Audit packages should reveal the minimum evidence needed for the named review purpose. |
@@ -1035,10 +1043,10 @@ current live-core claim.
 
 | Source article anchor | Z00Z extension | Required Z00Z wording or signature |
 | --- | --- | --- |
-| [Functional Encryption - Definitions and Challenges, pp. 1, 4, 8-16](<articles/Functional Encryption - Definitions and Challenges.pdf#page=1>) | Every future audit key, view key, disclosure token, or enterprise review credential must declare its leakage function before it is described as privacy-preserving. | Use `LeakageContract = {public_fields, counterparty_fields, auditor_outputs, fraud_outputs}`. A disclosure feature is valid only if the document can name what `AssetLeaf`, `ReceiverCard`, `PaymentRequest`, `TxPackage`, or audit wrapper fields remain visible to each audience. |
-| [A Survey on Anonymity, Confidentiality, and Auditability, pp. 6, 21, 24-30](<articles/A Survey on Anonymity, Confidentiality, and Auditability.pdf#page=6>) | Privacy review must be multi-axis rather than a single "private/not private" label. | Add a review row for `sender_graph`, `receiver_graph`, `amount`, `network_origin`, `unlinkability`, `auditability`, and `misuse_reveal`. A feature may improve one axis while weakening another; the threat model must say so explicitly. |
-| [A Survey on Anonymity, Confidentiality, and Auditability, pp. 24-28](<articles/A Survey on Anonymity, Confidentiality, and Auditability.pdf#page=24>) | `AnonymityBudget` and `OperatingLimit` should be treated as optional policy objects, not as ordinary visible accounts. | A policy-limited private flow should prove `usage <= limit` or `budget_valid(epoch, domain)` without making the budget object a reusable public wallet handle. Exceeding the limit should route to selective audit or refusal, not automatic global deanonymization. |
-| [Usability of Cryptocurrency Wallets, pp. 3-10](<articles/Usability of Cryptocurrency Wallets.pdf#page=3>) and [User-Perceived Privacy in Blockchain, pp. 7-15, 26-28](<articles/User-Perceived Privacy in Blockchain.pdf#page=7>) | Wallet privacy UX must be part of the threat model because user action can undo cryptographic privacy. | Add a `PrivacyUndoWarning` class for merging previously separated outputs, reusing `PaymentRequest` material, reusing public receiver material, creating unique amount or timing fingerprints, exporting broad audit views, or sending while transport privacy is degraded. |
-| [User-Perceived Privacy in Blockchain, pp. 10-15](<articles/User-Perceived Privacy in Blockchain.pdf#page=10>) | Built-in privacy should be the default posture; optional privacy should not produce a visually or structurally flagged transaction species. | The wallet should describe privacy posture as normal state, not a suspicious add-on. UX may expose cost, latency, or routing choices, but the resulting `TxPackage` family should avoid unnecessary mode markers that let observers separate "privacy users" from ordinary users. |
-| [A Survey on Anonymity, Confidentiality, and Auditability, pp. 21, 28-30](<articles/A Survey on Anonymity, Confidentiality, and Auditability.pdf#page=21>) | Transport privacy must stay separate from state privacy, but it needs its own quality gate. | `NetworkPrivacyAxis` should record ingress path, relay diversity, cover budget, timing bucket, helper dependency, and failure mode. OnionNet or Tor support can improve this axis only under stated assumptions; it must not upgrade the state-privacy claim by itself. |
-| [A Survey on Anonymity, Confidentiality, and Auditability, pp. 27-30, 39-40](<articles/A Survey on Anonymity, Confidentiality, and Auditability.pdf#page=27>) | Verification without disclosure should become the preferred audit phrase for quantitative review. | An auditor-facing flow should prefer `prove(metric)` over `reveal(records)`: examples include aggregate volume, cap compliance, epoch usage, or policy membership. The proof may satisfy a reviewer while keeping unrelated wallet history outside the audit package. |
+| [Functional Encryption - Definitions and Challenges, pp. 1, 4, 8-16](<../articles/Functional Encryption - Definitions and Challenges.pdf#page=1>) | Every future audit key, view key, disclosure token, or enterprise review credential must declare its leakage function before it is described as privacy-preserving. | Use `LeakageContract = {public_fields, counterparty_fields, auditor_outputs, fraud_outputs}`. A disclosure feature is valid only if the document can name what `AssetLeaf`, `ReceiverCard`, `PaymentRequest`, `TxPackage`, or audit wrapper fields remain visible to each audience. |
+| [A Survey on Anonymity, Confidentiality, and Auditability, pp. 6, 21, 24-30](<../articles/A Survey on Anonymity, Confidentiality, and Auditability.pdf#page=6>) | Privacy review must be multi-axis rather than a single "private/not private" label. | Add a review row for `sender_graph`, `receiver_graph`, `amount`, `network_origin`, `unlinkability`, `auditability`, and `misuse_reveal`. A feature may improve one axis while weakening another; the threat model must say so explicitly. |
+| [A Survey on Anonymity, Confidentiality, and Auditability, pp. 24-28](<../articles/A Survey on Anonymity, Confidentiality, and Auditability.pdf#page=24>) | `AnonymityBudget` and `OperatingLimit` should be treated as optional policy objects, not as ordinary visible accounts. | A policy-limited private flow should prove `usage <= limit` or `budget_valid(epoch, domain)` without making the budget object a reusable public wallet handle. Exceeding the limit should route to selective audit or refusal, not automatic global deanonymization. |
+| [Usability of Cryptocurrency Wallets, pp. 3-10](<../articles/Usability of Cryptocurrency Wallets.pdf#page=3>) and [User-Perceived Privacy in Blockchain, pp. 7-15, 26-28](<../articles/User-Perceived Privacy in Blockchain.pdf#page=7>) | Wallet privacy UX must be part of the threat model because user action can undo cryptographic privacy. | Add a `PrivacyUndoWarning` class for merging previously separated outputs, reusing `PaymentRequest` material, reusing public receiver material, creating unique amount or timing fingerprints, exporting broad audit views, or sending while transport privacy is degraded. |
+| [User-Perceived Privacy in Blockchain, pp. 10-15](<../articles/User-Perceived Privacy in Blockchain.pdf#page=10>) | Built-in privacy should be the default posture; optional privacy should not produce a visually or structurally flagged transaction species. | The wallet should describe privacy posture as normal state, not a suspicious add-on. UX may expose cost, latency, or routing choices, but the resulting `TxPackage` family should avoid unnecessary mode markers that let observers separate "privacy users" from ordinary users. |
+| [A Survey on Anonymity, Confidentiality, and Auditability, pp. 21, 28-30](<../articles/A Survey on Anonymity, Confidentiality, and Auditability.pdf#page=21>) | Transport privacy must stay separate from state privacy, but it needs its own quality gate. | `NetworkPrivacyAxis` should record ingress path, relay diversity, cover budget, timing bucket, helper dependency, and failure mode. OnionNet or Tor support can improve this axis only under stated assumptions; it must not upgrade the state-privacy claim by itself. |
+| [A Survey on Anonymity, Confidentiality, and Auditability, pp. 27-30, 39-40](<../articles/A Survey on Anonymity, Confidentiality, and Auditability.pdf#page=27>) | Verification without disclosure should become the preferred audit phrase for quantitative review. | An auditor-facing flow should prefer `prove(metric)` over `reveal(records)`: examples include aggregate volume, cap compliance, epoch usage, or policy membership. The proof may satisfy a reviewer while keeping unrelated wallet history outside the audit package. |

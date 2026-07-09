@@ -1,10 +1,12 @@
 ---
-title: "Watchers"
+title: "Watchers Home"
 description: "Monitoring guides, observer responsibilities, and live system views."
+difficulty: basic
+icon: material-symbols:home-outline
 toc: true
 ---
 
-# Watchers
+# Watchers Home
 
 > [!note]
 > This domain is now routable even though watcher-specific live views are still pending.

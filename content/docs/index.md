@@ -1,119 +1,72 @@
 ---
-title: "Z00Z Home"
+title: "Docs Home"
 description: "First-screen public explanation of Z00Z as a private rights and settlement layer with wallet-local possession and checkpointed public evidence."
+difficulty: basic
+icon: material-symbols:home-outline
 toc: true
 ---
-# Z00Z Home
+
+# Docs Home
+
 > [!note]
-> **Docs route:** `/docs`
+> **Maturity:** `Live docs hub over current core thesis and bounded target architecture`
 >
-> **Target site route:** `/`
->
-> **Maturity:** `Site support`
->
-> Keep the public wording aligned with the stated maturity and route intent.
+> **Current posture:** The public site can describe the core thesis, current protocol boundaries, and documented target architecture from the whitepaper corpus. It should not imply that every future service, issuer, or ecosystem surface is already live.
 
-## Page Brief
+Z00Z is a privacy-first digital cash and settlement architecture built around wallet-local possession and checkpointed public evidence. The shortest honest category sentence is that **Z00Z treats money, rights, and bounded claims as private wallet-local objects first, and only later turns the minimum necessary evidence into public settlement facts**. That is a different starting point from public account chains, which usually treat globally visible balances, addresses, and execution history as the default truth.
 
-What
-: First-screen public explanation of Z00Z as a private rights and settlement layer with wallet-local possession and checkpointed public evidence.
+This home page exists to make that distinction legible before a reader encounters deeper protocol, developer, or legal material. Z00Z is not presented here as a generic smart-contract platform with privacy features layered on top. It is not a hosted wallet, exchange, or custody desk. It is also not a promise that all of the broader rights economy described in the corpus is already implemented in production. The defensible claim is narrower: the live direction centers confidential asset objects, receiver-native wallet flows, transaction packages, replay-safe checkpoints, and a public layer that acts more like a settlement notary than like a public wallet database.
 
-When
-: Used by new visitors before they enter docs, developer flows, ecosystem content, or legal material.
+## In One Sentence
 
-Where
-: Root route and main marketing entrypoint.
+Z00Z is a rights-first settlement model for private cash and related private objects, where wallets carry possession and preparation locally while the public chain verifies only the evidence needed for safe, replay-resistant final settlement.
 
-Who
-: Builders, integrators, researchers, privacy-sensitive organizations, contributors, and early community readers.
+## Why This Model Exists
 
-Why
-: Prevents category drift into generic privacy coin, private VM, or exchange-style narratives.
+The whitepaper corpus starts from a simple observation: public-state blockchains are good at shared verification and bad at preserving cash-like privacy. Once value is organized around reusable accounts and permanent public histories, observers can reconstruct treasuries, payroll cycles, supplier relationships, and personal behavior even if some fields are encrypted. Z00Z responds by narrowing the public surface instead of trying to cosmetically hide an account graph that remains globally legible.
 
-How
-: Lead with a short category sentence, a live-vs-target maturity strip, primary routes to Learn, Developers, Protocol, and Security, plus one compact architecture diagram.
+That architectural choice matters for more than payments. If the wallet is already the place where possession, receiver material, and bounded rights are prepared, then the same model can support offline-first cash, externally backed rights, policy-shaped money, or scoped service claims without turning every interaction into a permanent public profile. The corpus describes that broader direction carefully, but it keeps the current claim disciplined: digital cash is the clearest live expression of the model today.
 
-## Reader Lenses
+## How The Flow Stays Narrow
 
-::: tabs
+```mermaid
+flowchart LR
+  Wallet["Wallet-local possession<br/>receiver material and local inventory"] --> Package["TxPackage or claim package<br/>prepared off-chain"]
+  Package --> Checkpoint["Checkpoint validation<br/>and replay-safe settlement"]
+  Checkpoint --> Evidence["Public evidence<br/>roots, deltas, proofs, links"]
 
-@tab:active Purpose
-First-screen public explanation of Z00Z as a private rights and settlement layer with wallet-local possession and checkpointed public evidence.
+  style Wallet fill:#E3F2FD,stroke:#1E88E5,stroke-width:1px,color:#0D47A1
+  style Package fill:#ECEFF1,stroke:#546E7A,stroke-width:1px,color:#263238
+  style Checkpoint fill:#EDE7F6,stroke:#5E35B1,stroke-width:1px,color:#311B92
+  style Evidence fill:#FFE0B2,stroke:#F57C00,stroke-width:1px,color:#263238
+```
 
-@tab Audience
-Primary readers: Builders, integrators, researchers, privacy-sensitive organizations, contributors, and early community readers.
+The wallet is where ownership, receiver routing, and package preparation begin. The checkpoint boundary is where publication becomes final settlement. The public chain therefore records the state transition evidence, not a full public diary of a user's wallet. That is why Z00Z can talk about privacy and settlement in the same sentence without pretending that privacy means "nothing public ever exists." Public evidence still exists. The design goal is to keep it narrow, typed, and tied to settlement rather than to public account identity.
 
-@tab Delivery
-Lead with a short category sentence, a live-vs-target maturity strip, primary routes to Learn, Developers, Protocol, and Security, plus one compact architecture diagram.
+## What Readers Can Verify Today
 
-:::
-
-## Primary Lanes
-
-| Section | Role | First route |
+| Surface | What the corpus supports now | How to describe it safely |
 | --- | --- | --- |
-| [Learn](/docs/learn) | Reader-first education hub that compresses Z00Z before the full technical corpus. | `/learn` |
-| [Protocol](/docs/protocol) | Protocol documentation hub for settlement, object model, privacy, checkpoints, economics, governance, and companion whitepapers. | `/protocol` |
-| [Developers](/docs/developers) | Builder hub for Rust workspace, APIs, wallets, storage, runtime services, simulator, configs, tests, and examples. | `/developers` |
-| [Network](/docs/network) | Operator and network architecture hub for runtime services, transport, privacy ingress, DA, checkpoints, and observability. | `/network` |
-| [Use Cases](/docs/use-cases) | Use-case hub for the six core application families. | `/use-cases` |
-| [Ecosystem](/docs/ecosystem) | Public ecosystem hub for builders, issuers, operators, useful-work programs, community, blog, and changelog. | `/ecosystem` |
-| [Security](/docs/security) | Security hub for privacy threat model, crypto policy, verification, supply chain, audits, disclosure, and incidents. | `/security` |
-| [Research](/docs/research) | Research hub for whitepapers, technical papers, benchmarks, verification, archive, and glossary. | `/research` |
-| [Support](/docs/support) | Support hub for FAQs, troubleshooting, wallet recovery, developer help, contact, and contribution paths. | `/support` |
-| [Legal](/docs/legal) | Legal and public-claims hub for protocol neutrality, disclosures, terms, privacy policy, claim boundaries, and independent service responsibilities. | `/legal` |
+| Core thesis | Wallet-local possession, transaction packages, checkpoint-bound settlement, and narrow public evidence are central throughout the main corpus. | Speak in present tense about the architecture and whitepaper-defined boundaries. |
+| Live maturity | Some protocol-facing and verification surfaces are described as live or current, while many ecosystem and expansion layers remain target architecture. | Separate "live core", "active hardening", and "target expansion" explicitly. |
+| Legal and service boundary | The legal corpus insists that protocol, steward, wallet, issuer, and service responsibilities remain distinct. | Do not collapse Z00Z into an operator, exchange, custody service, or compliance oracle. |
 
-## Section Lens
+## Choose A Starting Path
 
-Source
-: the root README, litepaper thesis, and marketing-category boundaries.
+| Start here | Use it when you need | Why it matters |
+| --- | --- | --- |
+| [Learn](/docs/learn) | A reader-first path into the core ideas, vocabulary, maturity bands, and category boundary. | Best first stop if the corpus feels too large. |
+| [Protocol](/docs/protocol) | The detailed settlement, object model, privacy, checkpoint, and architecture model. | Best for technical readers who already understand the high-level thesis. |
+| [Developers](/docs/developers) | Workspace, APIs, wallets, storage, runtime services, and verification guidance. | Best for builders deciding whether the repo surfaces match the whitepapers. |
+| [Security](/docs/security) | Threat model, crypto-policy, supply-chain, and disclosure discipline. | Best for readers who need the adversary model before they trust the claims. |
+| [Legal](/docs/legal) | Public-claim hygiene, steward limits, terms, privacy policy boundaries, and disclosures. | Best for communications, diligence, and partner review. |
 
-Message
-: Z00Z is a private settlement and rights architecture, not a generic privacy coin, exchange, or vague Web3 landing page.
+## Reading Posture
 
-UX
-: a concise product-docs landing page with direct routing into Learn, Protocol, Developers, and Security.
+Use the site as a guided synthesis, not as a replacement for the whitepapers. The docs are meant to get a reader to the right question quickly, explain what can be claimed without exaggeration, and then point back to the primary papers. When a page describes target architecture, it should say so plainly. When a page relies on current implementation evidence, it should keep that evidence narrow and concrete. That is how Z00Z avoids the usual trap of sounding more complete than the repo or corpus can justify.
 
-Include
-: primary routes, maturity labels, public category sentence, and a compact architecture signal above the fold.
+## Evidence and Further Reading
 
-Avoid
-: price framing, unsupported production claims, and visual noise that hides the category definition.
-
-## Section Pages
-
-| Page | Role |
-| --- | --- |
-| [Learn](/docs/learn) | Reader-first education hub that compresses Z00Z before the full technical corpus. |
-| [Protocol](/docs/protocol) | Protocol documentation hub for settlement, object model, privacy, checkpoints, economics, governance, and companion whitepapers. |
-| [Developers](/docs/developers) | Builder hub for Rust workspace, APIs, wallets, storage, runtime services, simulator, configs, tests, and examples. |
-| [Network](/docs/network) | Operator and network architecture hub for runtime services, transport, privacy ingress, DA, checkpoints, and observability. |
-| [Use Cases](/docs/use-cases) | Use-case hub for the six core application families. |
-| [Ecosystem](/docs/ecosystem) | Public ecosystem hub for builders, issuers, operators, useful-work programs, community, blog, and changelog. |
-| [Security](/docs/security) | Security hub for privacy threat model, crypto policy, verification, supply chain, audits, disclosure, and incidents. |
-| [Research](/docs/research) | Research hub for whitepapers, technical papers, benchmarks, verification, archive, and glossary. |
-| [Support](/docs/support) | Support hub for FAQs, troubleshooting, wallet recovery, developer help, contact, and contribution paths. |
-| [Legal](/docs/legal) | Legal and public-claims hub for protocol neutrality, disclosures, terms, privacy policy, claim boundaries, and independent service responsibilities. |
-
-## Route Map
-
-@mermaidstart
-graph TD
-  home["Z00Z Home"]
-  home --> learn["Learn"]
-  home --> protocol["Protocol"]
-  home --> developers["Developers"]
-  home --> network["Network"]
-  home --> use_cases["Use Cases"]
-  home --> ecosystem["Ecosystem"]
-  home --> security["Security"]
-  home --> research["Research"]
-  home --> support["Support"]
-  home --> legal["Legal"]
-@mermaidend
-
-+++ Evidence and scaffold notes
-- Evidence anchors: `README.md, docs/Z00Z-Litepaper.md, docs/Z00Z-Marketing-Srategy.md`
-- Section: `Home`
-- Section message: Z00Z is a private settlement and rights architecture, not a generic privacy coin, exchange, or vague Web3 landing page.
-+++
+- `content/whitepapers/Main-Whitepaper.md` sections 1 through 3 define the privacy-first cash thesis, the settlement-notary framing, and the core protocol objects.
+- `content/whitepapers/Uniqueness.md` sections 1 through 5 explain why Z00Z is framed as a private spendable rights and settlement layer rather than as a generic privacy coin or public VM.
+- `content/whitepapers/Legal-Architecture.md` sections 3, 4, and 17 define the protocol-service boundary, non-claims, and public-communications guardrails that this page follows.
