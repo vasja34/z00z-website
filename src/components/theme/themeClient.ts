@@ -1,9 +1,8 @@
 "use client";
 
 import type { CodeThemeOption } from "@/lib/config/site";
+import { CODE_THEME_STORAGE_KEY, THEME_STORAGE_KEY } from "@/components/theme/themeStorage";
 
-export const THEME_STORAGE_KEY = "z00z-demo-theme";
-export const CODE_THEME_STORAGE_KEY = "z00z-demo-code-theme";
 export const THEME_EVENT_NAME = "z00z:theme-change";
 export const CODE_THEME_EVENT_NAME = "z00z:code-theme-change";
 

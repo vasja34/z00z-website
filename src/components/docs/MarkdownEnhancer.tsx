@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Panzoom, { type PanzoomObject } from "@panzoom/panzoom";
 import mermaid from "mermaid";
 
+import { jumpToHashTarget } from "@/components/docs/instantHashNavigation";
 import { THEME_EVENT_NAME } from "@/components/theme/themeClient";
 
 type MermaidPanzoomBinding = {
@@ -62,6 +63,27 @@ const MERMAID_THEME_CONFIG = {
     titleColor: "#263238",
   },
 } as const;
+
+function decodeMermaidDefinition(value: string | undefined): string | null {
+  if (!value) {
+    return null;
+  }
+
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+function readMermaidSource(node: HTMLElement): string {
+  return (
+    decodeMermaidDefinition(node.dataset.mermaidDefinition) ??
+    node.dataset.mermaidSource ??
+    node.textContent ??
+    ""
+  ).trim();
+}
 
 function hasPendingMermaidNodes(): boolean {
   return Array.from(document.querySelectorAll<HTMLElement>(".docs-prose .mermaid")).some(
@@ -137,14 +159,13 @@ async function initializeMermaid() {
   mermaid.initialize(MERMAID_THEME_CONFIG);
 
   mermaidNodes.forEach((node) => {
-    if (!node.dataset.mermaidSource) {
-      node.dataset.mermaidSource = node.textContent ?? "";
-    }
+    const source = readMermaidSource(node);
 
     cleanupMermaidPanzoom(node);
 
-    if (node.dataset.mermaidSource) {
-      node.textContent = node.dataset.mermaidSource;
+    if (source) {
+      node.dataset.mermaidSource = source;
+      node.textContent = source;
     }
 
     node.removeAttribute("data-processed");
@@ -405,8 +426,28 @@ export function MarkdownEnhancer() {
       });
     };
 
+    const handleTableOfContentsClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      const link = target?.closest<HTMLAnchorElement>(".table-of-contents-link[href^='#']");
+      const href = link?.getAttribute("href");
+
+      if (!link || !href) {
+        return;
+      }
+
+      const id = decodeURIComponent(href.slice(1));
+
+      if (!id) {
+        return;
+      }
+
+      event.preventDefault();
+      jumpToHashTarget(id);
+    };
+
     window.addEventListener(THEME_EVENT_NAME, handleThemeChange as EventListener);
     window.addEventListener("resize", handleResize);
+    document.addEventListener("click", handleTableOfContentsClick);
 
     return () => {
       window.cancelAnimationFrame(animationFrameId);
@@ -416,6 +457,7 @@ export function MarkdownEnhancer() {
       cleanupAllMermaidPanzoom();
       window.removeEventListener(THEME_EVENT_NAME, handleThemeChange as EventListener);
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("click", handleTableOfContentsClick);
     };
   }, []);
 

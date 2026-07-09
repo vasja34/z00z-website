@@ -77,7 +77,7 @@ export default async function ContentDomainPage({ params }: ContentDomainPagePro
   ];
 
   return (
-    <div className="grid gap-10 xl:grid-cols-[minmax(0,52rem)_15rem]">
+    <div className="grid gap-10 xl:grid-cols-[minmax(0,66rem)_14rem]">
       <section className="min-w-0">
         <nav aria-label="Breadcrumbs" className="mb-6">
           <ol className="flex flex-wrap items-center gap-2 text-sm text-base-content/55">
@@ -115,6 +115,7 @@ export default async function ContentDomainPage({ params }: ContentDomainPagePro
             <>
               <article
                 className={page.kind === "markdown" ? "docs-prose" : "docs-html"}
+                suppressHydrationWarning
                 dangerouslySetInnerHTML={{ __html: page.html }}
               />
               {page.kind === "markdown" && <MarkdownEnhancer key={enhancerKey} />}

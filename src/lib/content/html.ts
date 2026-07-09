@@ -54,7 +54,7 @@ const SHADOW_HTML_BASE_CSS = `
     border: 1px solid var(--docs-inline-code-border) !important;
     border-radius: 0.375rem;
     color: var(--docs-inline-code-fg) !important;
-    font-family: var(--font-source-code-pro), ui-monospace, SFMono-Regular, Menlo, monospace !important;
+    font-family: var(--font-ibm-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace !important;
     font-size: 0.92em;
     padding: 0.25rem 0.375rem;
   }

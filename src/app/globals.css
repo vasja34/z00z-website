@@ -322,10 +322,11 @@
 
   .docs-prose code:not(.hljs),
   .docs-html code:not(.hljs) {
-    @apply rounded-md border px-1.5 py-1 font-mono text-[0.92em];
+    @apply rounded-md border px-1.5 py-1 text-[0.92em];
     background-color: var(--docs-inline-code-bg);
     border-color: var(--docs-inline-code-border);
     color: var(--docs-inline-code-fg);
+    font-family: var(--font-ibm-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   }
 
   .docs-prose pre,
@@ -387,10 +388,11 @@
   .docs-prose th code:not(.hljs),
   .docs-html td code:not(.hljs),
   .docs-html th code:not(.hljs) {
-    @apply rounded-[0.18rem] border px-[0.34rem] py-[0.08rem] font-mono text-[0.84em] font-normal tracking-[-0.01em];
+    @apply rounded-[0.18rem] border px-[0.34rem] py-[0.08rem] text-[0.84em] font-normal tracking-[-0.01em];
     background-color: var(--docs-table-inline-code-bg);
     border-color: var(--docs-table-inline-code-border);
     color: var(--docs-table-inline-code-fg);
+    font-family: var(--font-ibm-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   }
 
   .docs-prose img {

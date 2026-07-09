@@ -2,6 +2,7 @@
 
 import { type MouseEvent, useEffect, useState } from "react";
 
+import { getDocsAnchorOffset, jumpToHashTarget } from "@/components/docs/instantHashNavigation";
 import type { TocItem } from "@/lib/content/docs";
 
 type DocPageTocProps = {
@@ -14,17 +15,11 @@ export function DocPageToc({ items }: DocPageTocProps) {
   const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
     event.preventDefault();
 
-    const heading = document.getElementById(id);
-    if (!heading) {
+    if (!jumpToHashTarget(id)) {
       return;
     }
 
     setActiveId(id);
-    window.history.pushState(null, "", `#${encodeURIComponent(id)}`);
-    heading.scrollIntoView({
-      block: "start",
-      behavior: "instant",
-    });
   };
 
   useEffect(() => {
@@ -44,15 +39,14 @@ export function DocPageToc({ items }: DocPageTocProps) {
 
         if (currentHeading) {
           const currentTop = currentHeading.getBoundingClientRect().top;
+          const currentOffset = getDocsAnchorOffset(currentHeading);
 
-          if (currentTop >= 0 && currentTop <= 160) {
+          if (currentTop >= 0 && currentTop <= currentOffset + 24) {
             setActiveId(hashId);
             return;
           }
         }
       }
-
-      const viewportOffset = 140;
       let nextActiveId = items[0]?.id ?? "";
 
       for (const item of items) {
@@ -61,7 +55,7 @@ export function DocPageToc({ items }: DocPageTocProps) {
           continue;
         }
 
-        if (heading.getBoundingClientRect().top <= viewportOffset) {
+        if (heading.getBoundingClientRect().top <= getDocsAnchorOffset(heading)) {
           nextActiveId = item.id;
           continue;
         }

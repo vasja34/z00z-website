@@ -36,6 +36,25 @@ type RenderMarkdownOptions = {
   pipeline: ContentPipelineConfig;
 };
 
+function encodeMermaidSource(source: string): string {
+  return encodeURIComponent(source);
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function renderMermaidBlock(source: string): string {
+  const content = source.trim();
+
+  return `<div class="mermaid" data-mermaid-definition="${encodeMermaidSource(content)}">${escapeHtml(content)}</div>`;
+}
+
 function slugifyHeading(value: string): string {
   return encodeURIComponent(
     value
@@ -87,7 +106,7 @@ export function renderMarkdown(source: string, options: RenderMarkdownOptions): 
     const language = token.info.trim().split(/\s+/u)[0]?.toLowerCase();
 
     if (pipeline.markdown.mermaid && language === "mermaid") {
-      return `<div class="mermaid">${md.utils.escapeHtml(token.content.trim())}</div>`;
+      return renderMermaidBlock(token.content);
     }
 
     if (defaultFenceRenderer) {
@@ -283,7 +302,7 @@ export function renderMarkdown(source: string, options: RenderMarkdownOptions): 
       open: "mermaidstart",
       close: "mermaidend",
       render(tokens, index) {
-        return `<div class="mermaid">${tokens[index].content}</div>`;
+        return renderMermaidBlock(tokens[index].content);
       },
     });
   }

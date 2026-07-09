@@ -76,6 +76,7 @@ type PageRecord = {
 };
 
 const SUPPORTED_EXTENSIONS = [".md", ".html"];
+const CONTENT_ASSET_ROUTE_PREFIX = "/content-assets";
 
 function isPrivateEntry(entryName: string): boolean {
   return entryName.startsWith("_");
@@ -125,6 +126,57 @@ function directoryExists(dirPath: string): boolean {
 
 function urlForSlug(domain: DomainConfig, slug: string[]): string {
   return slug.length === 0 ? domain.home_path : `${domain.home_path}/${slug.join("/")}`;
+}
+
+function isPathInsideRoot(rootDir: string, targetPath: string): boolean {
+  const relativePath = path.relative(rootDir, targetPath);
+
+  return relativePath !== "" && !relativePath.startsWith("..") && !path.isAbsolute(relativePath);
+}
+
+function encodeUrlPathSegments(value: string): string {
+  return value
+    .split(/[\\/]+/)
+    .filter(Boolean)
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
+}
+
+function resolveExistingAssetFile(basePath: string): string | null {
+  if (!fs.existsSync(basePath) || !fs.statSync(basePath).isFile()) {
+    return null;
+  }
+
+  return basePath;
+}
+
+function resolveRelativeAssetFile(
+  rootDir: string,
+  currentFilePath: string,
+  relativePath: string,
+): string | null {
+  const targetPath = path.resolve(path.dirname(currentFilePath), relativePath);
+
+  if (!isPathInsideRoot(rootDir, targetPath)) {
+    return null;
+  }
+
+  return resolveExistingAssetFile(targetPath);
+}
+
+export function urlForContentAsset(domain: DomainConfig, assetPath: string): string {
+  return `${CONTENT_ASSET_ROUTE_PREFIX}/${encodeURIComponent(domain.id)}/${encodeUrlPathSegments(assetPath)}`;
+}
+
+export function resolveDomainAssetFile(domain: DomainConfig, assetSegments: string[]): string | null {
+  const rootDir = resolveDomainRoot(domain);
+  const targetPath = path.resolve(rootDir, ...assetSegments);
+
+  if (!isPathInsideRoot(rootDir, targetPath)) {
+    return null;
+  }
+
+  return resolveExistingAssetFile(targetPath);
 }
 
 function normalizeContentStem(value: string): string {
@@ -238,14 +290,15 @@ function rewriteMarkdownContentLinks(
 ): string {
   const $ = load(html);
 
-  $("a[href]").each((_, element) => {
-    const href = $(element).attr("href");
-
-    if (!href || href.startsWith("#")) {
+  const rewriteRelativeFileReference = (
+    value: string,
+    assign: (nextValue: string) => void,
+  ) => {
+    if (!value || value.startsWith("#")) {
       return;
     }
 
-    const { pathname, query, hash } = splitHref(href);
+    const { pathname, query, hash } = splitHref(value);
 
     if (!pathname || pathname.startsWith("/") || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/iu.test(pathname)) {
       return;
@@ -263,26 +316,66 @@ function rewriteMarkdownContentLinks(
       path.resolve(path.dirname(currentFilePath), resolvedPathname),
     );
 
-    if (!targetFile) {
+    if (targetFile) {
+      const targetSlug = slugForFilePath(rootDir, targetFile);
+
+      if (targetSlug) {
+        assign(`${urlForSlug(domain, targetSlug)}${query}${hash}`);
+      }
+
       return;
     }
 
-    const targetSlug = slugForFilePath(rootDir, targetFile);
+    const assetFile = resolveRelativeAssetFile(rootDir, currentFilePath, resolvedPathname);
 
-    if (!targetSlug) {
+    if (!assetFile) {
       return;
     }
 
-    $(element).attr("href", `${urlForSlug(domain, targetSlug)}${query}${hash}`);
+    const assetRelativePath = path.relative(rootDir, assetFile);
+    assign(`${urlForContentAsset(domain, assetRelativePath)}${query}${hash}`);
+  };
 
-    const targetFolderMeta = readFolderMeta(path.dirname(targetFile));
+  $("a[href]").each((_, element) => {
+    const href = $(element).attr("href");
 
-    if (usesFilenameLinkText(targetFolderMeta)) {
-      $(element).text(titleFromFilePath(targetFile));
-    }
+    rewriteRelativeFileReference(href ?? "", (nextHref) => {
+      $(element).attr("href", nextHref);
+
+      const { pathname } = splitHref(nextHref);
+
+      if (!pathname.startsWith(domain.home_path)) {
+        return;
+      }
+
+      const decodedPathname = decodeURIComponent(pathname);
+      const slugPath = decodedPathname
+        .replace(new RegExp(`^${domain.home_path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/?`), "")
+        .split("/")
+        .filter(Boolean);
+      const targetFile = resolveDocFile(rootDir, slugPath);
+
+      if (!targetFile) {
+        return;
+      }
+
+      const targetFolderMeta = readFolderMeta(path.dirname(targetFile));
+
+      if (usesFilenameLinkText(targetFolderMeta)) {
+        $(element).text(titleFromFilePath(targetFile));
+      }
+    });
   });
 
-  return $.root().html() ?? html;
+  $("img[src]").each((_, element) => {
+    const src = $(element).attr("src");
+
+    rewriteRelativeFileReference(src ?? "", (nextSrc) => {
+      $(element).attr("src", nextSrc);
+    });
+  });
+
+  return $("body").length > 0 ? $("body").html() ?? html : $.root().html() ?? html;
 }
 
 function resolveNavIconKey({
@@ -589,7 +682,7 @@ function stripLeadingDuplicateMarkdownTitle(html: string, pageTitle: string): st
 
   firstHeading.remove();
 
-  return $.root().html() ?? html;
+  return $("body").length > 0 ? $("body").html() ?? html : $.root().html() ?? html;
 }
 
 function stripLeadingMarkdownHeading(html: string): string {
@@ -602,7 +695,7 @@ function stripLeadingMarkdownHeading(html: string): string {
 
   firstHeading.remove();
 
-  return $.root().html() ?? html;
+  return $("body").length > 0 ? $("body").html() ?? html : $.root().html() ?? html;
 }
 
 function resolveMarkdownPageTitle(

@@ -101,6 +101,35 @@ function isNavItemActive(item: DocNavItem, pathname: string): boolean {
   return item.href === pathname || item.children.some((child) => isNavItemActive(child, pathname));
 }
 
+function BrandWordmark({
+  brandName,
+  className,
+}: {
+  brandName: string;
+  className?: string;
+}) {
+  const tokens = brandName.trim().split(/\s+/).filter(Boolean);
+  const lead = tokens[0] ?? brandName;
+  const tail = tokens.slice(1).join(" ");
+
+  return (
+    <span
+      aria-label={brandName}
+      className={[
+        "inline-flex min-w-0 max-w-full origin-left items-baseline gap-[0.18em] whitespace-nowrap uppercase font-[780] leading-none tracking-[0.045em] [font-family:var(--font-geist-sans),var(--font-open-sans),system-ui,sans-serif]",
+        className ?? "",
+      ].join(" ")}
+    >
+      <span className="shrink-0 text-base-content drop-shadow-[0_6px_18px_rgba(0,0,0,0.18)]">{lead}</span>
+      {tail ? (
+        <span className="min-w-0 tracking-[0.045em] text-primary drop-shadow-[0_6px_18px_rgba(0,0,0,0.22)]">
+          {tail}
+        </span>
+      ) : null}
+    </span>
+  );
+}
+
 function NavigationSettings({
   onToggleNavIcons,
   showNavIcons,
@@ -280,9 +309,7 @@ export function DocsShell({
     });
   };
 
-  const desktopSidebarWidth = "22rem";
-  const brandTextClassName =
-    "min-w-0 overflow-hidden whitespace-nowrap [font-family:var(--font-open-sans)] text-[26px] font-bold leading-7 tracking-normal text-base-content";
+  const desktopSidebarWidth = "clamp(21.5rem, 25vw, 23rem)";
 
   const headerControls = (
     <>
@@ -311,7 +338,7 @@ export function DocsShell({
 
   return (
     <div className="min-h-screen bg-base-100 text-base-content">
-      <header className="sticky top-0 z-40 border-b border-base-300 bg-base-100/95 backdrop-blur">
+      <header data-docs-header className="sticky top-0 z-40 border-b border-base-300 bg-base-100/95 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-[1600px] items-center gap-3 px-4 sm:px-6 lg:hidden">
           <button
             type="button"
@@ -326,13 +353,13 @@ export function DocsShell({
             <Image
               src="/assets/logo/ZUZ-Labs-small.jpg"
               alt="Z00Z Labs"
-              width={34}
-              height={34}
+              width={40}
+              height={40}
               className="rounded-md object-cover ring-1 ring-base-300/80"
               priority
             />
-            <h1 className={`truncate ${brandTextClassName}`}>
-              {brandName}
+            <h1 className="ml-1 min-w-0 overflow-hidden">
+              <BrandWordmark brandName={brandName} className="text-[1.16rem] sm:text-[1.28rem]" />
             </h1>
           </Link>
 
@@ -352,12 +379,14 @@ export function DocsShell({
               <Image
                 src="/assets/logo/ZUZ-Labs-small.jpg"
                 alt="Z00Z Labs"
-                width={36}
-                height={36}
+                width={44}
+                height={44}
                 className="shrink-0 rounded-md object-cover ring-1 ring-base-300/80"
                 priority
               />
-              <h1 className={brandTextClassName}>{brandName}</h1>
+              <h1 className="ml-1.5 min-w-0 pr-2">
+                <BrandWordmark brandName={brandName} className="text-[26px]" />
+              </h1>
             </Link>
           </div>
 
@@ -372,7 +401,10 @@ export function DocsShell({
       </header>
 
       <div className="mx-auto flex max-w-[1600px]">
-        <aside className="hidden w-[22rem] shrink-0 border-r border-base-300 bg-base-100 lg:sticky lg:top-14 lg:flex lg:h-[calc(100vh-3.5rem)]">
+        <aside
+          className="hidden shrink-0 border-r border-base-300 bg-base-100 lg:sticky lg:top-14 lg:flex lg:h-[calc(100vh-3.5rem)]"
+          style={{ width: desktopSidebarWidth }}
+        >
           <div className="h-full w-full overflow-y-auto px-3 py-4">
             <NavigationList
               items={navItems}

@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { type ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { type MouseEvent, type ReactNode } from "react";
 
+import { jumpToPageTop } from "@/components/docs/instantHashNavigation";
 import { NavIcon } from "@/components/ui/NavIcon";
 
 function ChevronIcon({ open }: { open: boolean }) {
@@ -49,9 +51,43 @@ function MenuLinkCard({
   onNavigate?: () => void;
   title: string;
 }) {
+  const router = useRouter();
+  const isUnmodifiedPrimaryClick = (event: MouseEvent<HTMLAnchorElement>) =>
+    event.button === 0 &&
+    !event.metaKey &&
+    !event.ctrlKey &&
+    !event.shiftKey &&
+    !event.altKey;
+
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const currentPathname = typeof window === "undefined" ? "" : window.location.pathname;
+    const targetPathname =
+      typeof window === "undefined" ? "" : new URL(href, window.location.origin).pathname;
+    const isSamePageNavigation = currentPathname === targetPathname;
+
+    if (!isUnmodifiedPrimaryClick(event)) {
+      onNavigate?.();
+      return;
+    }
+
+    onNavigate?.();
+    event.preventDefault();
+    event.stopPropagation();
+    event.currentTarget.blur();
+
+    if (isSamePageNavigation) {
+      jumpToPageTop(targetPathname);
+      return;
+    }
+
+    jumpToPageTop(currentPathname);
+    router.push(href, { scroll: false });
+  };
+
   return (
     <Link
       href={href}
+      scroll={false}
       className={[
         "group flex gap-3 rounded-md px-2 py-1.5 transition",
         description ? "items-start" : "items-center",
@@ -61,7 +97,7 @@ function MenuLinkCard({
         compact ? "justify-center px-0 py-0 hover:bg-transparent" : "",
       ].join(" ")}
       title={title}
-      onClick={onNavigate}
+      onClick={handleClick}
     >
       {compact && <MarkerChip icon={icon} marker={marker} />}
       {!compact && (
@@ -72,7 +108,7 @@ function MenuLinkCard({
             </span>
           )}
           <span className="min-w-0 flex-1">
-            <span className="block break-words whitespace-normal text-[0.98rem] font-semibold leading-5">{title}</span>
+            <span className="menu-link-title block break-words whitespace-normal text-[0.98rem] font-semibold leading-5">{title}</span>
             {description && (
               <span className="block text-[0.7rem] uppercase tracking-[0.16em] text-base-content/45">
                 {description}
@@ -190,7 +226,7 @@ export function MenuCollapse({
           </span>
         )}
         <span className="pointer-events-none min-w-0 flex-1">
-          <span className="block break-words whitespace-normal text-[0.98rem] font-semibold leading-5">{title}</span>
+          <span className="menu-link-title block break-words whitespace-normal text-[0.98rem] font-semibold leading-5">{title}</span>
           {description && (
             <span className="block text-[0.7rem] uppercase tracking-[0.16em] text-base-content/45">
               {description}
@@ -207,7 +243,11 @@ export function MenuCollapse({
         </span>
       </button>
 
-      {expanded && <ul className="ml-3 space-y-0.5 border-l border-base-300 pl-3">{children}</ul>}
+      {expanded && (
+        <ul className="ml-3 space-y-0.5 border-l border-base-300 pl-3 [&_.menu-link-title]:origin-center [&_.menu-link-title]:text-[0.95rem] [&_.menu-link-title]:font-medium [&_.menu-link-title]:[transform:scaleY(1.006)]">
+          {children}
+        </ul>
+      )}
     </li>
   );
 }
