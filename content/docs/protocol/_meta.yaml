@@ -1,19 +1,20 @@
 title: "Protocol"
 icon: layers
-page_icons:
-  index: layers
 order:
   - index
   - architecture
+  - object-lifecycle
   - settlement-model
-  - wallet-local-possession
   - checkpoints
+  - wallet-local-possession
+  - receiver-flow
   - assets-vouchers-rights
   - smart-cash
-  - linked-liability
+  - selective-disclosure
   - privacy-threat-model
+  - linked-liability
   - cross-chain-rights
+  - proof-of-useful-work
   - tokenomics
   - governance
-  - proof-of-useful-work
   - post-quantum-migration

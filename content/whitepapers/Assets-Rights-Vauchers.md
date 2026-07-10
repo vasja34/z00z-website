@@ -1,5 +1,5 @@
 ---
-title: "Z00Z Assets, Rights, And Vouchers Whitepaper"
+title: "Assets, Rights, And Vouchers Whitepaper"
 description: "Defines the object boundary between assets, rights, and vouchers so value, authority, and conditional claims stay distinct in Z00Z."
 difficulty: advanced
 icon: mdi:alpha-c-circle-outline

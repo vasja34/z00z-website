@@ -1,5 +1,5 @@
 ---
-title: "Z00Z Legal Architecture Whitepaper"
+title: "Legal Architecture Whitepaper"
 description: "Defines the legal and communications boundary between the Z00Z protocol, steward entities, issuers, wallets, and service operators."
 difficulty: advanced
 icon: mdi:alpha-c-circle-outline

@@ -44,3 +44,15 @@
 
 
 Исправил в [DocsShell.tsx](/home/vadim/Projects/z00z-website/src/components/docs/DocsShell.tsx): для логотипа включил `unoptimized` у `next/image`, чтобы он брал raw PNG без optimizer Next. Это как раз тот слой, который чаще всего даёт чёрные углы/ореолы на прозрачных PNG.
+
+https://mdit-plugins.github.io/attrs.html#syntax
+
+-----------
+
+
+
+Цвета иконок на `Docs Home` означают не раздел, а уровень сложности документа.
+
+Синий — `basic`, зелёный — `intermediate`, жёлтый — `advanced`, красный — `expert`, фиолетовый — `specialist` или `unknown`.
+
+Иными словами: цвет = глубина/порог входа документа.

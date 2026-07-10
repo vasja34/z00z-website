@@ -1,5 +1,5 @@
 ---
-title: "Z00Z Main Whitepaper"
+title: "Main Whitepaper"
 description: "Core protocol paper describing wallet-local possession, confidential settlement objects, checkpointed reconciliation, and narrow public evidence."
 difficulty: advanced
 icon: mdi:alpha-c-circle-outline

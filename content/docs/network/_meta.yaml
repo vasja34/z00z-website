@@ -1,16 +1,15 @@
 title: "Network"
 icon: network
-page_icons:
-  index: network
 order:
   - index
   - overview
+  - publication-pipeline
+  - node-operations
   - aggregators
   - validators
   - watchers
   - data-infrastructure
-  - onionnet
   - data-availability
   - checkpoint-anchors-zts
-  - node-operations
+  - onionnet
   - status-explorer

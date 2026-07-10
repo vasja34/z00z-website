@@ -1,12 +1,19 @@
 ---
-gsd_state_version: '1.0'
-status: complete
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+current_phase: 002
+current_phase_name: 002-New-Docs
+status: executing
+stopped_at: Phase 002 planning review and coverage proof before execution.
+last_updated: "2026-07-10T07:29:59.073Z"
+last_activity: 2026-07-10
 progress:
-  total_phases: 1
-  completed_phases: 1
-  total_plans: 10
-  completed_plans: 10
-  percent: 100
+  total_phases: 2
+  completed_phases: 0
+  total_plans: 11
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -15,21 +22,22 @@ progress:
 
 See: `.planning/ROADMAP.md`
 
-**Core value:** Turn the Z00Z whitepaper corpus into approachable docs pages without losing technical precision or source traceability.
-**Current focus:** Phase 1 - 001-Docs (validated and complete)
+**Core value:** Turn the Z00Z whitepaper corpus into approachable docs pages without losing technical precision, authority boundaries, or source traceability.
+**Current focus:** Phase 002 — 002-New-Docs
 
 ## Current Position
 
-Phase: 1 of 1 (001-Docs)
-Plan: 10 of 10 in current phase
-Status: Completed `001-Docs`
-Last activity: 2026-07-09 - Completed `001-10`: the final closeout loop added `.planning/phases/001-Docs/001-doublecheck-report.md`, synchronized `ROADMAP.md` and `STATE.md` to the validated 10-plan end state, and logged three inline review passes for `001-10` with a final clean-run streak of 2. The `001-Docs` phase is now fully validated.
+Phase: 002 (002-New-Docs) — EXECUTING
+Plan: 1 of 10
+Status: Executing Phase 002
+Last activity: 2026-07-10
 
-Progress: ██████████ 100%
+Progress: █████░░░░░ 50%
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 10
 - Average duration: -
 - Total execution time: -
@@ -39,10 +47,12 @@ Progress: ██████████ 100%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1     | 10    | -     | -        |
+| 2     | 0     | -     | -        |
 
 **Recent Trend:**
-- Last 5 plans: `001-06`, `001-07`, `001-08`, `001-09`, `001-10` complete
-- Trend: Phase closeout completed
+
+- Last completed plans: `001-06`, `001-07`, `001-08`, `001-09`, `001-10`
+- Trend: planning reopened for the second-pass docs rewrite
 
 ## Accumulated Context
 
@@ -52,30 +62,27 @@ Progress: ██████████ 100%
 - [Phase 1] Base all docs rewrites on `content/whitepapers` and the page intent defined in `docs/z00z_website-design.html`.
 - [Phase 1] Treat current docs markdown as replaceable placeholder content, not as protected source text.
 - [Phase 1] Treat `001-design-reconciliation.md`, `001-page-source-matrix.md`, and `001-page-pattern-matrix.md` as the canonical execution inputs for all later docs rewrite plans in this phase.
-- [Phase 1] Absorb missing `learn/litepaper` intent into the live learn flow instead of preserving dead sidebar drift in the current docs tree.
-- [Phase 1] Use repository Mermaid skills for generated diagrams, with `mermaid-spectrum` as the default compact flowchart route and `mermaid-c4` for true C4 views.
-- [Phase 1] Absorb missing protocol-only legal-architecture intent into the legal family instead of preserving a dead protocol route.
-- [Phase 1] Absorb missing developers `migration-guides` intent into real foundational developer pages instead of preserving a dead sidebar route.
-- [Phase 1] Treat the foundational developers family as a docs-repo-aware builder map first, and describe broader runtime surfaces only through whitepaper-grounded maturity language.
 - [Phase 1] Keep every plan-level `<verify>` block aligned to the inline `GSD-Review-Tasks-Execution` loop: at least 3 passes, fixes between passes, and stop only after 2 consecutive clean runs.
-- [Phase 1] Treat the advanced developers family as a current-repo-aware orientation layer: runtime, storage, WASM, API, and verification pages may explain target subsystems, but only local repo workflows may be described as live commands.
-- [Phase 1] Treat the network family as an operator-boundary reference: publication, availability, anchors, watchers, and explorer surfaces may be useful and public, but checkpoint settlement remains the authority plane.
-- [Phase 1] Treat the security and support families as trust-boundary surfaces first: self-custody, scoped disclosure, repo-local troubleshooting, and non-public security reporting must stay explicit across public docs.
-- [Phase 1] Treat the research family as an authority-order map first, and treat the use-case family as a bounded scenario-entry layer with explicit current-versus-target posture and concrete corpus evidence on every page.
 - [Phase 1] Treat Mermaid diagrams as part of the docs consistency surface: use repository Mermaid skills, keep palette semantics stable, and avoid route-placeholder nodes or generic maturity labels in section hubs.
+- [Phase 2] `002-TODO.md` is the normative Phase 002 spec even though it contains `0` inherited `TASK-NNN` rows; grouped `002-01` through `002-10` plan IDs are planner-owned.
+- [Phase 2] Reuse the current docs runtime and content loader; do not introduce a parallel docs engine, alternate route system, or second metadata authority.
+- [Phase 2] Resolve section-home body suppression inside the existing docs routes before large `index.md` rewrites proceed.
+- [Phase 2] Normalize difficulty/icon handling from the old `mdi:alpha-*-circle-outline` family to the TODO’s `mdi:alphabet-*-box-outline` contract.
+- [Phase 2] Treat Phase 002 acceptance as stricter than plain `npm run verify`; add docs-specific checks for word-count, evidence links, `Read Next`, TOC, and claim-hygiene coverage.
 
 ### Pending Todos
 
-- No open todos remain inside `001-Docs`.
-- Next operator action: start the next milestone or request post-phase verification/work outside this completed docs rewrite phase.
+- Review and finalize `002-01-PLAN.md` through `002-10-PLAN.md`.
+- Execute Phase 002 after the coverage review and doublecheck gates are green.
 
 ### Blockers/Concerns
 
-- The earlier `ROADMAP.md` and `STATE.md` restoration issue was resolved during phase execution.
-- No active blocker remains for the completed `001-Docs` phase.
+- Current docs section homes suppress authored body content and TOC whenever landing cards exist; this must be addressed early in Phase 002.
+- Current repo verification does not yet prove all Phase 002 acceptance conditions.
+- Older planning surfaces still mention a stale design-file path; Phase 002 uses the current design foundation files instead.
 
 ## Session Continuity
 
-Last session: 2026-07-09 16:09
-Stopped at: `001-Docs` validated and complete; the next checkpoint is operator choice outside this phase.
-Resume file: None
+Last session: 2026-07-10 09:15
+Stopped at: Phase 002 planning review and coverage proof before execution.
+Resume file: `.planning/phases/002-New-Docs/002-CONTEXT.md`

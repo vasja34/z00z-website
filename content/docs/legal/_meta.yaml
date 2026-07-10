@@ -1,12 +1,10 @@
 title: "Legal"
 icon: legal
-page_icons:
-  index: legal
 order:
   - index
   - architecture
-  - legal-architecture
-  - terms
-  - privacy
-  - disclosures
   - public-claim-boundaries
+  - disclosures
+  - privacy
+  - terms
+  - legal-architecture

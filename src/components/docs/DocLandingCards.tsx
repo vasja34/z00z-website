@@ -58,23 +58,23 @@ function resolveCardTone(icon?: string): CardTone {
     return CARD_TONES.note;
   }
 
-  if (icon.includes("alpha-a")) {
+  if (icon.includes("alpha-a") || icon.includes("alphabet-a")) {
     return CARD_TONES.note;
   }
 
-  if (icon.includes("alpha-b")) {
+  if (icon.includes("alpha-b") || icon.includes("alphabet-b")) {
     return CARD_TONES.tip;
   }
 
-  if (icon.includes("alpha-c")) {
+  if (icon.includes("alpha-c") || icon.includes("alphabet-c")) {
     return CARD_TONES.warning;
   }
 
-  if (icon.includes("alpha-d")) {
+  if (icon.includes("alpha-d") || icon.includes("alphabet-d")) {
     return CARD_TONES.caution;
   }
 
-  if (icon.includes("alpha-e") || icon === "carbon:unknown") {
+  if (icon.includes("alpha-e") || icon.includes("alphabet-e") || icon === "carbon:unknown") {
     return CARD_TONES.important;
   }
 

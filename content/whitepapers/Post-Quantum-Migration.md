@@ -1,5 +1,5 @@
 ---
-title: "Z00Z PQ Migration Whitepaper"
+title: "Post-Quantum Migration Whitepaper"
 description: "Maps the post-quantum migration boundary, legacy risk surface, and phased transition path from current ECC flows to stronger cryptographic suites."
 difficulty: expert
 icon: mdi:alpha-d-circle-outline

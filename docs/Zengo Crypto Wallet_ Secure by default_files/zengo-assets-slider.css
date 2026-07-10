@@ -1,0 +1,23 @@
+.zengo-assets-slider.swiper-initialized .swiper-wrapper {
+	overflow:initial!important;
+	-webkit-transition-timing-function: linear !important;
+	-moz-transition-timing-function: linear !important;
+	transition-timing-function: linear !important;
+	padding:20px 0;
+}
+.zengo-assets-slider{
+    overflow: hidden
+}
+.zengo-assets-slider .swiper-slide {
+	width:auto;
+	max-width:85px;
+	transition: all 0.3s ease-in-out;
+	
+  @media screen and (max-width: 767px) {
+	max-width:50px;
+  }
+
+}
+.zengo-assets-slider .swiper-slide a {
+	display:block;
+}

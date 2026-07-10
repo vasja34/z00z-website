@@ -1,5 +1,5 @@
 ---
-title: "Z00Z Proof-of-Useful-Work Whitepaper"
+title: "Proof-of-Useful-Work Whitepaper"
 description: "Defines a rule-bound reward system for verifiable useful outcomes, evidence review, and treasury-limited payout authorization."
 difficulty: advanced
 icon: mdi:alpha-c-circle-outline

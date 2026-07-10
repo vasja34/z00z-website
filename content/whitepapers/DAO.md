@@ -1,5 +1,5 @@
 ---
-title: "Z00Z DAO Whitepaper"
+title: "DAO Whitepaper"
 description: "Defines a bounded governance model for proposals, treasury rules, AI-assisted review, and non-custodial stewardship in the Z00Z ecosystem."
 difficulty: advanced
 icon: mdi:alpha-c-circle-outline

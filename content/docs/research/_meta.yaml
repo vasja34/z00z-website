@@ -1,14 +1,12 @@
 title: "Research"
 icon: flask
-page_icons:
-  index: flask
-  glossary: book-open
 order:
   - index
+  - source-authority-map
   - whitepapers
+  - glossary
   - technical-papers
   - hjmt
   - benchmarks
   - verification-orchestrator
   - archive
-  - glossary

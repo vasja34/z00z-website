@@ -1,6 +1,4 @@
 title: "Z00Z Docs"
-page_icons:
-  index: material-symbols:home-outline
 order:
   - index
   - learn
@@ -8,9 +6,7 @@ order:
   - developers
   - network
   - use-cases
-  - ecosystem
   - security
   - research
   - support
   - legal
-  - demo

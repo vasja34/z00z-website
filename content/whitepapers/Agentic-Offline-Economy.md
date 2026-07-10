@@ -1,5 +1,5 @@
 ---
-title: "Z00Z Agentic Offline Economy Whitepaper"
+title: "Agentic Offline Economy Whitepaper"
 description: "Explains how Z00Z can carry offline machine, agent, and capability-driven economic flows as private wallet-local rights with later checkpointed reconciliation."
 difficulty: expert
 icon: mdi:alpha-d-circle-outline

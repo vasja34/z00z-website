@@ -212,6 +212,7 @@ function NavigationList({
           key={item.href}
           active={active}
           compact={collapsed}
+          forceBlackIcon
           href={item.href}
           icon={showNavIcons ? item.icon : undefined}
           marker={marker}

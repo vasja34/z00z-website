@@ -1,23 +1,21 @@
 title: "Developers"
 icon: code
-page_icons:
-  index: code
 order:
   - index
   - get-started
-  - ai-agent-playbook
   - workspace
+  - ai-agent-playbook
   - core
+  - storage-hjmt
   - crypto
   - wallet
   - payment-requests
-  - storage-hjmt
   - rpc
   - rollup-node
   - runtime-services
-  - simulator
   - configuration-genesis
   - wasm-wallet
+  - simulator
   - examples
   - api-reference
   - verification-tests

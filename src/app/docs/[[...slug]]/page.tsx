@@ -60,7 +60,9 @@ export default async function DocsPage({ params }: DocsPageProps) {
     })),
   ];
   const hasLandingCards = page.landingCards.length > 0;
-  const showLandingOnly = hasLandingCards;
+  const hasRenderableBody =
+    Boolean(page.frameHtml?.trim()) || Boolean(page.shadowHtml?.trim()) || Boolean(page.html.trim());
+  const showLandingOnly = !hasRenderableBody && hasLandingCards;
 
   return (
     <div className="grid gap-10 xl:grid-cols-[minmax(0,66rem)_14rem]">
@@ -98,26 +100,18 @@ export default async function DocsPage({ params }: DocsPageProps) {
         </header>
 
         <div className="min-w-0">
-          <DocLandingCards items={page.landingCards} />
-
           {!showLandingOnly && page.frameHtml ? (
-            <>
-              <div className="overflow-hidden rounded-md border border-base-300 bg-base-100">
-                <HtmlDocumentFrame
-                  key={`${enhancerKey}:frame`}
-                  html={page.frameHtml}
-                  initialHeight={page.frameHeightHint}
-                />
-              </div>
-              <DocPagePager previous={neighbors.previous} next={neighbors.next} />
-            </>
+            <div className="overflow-hidden rounded-md border border-base-300 bg-base-100">
+              <HtmlDocumentFrame
+                key={`${enhancerKey}:frame`}
+                html={page.frameHtml}
+                initialHeight={page.frameHeightHint}
+              />
+            </div>
           ) : !showLandingOnly && page.shadowHtml ? (
-            <>
-              <div className="overflow-hidden rounded-md border border-base-300 bg-base-100">
-                <ShadowHtmlArticle html={page.shadowHtml} />
-              </div>
-              <DocPagePager previous={neighbors.previous} next={neighbors.next} />
-            </>
+            <div className="overflow-hidden rounded-md border border-base-300 bg-base-100">
+              <ShadowHtmlArticle html={page.shadowHtml} />
+            </div>
           ) : !showLandingOnly ? (
             <>
               <article
@@ -126,9 +120,11 @@ export default async function DocsPage({ params }: DocsPageProps) {
                 dangerouslySetInnerHTML={{ __html: page.html }}
               />
               {page.kind === "markdown" && <MarkdownEnhancer key={enhancerKey} />}
-              <DocPagePager previous={neighbors.previous} next={neighbors.next} />
             </>
           ) : null}
+
+          {hasLandingCards ? <DocLandingCards items={page.landingCards} /> : null}
+          {!showLandingOnly ? <DocPagePager previous={neighbors.previous} next={neighbors.next} /> : null}
         </div>
       </section>
 

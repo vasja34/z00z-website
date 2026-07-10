@@ -18,7 +18,6 @@ type FolderMeta = {
   title?: string;
   order?: string[];
   icon?: string;
-  page_icons?: Record<string, string>;
   page_title_source?: "document" | "filename";
   internal_link_text_source?: "authored" | "filename";
 };
@@ -90,17 +89,17 @@ type PageRecord = {
 const SUPPORTED_EXTENSIONS = [".md", ".html"];
 const CONTENT_ASSET_ROUTE_PREFIX = "/content-assets";
 const ARTICLE_ASSET_ROUTE_PREFIX = "/articles";
-const ARTICLE_ASSET_ROOT = path.resolve(process.cwd(), "docs/articles");
+const ARTICLE_ASSET_ROOT = path.resolve(process.cwd(), "public/articles");
 const INLINE_CONTENT_REFERENCE_PATTERN = /^content\/[A-Za-z0-9._/-]+\.(?:md|html)$/u;
 const referenceTitleCache = new Map<string, string>();
 const headingAnchorCache = new Map<string, Map<string, string>>();
 const DIFFICULTY_ICON_MAP = {
   unknown: "carbon:unknown",
-  basic: "mdi:alpha-a-circle-outline",
-  intermediate: "mdi:alpha-b-circle-outline",
-  advanced: "mdi:alpha-c-circle-outline",
-  expert: "mdi:alpha-d-circle-outline",
-  specialist: "mdi:alpha-e-circle-outline",
+  basic: "mdi:alphabet-a-box-outline",
+  intermediate: "mdi:alphabet-b-box-outline",
+  advanced: "mdi:alphabet-c-box-outline",
+  expert: "mdi:alphabet-d-box-outline",
+  specialist: "mdi:alphabet-e-box-outline",
 } as const;
 
 function resolveDifficultyIcon(
@@ -622,7 +621,6 @@ function rewriteMarkdownContentLinks(
 
     rewriteRelativeFileReference(href ?? "", (nextHref) => {
       $(element).attr("href", nextHref);
-      applyArticleLinkBehavior(element, nextHref);
 
       const { pathname } = splitHref(nextHref);
 
@@ -647,6 +645,8 @@ function rewriteMarkdownContentLinks(
         $(element).text(titleFromFilePath(targetFile));
       }
     });
+
+    applyArticleLinkBehavior(element, $(element).attr("href") ?? "");
   });
 
   $("img[src]").each((_, element) => {
@@ -734,7 +734,6 @@ function resolveNavIconKey({
 
 function readPageMetadata(filePath: string, slug: string[], folderMeta: FolderMeta, stem: string): PageRecord {
   const extension = path.extname(filePath).toLowerCase();
-  const configuredIcon = folderMeta.page_icons?.[stem];
   const fallbackTitle = titleFromFilePath(filePath);
 
   if (extension === ".md") {
@@ -752,8 +751,7 @@ function readPageMetadata(filePath: string, slug: string[], folderMeta: FolderMe
       description: frontmatter.description ?? null,
       hideInNav: frontmatter.hide_in_nav ?? false,
       icon: resolveNavIconKey({
-        explicitIcon:
-          frontmatter.icon ?? configuredIcon ?? resolveDifficultyIcon(frontmatter.difficulty),
+        explicitIcon: frontmatter.icon ?? resolveDifficultyIcon(frontmatter.difficulty),
         slug,
         title,
       }),
@@ -773,7 +771,7 @@ function readPageMetadata(filePath: string, slug: string[], folderMeta: FolderMe
     description: $("p").first().text().trim() || null,
     hideInNav: false,
     icon: resolveNavIconKey({
-      explicitIcon: configuredIcon,
+      explicitIcon: undefined,
       slug,
       title,
     }),

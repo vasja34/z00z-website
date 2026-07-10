@@ -1,5 +1,5 @@
 ---
-title: "Z00Z Cross-Chain Integration Whitepaper"
+title: "Cross-Chain Integration Whitepaper"
 description: "Explains how Z00Z settles private rights while integrating with external custody, issuance, liquidity, and attestation systems without surrendering settlement truth."
 difficulty: advanced
 icon: mdi:alpha-c-circle-outline

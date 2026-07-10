@@ -12,12 +12,18 @@ function resolveNavIconColor(icon?: string): string {
     return "currentColor";
   }
 
-  if (icon.includes("alpha-a") || icon === "home" || icon === "material-symbols:home-outline") {
+  if (
+    icon.includes("alpha-a") ||
+    icon.includes("alphabet-a") ||
+    icon === "home" ||
+    icon === "material-symbols:home-outline"
+  ) {
     return "var(--docs-note-border)";
   }
 
   if (
     icon.includes("alpha-b") ||
+    icon.includes("alphabet-b") ||
     ["book", "code", "mdi:learn-outline", "palette", "spark", "support", "wallet"].includes(icon)
   ) {
     return "var(--docs-tip-border)";
@@ -25,6 +31,7 @@ function resolveNavIconColor(icon?: string): string {
 
   if (
     icon.includes("alpha-c") ||
+    icon.includes("alphabet-c") ||
     ["compass", "flask", "monitor", "network", "research"].includes(icon)
   ) {
     return "var(--docs-warning-border)";
@@ -32,6 +39,7 @@ function resolveNavIconColor(icon?: string): string {
 
   if (
     icon.includes("alpha-d") ||
+    icon.includes("alphabet-d") ||
     ["eye", "scales", "security", "shield"].includes(icon)
   ) {
     return "var(--docs-caution-border)";
@@ -39,6 +47,7 @@ function resolveNavIconColor(icon?: string): string {
 
   if (
     icon.includes("alpha-e") ||
+    icon.includes("alphabet-e") ||
     ["brochure", "chart", "layers", "legal", "map", "protocol", "users"].includes(icon)
   ) {
     return "var(--docs-important-border)";
@@ -52,7 +61,7 @@ function resolveNavIconColor(icon?: string): string {
 }
 
 function navIconStyle(icon?: string, forceBlack = false): CSSProperties {
-  return { color: forceBlack ? "#000" : resolveNavIconColor(icon) };
+  return { color: forceBlack ? "var(--color-base-content)" : resolveNavIconColor(icon) };
 }
 
 function ChevronIcon({ open }: { open: boolean }) {
@@ -236,6 +245,7 @@ export function MenuCollapse({
   children,
   compact = false,
   description,
+  forceBlackIcon = false,
   href,
   icon,
   marker,
@@ -248,6 +258,7 @@ export function MenuCollapse({
   children: ReactNode;
   compact?: boolean;
   description?: string;
+  forceBlackIcon?: boolean;
   href: string;
   icon?: string;
   marker: string;
@@ -278,7 +289,16 @@ export function MenuCollapse({
 
   if (compact) {
     return (
-      <MenuItem active={active} compact forceBlackIcon href={href} icon={icon} marker={marker} onNavigate={onNavigate} title={title} />
+      <MenuItem
+        active={active}
+        compact
+        forceBlackIcon={forceBlackIcon}
+        href={href}
+        icon={icon}
+        marker={marker}
+        onNavigate={onNavigate}
+        title={title}
+      />
     );
   }
 
@@ -298,7 +318,7 @@ export function MenuCollapse({
         onClick={handleClick}
       >
         {icon && (
-          <span className="pointer-events-none shrink-0 self-center" style={navIconStyle(icon, true)}>
+          <span className="pointer-events-none shrink-0 self-center" style={navIconStyle(icon, forceBlackIcon)}>
             <NavIcon icon={icon} className="h-[1.22rem] w-[1.22rem]" />
           </span>
         )}

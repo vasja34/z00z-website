@@ -1,12 +1,10 @@
 title: "Support"
 icon: support
-page_icons:
-  index: support
 order:
   - index
   - faq
-  - troubleshooting
   - wallet-recovery-safety
+  - troubleshooting
   - developer-support
   - contact
   - contribute

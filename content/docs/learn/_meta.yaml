@@ -1,11 +1,11 @@
 title: "Learn"
 icon: mdi:learn-outline
-page_icons:
-  index: mdi:learn-outline
 order:
   - index
   - what-is-z00z
-  - main-whitepaper
+  - private-objects
   - terminology
-  - roadmap
+  - live-vs-target
+  - main-whitepaper
   - comparisons
+  - roadmap

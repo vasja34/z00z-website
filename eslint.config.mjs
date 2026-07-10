@@ -18,6 +18,7 @@ const eslintConfig = defineConfig([
     ".github/**",
     ".planning/**",
     ".temp/**",
+    "docs/**",
     "reports/**",
     "tools/**",
     "scripts/legacy/**",
